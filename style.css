@@ -1,0 +1,568 @@
+/* ============================================================
+   CONJU J'AIME — style.css
+   Toutes les règles CSS centralisées
+   ============================================================ */
+
+/* --- Variables globales --- */
+:root {
+    --mauve:       #724a91;
+    --mauve-fonce: #5a3a70;
+    --mauve-clair: #f3e5f5;
+    --vert-gr1:    #a8e6cf;
+    --vert-gr1-f:  #7fdbb6;
+    --orange-gr2:  #ff9f7f;
+    --rouge-gr3:   #b22222;
+    --jaune:       #f1c40f;
+    --jaune-clair: #fff9c4;
+    --fond:        linear-gradient(135deg, #f3e5f5 0%, #fff3e0 100%);
+    --blanc:       #ffffff;
+    --gris-texte:  #5d4037;
+    --succes:      #2ecc71;
+    --erreur:      #e74c3c;
+    --ombre:       0 15px 40px rgba(0,0,0,0.12);
+}
+
+/* --- Reset & base --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: "Verdana", sans-serif;
+    background: var(--fond);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+}
+
+/* --- Écrans (SPA) --- */
+.ecran { display: none; width: 100%; flex-direction: column; align-items: center; }
+.ecran.active { display: flex; }
+
+/* ============================================================
+   MENU PRINCIPAL
+   ============================================================ */
+#page-menu {
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.menu-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.menu-titre {
+    font-family: "Comic Sans MS", cursive;
+    font-size: 42px;
+    font-weight: bold;
+    color: var(--mauve);
+    margin-bottom: 5px;
+}
+
+.menu-sous-titre {
+    font-size: 15px;
+    color: var(--gris-texte);
+    font-style: italic;
+}
+
+.juju-menu {
+    width: 150px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin: 10px 0;
+}
+.juju-menu:hover { transform: scale(1.05) rotate(-3deg); }
+
+.menu-section {
+    width: 95%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-section-titre {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--mauve);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    border-left: 4px solid var(--mauve);
+    padding-left: 10px;
+}
+
+.btn-menu-jeu {
+    display: block;
+    width: auto;
+    min-width: 260px;
+    max-width: 340px;
+    padding: 13px 25px;
+    font-family: "Comic Sans MS", cursive;
+    font-size: 17px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    margin: 0 auto 10px auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+    white-space: nowrap;
+}
+.btn-menu-jeu:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+.btn-menu-jeu.mauve   { background: linear-gradient(135deg, var(--mauve) 0%, #9b59b6 100%); }
+.btn-menu-jeu.vert    { background: linear-gradient(135deg, var(--vert-gr1) 0%, var(--vert-gr1-f) 100%); }
+.btn-menu-jeu.orange  { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); }
+.btn-menu-jeu.desactive {
+    background: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+.btn-menu-jeu.desactive:hover { transform: none; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+
+/* ============================================================
+   PAGE DE JEU (commune à tous les jeux)
+   ============================================================ */
+.header-bandeau {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 20px;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    margin-bottom: 15px;
+}
+
+.btn-retour {
+    background: none;
+    border: 2px solid var(--mauve);
+    color: var(--mauve);
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-retour:hover { background: var(--mauve); color: white; }
+
+.info-serie {
+    font-size: 14px;
+    color: var(--mauve);
+    font-weight: bold;
+}
+
+.score-zone {
+    color: var(--jaune);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.btn-son {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--mauve);
+    padding: 5px 10px;
+    border: 2px solid var(--mauve);
+    border-radius: 15px;
+}
+
+/* --- Bulle leçon --- */
+.bulle-lecon {
+    background: var(--jaune-clair);
+    border: 2px solid #fbc02d;
+    border-radius: 20px;
+    padding: 15px 20px;
+    margin-bottom: 18px;
+    width: 95%;
+    max-width: 500px;
+    font-size: 14px;
+    color: var(--gris-texte);
+    line-height: 1.6;
+    transition: opacity 0.5s;
+}
+
+/* --- Bulle exceptions (2e/3e groupe) --- */
+.bulle-exceptions {
+    background: #f3e5f5;
+    border: 2px solid #9b59b6;
+    border-radius: 20px;
+    padding: 12px 18px;
+    margin-top: 15px;
+    width: 95%;
+    max-width: 500px;
+    font-size: 14px;
+    color: #6c3483;
+    line-height: 1.6;
+    transition: opacity 0.5s;
+}
+
+/* --- Bulle Retiens present1 (violet) --- */
+.bulle-present1 {
+    background: #f3e5f5;
+    border: 2px solid #9b59b6;
+    border-radius: 20px;
+    padding: 12px 18px;
+    margin-top: 15px;
+    width: 95%;
+    max-width: 500px;
+    font-size: 14px;
+    color: #6c3483;
+    line-height: 1.6;
+    transition: opacity 0.5s;
+}
+
+/* --- Cartouche de jeu --- */
+.cartouche {
+    background: white;
+    width: 95%;
+    max-width: 500px;
+    border-radius: 40px;
+    box-shadow: var(--ombre);
+    padding: 25px 25px 30px;
+    text-align: center;
+    position: relative;
+}
+
+.juju-jeu {
+    width: 120px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-bottom: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.juju-jeu:hover { transform: rotate(-5deg) scale(1.1); }
+
+/* Phrase d'encouragement dans le menu */
+.menu-encouragement {
+    color: var(--mauve);
+    font-style: italic;
+    font-size: 13px;
+    text-align: center;
+    margin: 5px 0 8px;
+    padding: 0 10px;
+    white-space: nowrap;
+}
+
+/* Zone FORM : sujet + input sur la même ligne */
+.form-ligne {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px 0 5px;
+    flex-wrap: wrap;
+}
+
+.sujet-inline {
+    font-family: "Comic Sans MS", cursive;
+    font-size: 42px;
+    font-weight: bold;
+    color: #333;
+    white-space: nowrap;
+}
+
+/* --- Verbe affiché --- */
+.verbe-display {
+    font-family: "Comic Sans MS", cursive;
+    font-size: 38px;
+    font-weight: bold;
+    margin: 8px 0;
+    color: #333;
+    min-height: 0;
+}
+
+/* --- Pelotes (QCM groupes) --- */
+.pelotes-zone {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.pelote {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-family: "Comic Sans MS", cursive;
+    font-weight: 900;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.pelote:hover { transform: scale(1.1); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+.pelote.p1 { background: var(--vert-gr1); }
+.pelote.p2 { background: var(--orange-gr2); }
+.pelote.p3 { background: var(--rouge-gr3); }
+
+/* Pelotes terminaisons (présent) */
+.pelote-terminaison {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-family: "Comic Sans MS", cursive;
+    font-weight: 900;
+    font-size: 32px;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--vert-gr1) 0%, var(--vert-gr1-f) 100%);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.pelote-terminaison:hover:not(:disabled) { transform: scale(1.12); box-shadow: 0 12px 25px rgba(0,0,0,0.3); }
+.pelote-terminaison:disabled { cursor: not-allowed; }
+.pelote-terminaison.correct {
+    background: linear-gradient(135deg, #00b894, #00cec9) !important;
+    transform: scale(1.12);
+}
+.pelote-terminaison.wrong {
+    background: linear-gradient(135deg, #ff7675, #d63031) !important;
+    transform: scale(0.9);
+    opacity: 0.5;
+}
+.pelote-terminaison.orange {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+}
+.pelote-terminaison.rouge {
+    background: linear-gradient(135deg, #c0392b 0%, #922b21 100%);
+}
+.pelote-terminaison.correct-p2 {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 5px white, 0 0 0 8px currentColor, 0 12px 25px rgba(0,0,0,0.3);
+    outline: 3px solid white;
+}
+
+/* --- Zone saisie (mode FORM) --- */
+.input-zone {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.input-reponse {
+    padding: 12px 15px;
+    font-size: 22px;
+    border: 3px solid var(--mauve);
+    border-radius: 20px;
+    width: 220px;
+    text-align: center;
+    font-family: "Comic Sans MS", cursive;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input-reponse:focus {
+    outline: none;
+    border-color: var(--jaune);
+    box-shadow: 0 0 10px rgba(241,196,15,0.4);
+}
+
+/* Sujet affiché dans présent FORM */
+.sujet-display {
+    font-family: "Comic Sans MS", cursive;
+    font-size: 52px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+.infinitif-display {
+    font-size: 36px;
+    font-style: italic;
+    color: #b794f4;
+    margin-bottom: 20px;
+}
+.conjugaison-display {
+    font-family: "Comic Sans MS", cursive;
+    font-size: 48px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+    min-height: 0;
+}
+
+/* --- Boutons action --- */
+.btn-valider {
+    background: var(--mauve);
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: "Comic Sans MS", cursive;
+    transition: background 0.2s, transform 0.2s;
+}
+.btn-valider:hover { background: var(--mauve-fonce); transform: scale(1.05); }
+.btn-valider:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-action {
+    background: var(--mauve);
+    color: white;
+    border: none;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: "Comic Sans MS", cursive;
+    margin: 8px;
+    transition: background 0.2s, transform 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.btn-action:hover { background: var(--mauve-fonce); transform: translateY(-2px); }
+
+/* --- Message feedback --- */
+.msg-zone {
+    font-family: "Comic Sans MS", cursive;
+    font-size: 20px;
+    font-weight: bold;
+    min-height: 35px;
+    margin-top: 10px;
+}
+
+/* Pelote indice (participe présent) */
+.pelote-indice {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    margin: 8px auto;
+    display: block;
+}
+
+/* --- Écran intermédiaire (fin de série) --- */
+.ecran-intermediaire {
+    display: none;
+    text-align: center;
+    padding: 25px;
+    width: 95%;
+    max-width: 500px;
+    background: white;
+    border-radius: 30px;
+    box-shadow: var(--ombre);
+    margin-top: 15px;
+}
+
+.intermediaire-titre {
+    font-family: "Comic Sans MS", cursive;
+    font-size: 32px;
+    color: var(--mauve);
+    margin-bottom: 10px;
+}
+
+.intermediaire-score {
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--jaune);
+    margin: 10px 0;
+}
+
+.intermediaire-msg {
+    font-size: 18px;
+    color: var(--gris-texte);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+/* --- Debug panel --- */
+#debug-panel {
+    display: none;
+    background: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+/* --- Confettis --- */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+@keyframes fall {
+    to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 480px) {
+    .menu-titre { font-size: 32px; }
+    .verbe-display { font-size: 30px; }
+    .pelote { width: 72px; height: 72px; font-size: 16px; }
+    .pelote-terminaison { width: 90px; height: 90px; font-size: 26px; }
+    .sujet-display { font-size: 40px; }
+    .conjugaison-display { font-size: 36px; }
+    .input-reponse { width: 180px; font-size: 18px; }
+}
+/* ============================================================
+   PRESENT TOUS LES GROUPES — ajouts
+   ============================================================ */
+
+.btn-menu-jeu.violet { background: linear-gradient(135deg, #6c3483 0%, #a569bd 100%); }
+
+/* Tableau leçon présent tous groupes */
+.tableau-lecon {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 8px;
+}
+.tableau-lecon th, .tableau-lecon td {
+    border: 1px solid #fbc02d;
+    padding: 4px 6px;
+    text-align: center;
+}
+.tableau-lecon th {
+    background: #fbc02d;
+    color: #5d4037;
+    font-weight: bold;
+}
+.tableau-lecon tr:nth-child(even) td { background: rgba(251,192,45,0.1); }
+
+/* Bulle Retiens presentTous (violet) */
+.bulle-tous {
+    background: #f3e5f5;
+    border: 2px solid #9b59b6;
+    border-radius: 20px;
+    padding: 12px 18px;
+    margin-top: 15px;
+    width: 95%;
+    max-width: 500px;
+    font-size: 13px;
+    color: #6c3483;
+    line-height: 1.7;
+    transition: opacity 0.5s;
+}
+
+/* Pelote verte pour groupe 1 dans presentTous */
+.pelote-terminaison.vert {
+    background: linear-gradient(135deg, var(--vert-gr1) 0%, var(--vert-gr1-f) 100%);
+}
