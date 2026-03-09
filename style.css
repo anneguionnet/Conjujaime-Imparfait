@@ -566,3 +566,8 @@ body {
 .pelote-terminaison.vert {
     background: linear-gradient(135deg, var(--vert-gr1) 0%, var(--vert-gr1-f) 100%);
 }
+
+/* Pelote violet clair pour -ent (universel) */
+.pelote-terminaison.violet-clair {
+    background: linear-gradient(135deg, #a569bd 0%, #c39bd3 100%);
+}
