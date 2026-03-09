@@ -228,6 +228,8 @@
                     onclick="validerImpForm()" style="margin-top:15px;">OK</button>
         </div>
 
+        <div class="msg-zone" id="msg-zone"></div>
+
         <!-- Bulle Retiens imparfait1 -->
         <div id="bulle-imparfait1" class="bulle-present1" style="display:none;">
             <strong>Retiens :</strong> au radical, on ajoute la terminaison :<br>
@@ -249,7 +251,6 @@
             💬 <i>Conseil de Juju : n'oublie pas le pronom des verbes pronominaux.</i>
         </div>
 
-        <div class="msg-zone" id="msg-zone"></div>
 
     </div>
 
@@ -1810,7 +1811,7 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
             if (b.innerText === '-' + bonneTerminaison) b.classList.add('correct');
         });
         parler(formeComplete);
-        setTimeout(questionSuivante, 1800);
+        setTimeout(prochain, 1800);
     } else {
         impEssaiCount++;
         document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
@@ -1833,7 +1834,7 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
                 if (b.innerText === '-' + bonneTerminaison) b.classList.add('correct');
             });
             parler(formeComplete);
-            setTimeout(questionSuivante, 2500);
+            setTimeout(prochain, 2500);
         }
     }
 }
@@ -1875,7 +1876,7 @@ function validerImpForm() {
             input.style.display = '';
             input.disabled = false;
             document.getElementById('btn-valider-impform').style.display = 'inline-block';
-            questionSuivante();
+            prochain();
         }, 2000);
     } else {
         impEssaiCount++;
@@ -1890,7 +1891,7 @@ function validerImpForm() {
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
             parler(formeComplete);
-            setTimeout(questionSuivante, 2500);
+            setTimeout(prochain, 2500);
         }
     }
 }
