@@ -67,6 +67,8 @@ const verbesImparfait1 = [
     radicalJe: "me dévou-",
     radicalTu: "te dévou-",
     radicalIl: "se dévou-",
+radicalNous: "nous dévou-",
+radicalVous: "vous dévou-",
     radicalPluriel: "se dévou-",
   },
   {
@@ -143,6 +145,8 @@ const verbesImparfait1 = [
     radicalJe: "me souven-",
     radicalTu: "te souven-",
     radicalIl: "se souven-",
+radicalNous: "nous souven-",
+radicalVous: "vous souven-",
     radicalPluriel: "se souven-",
   },
   {
@@ -159,6 +163,8 @@ const verbesImparfait1 = [
     radicalJe: "m'endorm-",
     radicalTu: "t'endorm-",
     radicalIl: "s'endorm-",
+ radicalNous: "nous endorm-",
+radicalVous: "vous endorm-",
     radicalPluriel: "s'endorm-",
   },
   {
@@ -173,6 +179,11 @@ const verbesImparfait1 = [
     niveau: 2,
     radicalImp: "voul-",
   },
+  // --- Verbes en -GUER ---
+  { infinitif: "conjuguer",  groupe: 1, niveau: 1, radicalImp: "conjugu-" },
+  { infinitif: "fatiguer",   groupe: 1, niveau: 1, radicalImp: "fatigu-" },
+  { infinitif: "naviguer",   groupe: 1, niveau: 2, radicalImp: "navigu-" },
+  { infinitif: "distinguer", groupe: 1, niveau: 3, radicalImp: "distingu-" },
 ];
 
 const verbesImparfait2 = [
@@ -202,6 +213,8 @@ const verbesImparfait2 = [
     radicalJe: "me méfi-",
     radicalTu: "te méfi-",
     radicalIl: "se méfi-",
+radicalNous: "nous méfi-",
+radicalVous: "vous méfi-",
     radicalPluriel: "se méfi-",
   },
   {
@@ -314,6 +327,18 @@ const verbesImparfait2 = [
     radicalJe: "me tais-",
     radicalTu: "te tais-",
     radicalIl: "se tais-",
+radicalNous: "nous tais-",
+radicalVous: "vous tais-",
     radicalPluriel: "se tais-",
   },
+  // --- Verbes en -GER ---
+  { infinitif: "manger",    groupe: 1, niveau: 1, radicalImp: "mange-",    radicalNousVous: "mang-" },
+  { infinitif: "changer",   groupe: 1, niveau: 1, radicalImp: "change-",   radicalNousVous: "chang-" },
+  { infinitif: "voyager",   groupe: 1, niveau: 2, radicalImp: "voyage-",   radicalNousVous: "voyag-" },
+  { infinitif: "corriger",  groupe: 1, niveau: 2, radicalImp: "corrige-",  radicalNousVous: "corrig-" },
+  // --- Verbes en -CER ---
+  { infinitif: "lancer",    groupe: 1, niveau: 1, radicalImp: "lanç-",     radicalNousVous: "lanc-" },
+  { infinitif: "commencer", groupe: 1, niveau: 1, radicalImp: "commenç-",  radicalNousVous: "commenc-" },
+  { infinitif: "prononcer", groupe: 1, niveau: 2, radicalImp: "prononç-",  radicalNousVous: "prononc-" },
+  { infinitif: "effacer",   groupe: 1, niveau: 2, radicalImp: "effaç-",    radicalNousVous: "effac-" },
 ];
