@@ -571,3 +571,6 @@ body {
 .pelote-terminaison.violet-clair {
     background: linear-gradient(135deg, #a569bd 0%, #c39bd3 100%);
 }
+.pelote-terminaison.gris {
+    background: linear-gradient(135deg, #999 0%, #bbb 100%);
+}
