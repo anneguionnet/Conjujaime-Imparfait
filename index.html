@@ -1334,14 +1334,14 @@ function getTerminaisonPT(v, sujetBrut) {
 }
 
 function couleurPelotePT(text, groupe) {
-    // Séries 3-5 : tout violet
-    if (serie >= 3) return 'violet';
-    // Séries 1-2 : couleur selon le texte de la terminaison
-    const t = text.replace('-','');
+    const t = text.replace(/-/g, '').toLowerCase();
     if (t === 'e' || t === 'es') return 'vert';
-    if (t === 'ent') return groupe === 1 ? 'vert' : 'pelote-orange-fonce';
-    // -s, -t, -ds, -ts, -d et variantes
-    return 'pelote-orange-fonce';
+    if (t === 'ent') return 'violet-clair'; // correct pour TOUS les groupes
+    // Singulier : orange (2e groupe) ou rouge (3e groupe)
+    if (groupe === 2) return 'orange';
+    if (groupe === 3) return 'rouge';
+    // Groupe 1 distracteur (-s, -t)
+    return 'vert';
 }
 
 function genererPelotesPT(v, sujetBrut) {
@@ -2632,12 +2632,15 @@ function getTerminaisonPT(v, sujetBrut) {
     return 't';
 }
 
-function couleurPelotePT(text) {
+function couleurPelotePT(text, groupe) {
     const t = text.replace(/-/g, '').toLowerCase();
     if (t === 'e' || t === 'es') return 'vert';
-    if (t === 'ent') return 'violet-clair';
-    // -s, -t, -ts, -ds, -d et variantes → orange/rouge
-    return 'orange';
+    if (t === 'ent') return 'violet-clair'; // correct pour TOUS les groupes
+    // Singulier non-1er groupe : orange (2e) ou rouge (3e)
+    if (groupe === 2) return 'orange';
+    if (groupe === 3) return 'rouge';
+    // Groupe 1 singulier distracteur (-s, -t) → vert foncé / neutre
+    return 'vert';
 }
 
 function genererPelotesPT(v, sujetBrut) {
