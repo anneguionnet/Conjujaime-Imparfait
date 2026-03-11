@@ -574,3 +574,6 @@ body {
 .pelote-terminaison.gris {
     background: linear-gradient(135deg, #999 0%, #bbb 100%);
 }
+.pelote-terminaison.peche {
+    background: linear-gradient(135deg, #e8845a 0%, #d4603a 100%);
+}

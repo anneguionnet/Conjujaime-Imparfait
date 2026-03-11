@@ -1336,12 +1336,9 @@ function getTerminaisonPT(v, sujetBrut) {
 function couleurPelotePT(text, groupe) {
     const t = text.replace(/-/g, '').toLowerCase();
     if (t === 'e' || t === 'es') return 'vert';
-    if (t === 'ent') return 'violet-clair'; // correct pour TOUS les groupes
-    // Singulier : orange (2e groupe) ou rouge (3e groupe)
-    if (groupe === 2) return 'orange';
-    if (groupe === 3) return 'rouge';
-    // Groupe 1 distracteur (-s, -t)
-    return 'vert';
+    if (t === 'ent') return 'violet-clair';
+    // -s, -t, -ds, -ts, -d → pêche (2e et 3e groupe)
+    return 'peche';
 }
 
 function genererPelotesPT(v, sujetBrut) {
@@ -2635,12 +2632,9 @@ function getTerminaisonPT(v, sujetBrut) {
 function couleurPelotePT(text, groupe) {
     const t = text.replace(/-/g, '').toLowerCase();
     if (t === 'e' || t === 'es') return 'vert';
-    if (t === 'ent') return 'violet-clair'; // correct pour TOUS les groupes
-    // Singulier non-1er groupe : orange (2e) ou rouge (3e)
-    if (groupe === 2) return 'orange';
-    if (groupe === 3) return 'rouge';
-    // Groupe 1 singulier distracteur (-s, -t) → vert foncé / neutre
-    return 'vert';
+    if (t === 'ent') return 'violet-clair';
+    // -s, -t, -ds, -ts, -d → pêche (2e et 3e groupe)
+    return 'peche';
 }
 
 function genererPelotesPT(v, sujetBrut) {
