@@ -1588,7 +1588,8 @@ function finDeSerie() {
     document.getElementById('ecran-intermediaire').style.display = 'block';
 
     const passe    = scoreSerie >= 5;
-    const derniere = serie >= 8;
+    const maxSeries = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    const derniere = serie >= maxSeries;
 
     const titre = document.getElementById('inter-titre');
     if (derniere && passe) {
@@ -1635,7 +1636,8 @@ function prochaineSerie() {
 }
 
 function rejouerSerie() {
-    if (serie >= 8) serie = 1;
+    const maxS = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    if (serie >= maxS) serie = 1;
     document.getElementById('ecran-intermediaire').style.display = 'none';
     document.getElementById('cartouche-jeu').style.display       = 'block';
     chargerSerie();
@@ -1657,7 +1659,8 @@ function clicJuju() {
 
 function allerASerie() {
     const val = parseInt(document.getElementById('debug-input').value);
-    if (val >= 1 && val <= 8) {
+    const maxDbg = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    if (val >= 1 && val <= maxDbg) {
         serie = val;
         document.getElementById('debug-panel').style.display = 'none';
         chargerSerie();
@@ -1718,7 +1721,7 @@ function afficherImparfait(v) {
     if (serie === 9) {
         sujet = Math.random() < 0.5 ? 'nous' : 'vous';
     } else {
-        const avecNV = serie >= 3;
+        const avecNV = false; // nous/vous uniquement en série 9 (géré séparément)
         const sujets = getSujetsImp(v, avecNV);
         sujet = sujets[Math.floor(Math.random() * sujets.length)];
     }
@@ -2881,7 +2884,8 @@ function finDeSerie() {
     document.getElementById('ecran-intermediaire').style.display = 'block';
 
     const passe    = scoreSerie >= 5;
-    const derniere = serie >= 8;
+    const maxSeries = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    const derniere = serie >= maxSeries;
 
     const titre = document.getElementById('inter-titre');
     if (derniere && passe) {
@@ -2928,7 +2932,8 @@ function prochaineSerie() {
 }
 
 function rejouerSerie() {
-    if (serie >= 8) serie = 1;
+    const maxS = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    if (serie >= maxS) serie = 1;
     document.getElementById('ecran-intermediaire').style.display = 'none';
     document.getElementById('cartouche-jeu').style.display       = 'block';
     chargerSerie();
@@ -2950,7 +2955,8 @@ function clicJuju() {
 
 function allerASerie() {
     const val = parseInt(document.getElementById('debug-input').value);
-    if (val >= 1 && val <= 8) {
+    const maxDbg = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    if (val >= 1 && val <= maxDbg) {
         serie = val;
         document.getElementById('debug-panel').style.display = 'none';
         chargerSerie();
