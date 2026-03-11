@@ -801,7 +801,7 @@ function afficherPresentPelotes(v) {
     zone.dataset.terminaison = terminaison;
 
     document.getElementById('present-infinitif').innerText = v.infinitif;
-    document.getElementById('present-conjugaison').innerText = `${sujet} ${radicalNet}_`;
+    document.getElementById('present-conjugaison').innerText = `${sujet} ${radicalNet}-`;
 
     const pelotesZone = document.getElementById('present-pelotes');
     pelotesZone.innerHTML = '';
@@ -810,7 +810,7 @@ function afficherPresentPelotes(v) {
     terminaisons.forEach(t => {
         const btn = document.createElement('button');
         btn.className = 'pelote-terminaison';
-        btn.textContent = '-' + t;
+        btn.textContent = t;
         btn.onclick = () => verifierTerminaison(t, btn, zone);
         pelotesZone.appendChild(btn);
     });
@@ -960,7 +960,7 @@ function afficherPresent2Pelotes(v) {
     zone.dataset.terminaison = terminaison;
 
     document.getElementById('p2-infinitif').innerText   = v.infinitif;
-    document.getElementById('p2-conjugaison').innerText = `${sujet} ${radicalNet}_`;
+    document.getElementById('p2-conjugaison').innerText = `${sujet} ${radicalNet}-`;
 
     const pelotesZone = document.getElementById('p2-pelotes');
     pelotesZone.innerHTML = '';
@@ -972,7 +972,7 @@ function afficherPresent2Pelotes(v) {
     pelotes.forEach(p => {
         const btn = document.createElement('button');
         btn.className = `pelote-terminaison ${couleurP2}`;
-        btn.textContent = p.text;
+        btn.textContent = p.text.replace(/^-/, '');
         btn.dataset.correct = p.correct ? '1' : '0';
         btn.onclick = () => verifierP2Pelote(p, btn, zone);
         pelotesZone.appendChild(btn);
@@ -1415,7 +1415,7 @@ function afficherPresentTousPelotes(v) {
     zone.dataset.terminaison = terminaison;
 
     document.getElementById('pt-infinitif').innerText   = v.infinitif;
-    document.getElementById('pt-conjugaison').innerText = `${sujet} ${radicalNet}_`;
+    document.getElementById('pt-conjugaison').innerText = `${sujet} ${radicalNet}-`;
 
     const pelotesZone = document.getElementById('pt-pelotes');
     pelotesZone.innerHTML = '';
@@ -1425,7 +1425,7 @@ function afficherPresentTousPelotes(v) {
     pelotes.forEach(p => {
         const btn = document.createElement('button');
         btn.className = `pelote-terminaison ${p.couleur}`;
-        btn.textContent = p.text;
+        btn.textContent = p.text.replace(/^-/, '');
         btn.dataset.correct = p.correct ? '1' : '0';
         btn.onclick = () => verifierPTPelote(p, btn, zone);
         pelotesZone.appendChild(btn);
@@ -1766,7 +1766,7 @@ function afficherImparfait(v) {
                 btn.className = 'pelote-terminaison ' + couleur.cls;
                 btn.style.background = couleur.hex;
             }
-            btn.innerText = '-' + term;
+            btn.innerText = term;
             btn.onclick = () => validerImpPelote(term, bonneTerminaison, sujetAff, radicalNet, v);
             pzone.appendChild(btn);
         });
@@ -1823,14 +1823,14 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
         // Désactiver toutes les pelotes
         document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
             b.disabled = true;
-            if (b.innerText === '-' + bonneTerminaison) b.classList.add('correct');
+            if (b.innerText === bonneTerminaison) b.classList.add('correct');
         });
         parler(formeComplete);
         setTimeout(prochain, 1800);
     } else {
         impEssaiCount++;
         document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
-            if (b.innerText === '-' + termChoisie) b.classList.add('wrong');
+            if (b.innerText === termChoisie) b.classList.add('wrong');
             b.disabled = true;
         });
         if (impEssaiCount === 1) {
@@ -1846,7 +1846,7 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
             msg.style.color = '#e74c3c';
             msg.innerText = `❌ C'était : ${formeComplete}`;
             document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
-                if (b.innerText === '-' + bonneTerminaison) b.classList.add('correct');
+                if (b.innerText === bonneTerminaison) b.classList.add('correct');
             });
             parler(formeComplete);
             setTimeout(prochain, 2500);
@@ -2085,7 +2085,7 @@ function afficherPresentPelotes(v) {
     zone.dataset.terminaison = terminaison;
 
     document.getElementById('present-infinitif').innerText = v.infinitif;
-    document.getElementById('present-conjugaison').innerText = `${sujet} ${radicalNet}_`;
+    document.getElementById('present-conjugaison').innerText = `${sujet} ${radicalNet}-`;
 
     const pelotesZone = document.getElementById('present-pelotes');
     pelotesZone.innerHTML = '';
@@ -2094,7 +2094,7 @@ function afficherPresentPelotes(v) {
     terminaisons.forEach(t => {
         const btn = document.createElement('button');
         btn.className = 'pelote-terminaison';
-        btn.textContent = '-' + t;
+        btn.textContent = t;
         btn.onclick = () => verifierTerminaison(t, btn, zone);
         pelotesZone.appendChild(btn);
     });
@@ -2244,7 +2244,7 @@ function afficherPresent2Pelotes(v) {
     zone.dataset.terminaison = terminaison;
 
     document.getElementById('p2-infinitif').innerText   = v.infinitif;
-    document.getElementById('p2-conjugaison').innerText = `${sujet} ${radicalNet}_`;
+    document.getElementById('p2-conjugaison').innerText = `${sujet} ${radicalNet}-`;
 
     const pelotesZone = document.getElementById('p2-pelotes');
     pelotesZone.innerHTML = '';
@@ -2256,7 +2256,7 @@ function afficherPresent2Pelotes(v) {
     pelotes.forEach(p => {
         const btn = document.createElement('button');
         btn.className = `pelote-terminaison ${couleurP2}`;
-        btn.textContent = p.text;
+        btn.textContent = p.text.replace(/^-/, '');
         btn.dataset.correct = p.correct ? '1' : '0';
         btn.onclick = () => verifierP2Pelote(p, btn, zone);
         pelotesZone.appendChild(btn);
@@ -2696,7 +2696,7 @@ function afficherPresentTousPelotes(v) {
     zone.dataset.terminaison = terminaison;
 
     document.getElementById('pt-infinitif').innerText   = v.infinitif;
-    document.getElementById('pt-conjugaison').innerText = `${sujet} ${radicalNet}_`;
+    document.getElementById('pt-conjugaison').innerText = `${sujet} ${radicalNet}-`;
 
     const pelotesZone = document.getElementById('pt-pelotes');
     pelotesZone.innerHTML = '';
@@ -2706,7 +2706,7 @@ function afficherPresentTousPelotes(v) {
     pelotes.forEach(p => {
         const btn = document.createElement('button');
         btn.className = `pelote-terminaison ${p.couleur}`;
-        btn.textContent = p.text;
+        btn.textContent = p.text.replace(/^-/, '');
         btn.dataset.correct = p.correct ? '1' : '0';
         btn.onclick = () => verifierPTPelote(p, btn, zone);
         pelotesZone.appendChild(btn);
