@@ -1727,7 +1727,22 @@ function afficherImparfait(v) {
     const radicalNet = radical.replace(/-$/, '');
     const bonneTerminaison = getTerminaisonImp(sujet);
 
+    // Déterminer le mode d'affichage
+    let modeSerie;
     if (serie <= 5) {
+        modeSerie = 'pelotes';
+    } else if (serie === 9) {
+        // Série 9 : progression interne selon qIndex
+        if (qIndex <= 2)      modeSerie = 'pelotes';
+        else if (qIndex <= 4) modeSerie = 'form-terminaison';
+        else                  modeSerie = 'form-entiere';
+    } else if (serie === 6) {
+        modeSerie = 'form-terminaison';
+    } else {
+        modeSerie = 'form-entiere';
+    }
+
+    if (modeSerie === 'pelotes') {
         // Mode pelotes
         document.getElementById('zone-imparfait-form').style.display = 'none';
         const zone = document.getElementById('zone-imparfait-pelotes');
@@ -1735,11 +1750,8 @@ function afficherImparfait(v) {
         zone.dataset.sujet = sujet;
         zone.dataset.bonne = bonneTerminaison;
 
-        // Infinitif en italique violet
         document.getElementById('imp-pelotes-infinitif').innerText = v.infinitif;
-
-        // Sujet + radical
-        document.getElementById('imp-pelotes-sujet').innerText = sujetAff + ' ' + radicalNet;
+        document.getElementById('imp-pelotes-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
 
         // Construire les 3 pelotes
         const couleur = getCouleurImp(v);
@@ -1774,7 +1786,7 @@ function afficherImparfait(v) {
         parler(v.infinitif);
 
     } else {
-        // Mode form séries 6-8
+        // Mode form
         document.getElementById('zone-imparfait-pelotes').style.display = 'none';
         const zone = document.getElementById('zone-imparfait-form');
         zone.style.display = 'block';
@@ -1787,9 +1799,9 @@ function afficherImparfait(v) {
         input.disabled = false;
         document.getElementById('btn-valider-impform').style.display = 'inline-block';
 
-        if (serie === 6) {
+        if (modeSerie === 'form-terminaison') {
             // Terminaison seulement
-            document.getElementById('imp-form-sujet').innerText = sujetAff + ' ' + radicalNet;
+            document.getElementById('imp-form-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
             input.placeholder = '…';
             input.style.width = '100px';
             input.style.fontSize = '28px';
