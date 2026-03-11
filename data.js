@@ -1356,11 +1356,11 @@ const verbesPresent = [
           groupe: 3,
           niveau: 4,
           pronominal: true,
-          radicalJe: "",
-          radicalTu: "",
-          radicalIl: "se décou",
-          radicalPluriel: "se décous",
-          terminaisons: "ds|ds|d|ent",
+          radicalJe: "me décou-",
+radicalTu: "te décou-",
+radicalIl: "se décou-",
+radicalPluriel: "se décous-",
+terminaisons: "ds|ds|d|ent",
         },
         {
           infinitif: "défendre",
@@ -2057,7 +2057,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "S'ébattre",
+          infinitif: "s'ébattre",
           groupe: 3,
           niveau: 3,
           pronominal: true,
@@ -2068,7 +2068,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Émettre",
+          infinitif: "émettre",
           groupe: 3,
           niveau: 1,
           radical: "éme",
@@ -2076,7 +2076,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "S'entremettre",
+          infinitif: "s'entremettre",
           groupe: 3,
           niveau: 3,
           pronominal: true,
@@ -2087,7 +2087,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Mettre",
+          infinitif: "mettre",
           groupe: 3,
           niveau: 1,
           radical: "me",
@@ -2106,7 +2106,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Omettre",
+          infinitif: "omettre",
           groupe: 3,
           niveau: 1,
           radical: "ome",
@@ -2114,7 +2114,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Permettre",
+          infinitif: "permettre",
           groupe: 3,
           niveau: 2,
           radical: "perme",
@@ -2133,7 +2133,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Promettre",
+          infinitif: "promettre",
           groupe: 3,
           niveau: 1,
           radical: "prome",
@@ -2152,7 +2152,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Rabattre",
+          infinitif: "rabattre",
           groupe: 3,
           niveau: 2,
           radical: "raba",
@@ -2171,7 +2171,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Réadmettre",
+          infinitif: "réadmettre",
           groupe: 3,
           niveau: 4,
           radical: "réadme",
@@ -2179,7 +2179,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Rebattre",
+          infinitif: "rebattre",
           groupe: 3,
           niveau: 3,
           radical: "reba",
@@ -2187,7 +2187,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Réémettre",
+          infinitif: "réémettre",
           groupe: 3,
           niveau: 3,
           radical: "rééme",
@@ -2195,7 +2195,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Remettre",
+          infinitif: "remettre",
           groupe: 3,
           niveau: 2,
           radical: "reme",
@@ -2214,7 +2214,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Retransmettre",
+          infinitif: "retransmettre",
           groupe: 3,
           niveau: 4,
           radical: "retransme",
@@ -2222,7 +2222,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Soumettre",
+          infinitif: "soumettre",
           groupe: 3,
           niveau: 1,
           radical: "soume",
@@ -2241,7 +2241,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Télétransmettre",
+          infinitif: "télétransmettre",
           groupe: 3,
           niveau: 4,
           radical: "télétransme",
@@ -2249,7 +2249,7 @@ const verbesPresent = [
           terminaisons: "ts|ts|t|ent",
         },
         {
-          infinitif: "Transmettre",
+          infinitif: "transmettre",
           groupe: 3,
           niveau: 2,
           radical: "transme",
