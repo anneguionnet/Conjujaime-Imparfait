@@ -1579,7 +1579,7 @@ function validerPTForm() {
 
 function prochain() {
     qIndex++;
-    if (qIndex < 8) { essai = 0; p2EssaiCount = 0; ptEssaiCount = 0; impEssaiCount = 0; majInterface(); }
+    if (qIndex < 8) { essai = 0; p2EssaiCount = 0; ptEssaiCount = 0; majInterface(); }
     else finDeSerie();
 }
 
@@ -2632,7 +2632,13 @@ function getTerminaisonPT(v, sujetBrut) {
     return 't';
 }
 
-// couleurPelotePT définie plus haut avec groupe
+function couleurPelotePT(text) {
+    const t = text.replace(/-/g, '').toLowerCase();
+    if (t === 'e' || t === 'es') return 'vert';
+    if (t === 'ent') return 'violet-clair';
+    // -s, -t, -ts, -ds, -d et variantes → orange/rouge
+    return 'orange';
+}
 
 function genererPelotesPT(v, sujetBrut) {
     const gr = v.groupe;
@@ -2869,7 +2875,7 @@ function validerPTForm() {
 
 function prochain() {
     qIndex++;
-    if (qIndex < 8) { essai = 0; p2EssaiCount = 0; ptEssaiCount = 0; impEssaiCount = 0; majInterface(); }
+    if (qIndex < 8) { essai = 0; p2EssaiCount = 0; ptEssaiCount = 0; majInterface(); }
     else finDeSerie();
 }
 
