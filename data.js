@@ -1190,13 +1190,7 @@ const verbesPresent = [
           radical: "gravi-",
           radicalPluriel: "graviss-",
         },
-        {
-          infinitif: "hennir",
-          groupe: 2,
-          niveau: 4,
-          radical: "henni-",
-          radicalPluriel: "henniss-",
-        },
+      { infinitif: "hennir", groupe: 2, niveau: 4, radical: "henni-", radicalPluriel: "henniss-", hAspire: true },
         {
           infinitif: "investir",
           groupe: 2,

@@ -357,8 +357,8 @@ function melangerTableau(arr) {
     return arr.sort(() => 0.5 - Math.random());
 }
 
-function adapterSujet(sujet, radical) {
-    if (sujet === 'je' && radical.replace('-','').match(/^[aeiouhéèêàâîïôù]/i)) return "j'";
+function adapterSujet(sujet, radical, hAspire) {
+    if (sujet === 'je' && !hAspire && radical.replace('-','').match(/^[aeiouhéèêàâîïôù]/i)) return "j'";
     return sujet;
 }
 
@@ -788,7 +788,7 @@ function afficherPresentPelotes(v) {
 
     const sujetBrut = SUJETS[Math.floor(Math.random() * SUJETS.length)];
     const radical = v.pronominal ? getRadicalPronominal(v, sujetBrut) : v.radical;
-    const sujet = adapterSujet(sujetBrut, radical);
+    const sujet = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet = radical.replace('-', '');
 
     let terminaison;
@@ -825,7 +825,7 @@ function afficherPresentForm(v) {
     const sujetBrut = SUJETS[Math.floor(Math.random() * SUJETS.length)];
     const radical    = v.pronominal ? getRadicalPronominal(v, sujetBrut) : v.radical;
     const radicalAlt = v.pronominal ? getRadicalAltPronominal(v, sujetBrut) : (v.radicalAlt || null);
-    const sujet      = adapterSujet(sujetBrut, radical);
+    const sujet      = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet = radical.replace('-', '');
 
     let terminaison;
@@ -951,7 +951,7 @@ function afficherPresent2Pelotes(v) {
     const pool = v.sujetsPossibles || (v.pronominal ? ['je','tu','il','elle','ils','elles'] : ['je','tu','il','elle','ils','elles']);
     const sujetBrut = pool[Math.floor(Math.random() * pool.length)];
     const radical    = getRadicalP2(v, sujetBrut);
-    const sujet      = adapterSujet(sujetBrut, radical);
+    const sujet      = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet = radical.replace(/-/g, '');
     const terminaison = getTerminaisonP2(sujetBrut, v.terminaisons);
 
@@ -988,7 +988,7 @@ function afficherPresent2Form(v) {
     const pool = v.sujetsPossibles || ['je','tu','il','elle','ils','elles'];
     const sujetBrut  = pool[Math.floor(Math.random() * pool.length)];
     const radical    = getRadicalP2(v, sujetBrut);
-    const sujet      = adapterSujet(sujetBrut, radical);
+    const sujet      = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet = radical.replace(/-/g, '');
     const terminaison = getTerminaisonP2(sujetBrut, v.terminaisons);
 
@@ -1310,10 +1310,22 @@ function getRadicalPT(v, sujetBrut) {
         if (sujetBrut === 'il' || sujetBrut === 'elle' || sujetBrut === 'on') return v.radicalIl;
         return v.radicalPluriel;
     }
+    // Non pronominal avec radicaux variables par personne
+    if (sujetBrut === 'je' && v.radicalJe) return v.radicalJe;
+    if (sujetBrut === 'tu' && v.radicalTu) return v.radicalTu;
     if ((sujetBrut === 'il' || sujetBrut === 'elle' || sujetBrut === 'on') && v.radicalIl) return v.radicalIl;
     if (sujetBrut === 'ils' || sujetBrut === 'elles') return v.radicalPluriel || v.radical;
     return v.radical;
 }
+
+
+
+
+
+
+
+
+
 
 function getTerminaisonPT(v, sujetBrut) {
     if (v.terminaisons) {
@@ -1403,7 +1415,7 @@ function afficherPresentTousPelotes(v) {
 
     const sujetBrut   = getSujetPT(v);
     const radical     = getRadicalPT(v, sujetBrut);
-    const sujet       = adapterSujet(sujetBrut, radical);
+    const sujet       = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet  = radical.replace(/-/g, '');
     const terminaison = getTerminaisonPT(v, sujetBrut);
 
@@ -1437,7 +1449,7 @@ function afficherPresentTousForm(v) {
 
     const sujetBrut   = getSujetPT(v);
     const radical     = getRadicalPT(v, sujetBrut);
-    const sujet       = adapterSujet(sujetBrut, radical);
+    const sujet       = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet  = radical.replace(/-/g, '');
     const terminaison = getTerminaisonPT(v, sujetBrut);
 
@@ -1723,7 +1735,7 @@ function afficherImparfait(v) {
         sujet = sujets[Math.floor(Math.random() * sujets.length)];
     }
     const radical = getRadicalImp(v, sujet);
-    const sujetAff = adapterSujet(sujet, radical);
+    const sujetAff = adapterSujet(sujet, radical, v.hAspire);
     const radicalNet = radical.replace(/-$/, '');
     const bonneTerminaison = getTerminaisonImp(sujet);
 
@@ -1883,7 +1895,7 @@ function validerImpForm() {
     const radicalNet = radical.replace(/-$/, '');
     const bonneTerminaison = getTerminaisonImp(sujet);
     const formeCorrecte = modeT ? bonneTerminaison : radicalNet + bonneTerminaison;
-    const sujetAff = adapterSujet(sujet, radical);
+    const sujetAff = adapterSujet(sujet, radical, v.hAspire);
     const formeComplete = sujetAff + ' ' + radicalNet + bonneTerminaison;
 
     if (reponse === formeCorrecte) {
@@ -2084,7 +2096,7 @@ function afficherPresentPelotes(v) {
 
     const sujetBrut = SUJETS[Math.floor(Math.random() * SUJETS.length)];
     const radical = v.pronominal ? getRadicalPronominal(v, sujetBrut) : v.radical;
-    const sujet = adapterSujet(sujetBrut, radical);
+    const sujet = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet = radical.replace('-', '');
 
     let terminaison;
@@ -2121,7 +2133,7 @@ function afficherPresentForm(v) {
     const sujetBrut = SUJETS[Math.floor(Math.random() * SUJETS.length)];
     const radical    = v.pronominal ? getRadicalPronominal(v, sujetBrut) : v.radical;
     const radicalAlt = v.pronominal ? getRadicalAltPronominal(v, sujetBrut) : (v.radicalAlt || null);
-    const sujet      = adapterSujet(sujetBrut, radical);
+    const sujet      = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet = radical.replace('-', '');
 
     let terminaison;
@@ -2247,7 +2259,7 @@ function afficherPresent2Pelotes(v) {
     const pool = v.sujetsPossibles || (v.pronominal ? ['je','tu','il','elle','ils','elles'] : ['je','tu','il','elle','ils','elles']);
     const sujetBrut = pool[Math.floor(Math.random() * pool.length)];
     const radical    = getRadicalP2(v, sujetBrut);
-    const sujet      = adapterSujet(sujetBrut, radical);
+    const sujet      = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet = radical.replace(/-/g, '');
     const terminaison = getTerminaisonP2(sujetBrut, v.terminaisons);
 
@@ -2284,7 +2296,7 @@ function afficherPresent2Form(v) {
     const pool = v.sujetsPossibles || ['je','tu','il','elle','ils','elles'];
     const sujetBrut  = pool[Math.floor(Math.random() * pool.length)];
     const radical    = getRadicalP2(v, sujetBrut);
-    const sujet      = adapterSujet(sujetBrut, radical);
+    const sujet      = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet = radical.replace(/-/g, '');
     const terminaison = getTerminaisonP2(sujetBrut, v.terminaisons);
 
@@ -2599,6 +2611,18 @@ function getSujetPT(v) {
     return pool[Math.floor(Math.random() * pool.length)];
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
 function getRadicalPT(v, sujetBrut) {
     if (v.pronominal) {
         if (sujetBrut === 'je')  return v.radicalJe;
@@ -2606,6 +2630,8 @@ function getRadicalPT(v, sujetBrut) {
         if (sujetBrut === 'il' || sujetBrut === 'elle' || sujetBrut === 'on') return v.radicalIl;
         return v.radicalPluriel;
     }
+    if (sujetBrut === 'je' && v.radicalJe) return v.radicalJe;
+    if (sujetBrut === 'tu' && v.radicalTu) return v.radicalTu;
     if ((sujetBrut === 'il' || sujetBrut === 'elle' || sujetBrut === 'on') && v.radicalIl) return v.radicalIl;
     if (sujetBrut === 'ils' || sujetBrut === 'elles') return v.radicalPluriel || v.radical;
     return v.radical;
@@ -2699,7 +2725,7 @@ function afficherPresentTousPelotes(v) {
 
     const sujetBrut   = getSujetPT(v);
     const radical     = getRadicalPT(v, sujetBrut);
-    const sujet       = adapterSujet(sujetBrut, radical);
+    const sujet       = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet  = radical.replace(/-/g, '');
     const terminaison = getTerminaisonPT(v, sujetBrut);
 
@@ -2733,7 +2759,7 @@ function afficherPresentTousForm(v) {
 
     const sujetBrut   = getSujetPT(v);
     const radical     = getRadicalPT(v, sujetBrut);
-    const sujet       = adapterSujet(sujetBrut, radical);
+    const sujet       = adapterSujet(sujetBrut, radical, v.hAspire);
     const radicalNet  = radical.replace(/-/g, '');
     const terminaison = getTerminaisonPT(v, sujetBrut);
 
