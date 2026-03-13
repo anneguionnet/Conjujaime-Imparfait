@@ -1345,7 +1345,9 @@ function getTerminaisonPT(v, sujetBrut) {
     return 't';
 }
 
-function couleurPelotePT(text, groupe) {
+function couleurPelotePT(text, groupe, s) {
+    // Séries 4 et 5 : toutes les pelotes violettes
+    if (s >= 4) return 'violet-clair';
     const t = text.replace(/-/g, '').toLowerCase();
     if (t === 'e' || t === 'es') return 'vert';
     if (t === 'ent') return 'violet-clair';
@@ -1400,7 +1402,7 @@ function genererPelotesPT(v, sujetBrut) {
     }
 
     // Ajouter la couleur à chaque pelote
-    return pelotes.map(p => ({ ...p, couleur: couleurPelotePT(p.text, gr) }));
+    return pelotes.map(p => ({ ...p, couleur: couleurPelotePT(p.text, gr, serie) }));
 }
 
 function afficherPresentTous(v) {
@@ -2655,7 +2657,9 @@ function getTerminaisonPT(v, sujetBrut) {
     return 't';
 }
 
-function couleurPelotePT(text, groupe) {
+function couleurPelotePT(text, groupe, s) {
+    // Séries 4 et 5 : toutes les pelotes violettes
+    if (s >= 4) return 'violet-clair';
     const t = text.replace(/-/g, '').toLowerCase();
     if (t === 'e' || t === 'es') return 'vert';
     if (t === 'ent') return 'violet-clair';
@@ -2710,7 +2714,7 @@ function genererPelotesPT(v, sujetBrut) {
     }
 
     // Ajouter la couleur à chaque pelote
-    return pelotes.map(p => ({ ...p, couleur: couleurPelotePT(p.text, v.groupe) }));
+    return pelotes.map(p => ({ ...p, couleur: couleurPelotePT(p.text, v.groupe, serie) }));
 }
 
 function afficherPresentTous(v) {
