@@ -1401,6 +1401,13 @@ function genererPelotesPT(v, sujetBrut) {
             pelotes = melangerTableau([{text:'-es',correct:false},{text:'-ent',correct:true},{text:'-t',correct:false}]);
     }
 
+    // Série 4 : -ent toujours à droite
+    if (serie === 4) {
+        const ent = pelotes.find(p => p.text.replace(/-/g,'') === 'ent');
+        const autres = pelotes.filter(p => p.text.replace(/-/g,'') !== 'ent');
+        pelotes = [...autres, ent];
+    }
+
     // Ajouter la couleur à chaque pelote
     return pelotes.map(p => ({ ...p, couleur: couleurPelotePT(p.text, gr, serie) }));
 }
@@ -2711,6 +2718,13 @@ function genererPelotesPT(v, sujetBrut) {
             pelotes = melangerTableau([{text:'-e',correct:false},{text:'-t',correct:true},{text:'-ent',correct:false}]);
         else
             pelotes = melangerTableau([{text:'-es',correct:false},{text:'-ent',correct:true},{text:'-t',correct:false}]);
+    }
+
+    // Série 4 : -ent toujours à droite
+    if (serie === 4) {
+        const ent = pelotes.find(p => p.text.replace(/-/g,'') === 'ent');
+        const autres = pelotes.filter(p => p.text.replace(/-/g,'') !== 'ent');
+        pelotes = [...autres, ent];
     }
 
     // Ajouter la couleur à chaque pelote
