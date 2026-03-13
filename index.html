@@ -56,7 +56,7 @@
             Imparfait régulier
         </button>
         <button class="btn-menu-jeu orange" onclick="lancerJeu('imparfait2')">
-            Imparfait curieux
+            Imparfait altéré
         </button>
     </div>
 
@@ -232,9 +232,7 @@
 
         <!-- Bulle Retiens imparfait1 -->
         <div id="bulle-imparfait1" class="bulle-present1" style="display:none;">
-            <strong>Retiens :</strong> au radical, on ajoute la terminaison :<br>
-            <b>je / tu → -ais &nbsp;|&nbsp; il / elle / on → -ait &nbsp;|&nbsp; nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils / elles → -aient</b><br>
-            💬 <i>Conseil de Juju : n'oublie pas le pronom des verbes pronominaux.</i>
+            💬 <i>Conseil de Juju : n'oublie pas le pronom des verbes pronominaux. Exemple : tu t'élançais.</i>
         </div>
 
         <!-- Bulle Retiens imparfait2 -->
@@ -499,7 +497,7 @@ function lancerJeu(type) {
         present2:  'Le présent — 2e et 3e groupe',
         presentTous: 'Le présent — Tous les groupes',
         imparfait1:  "L'imparfait — régulier",
-        imparfait2:  "L'imparfait curieux",
+        imparfait2:  "L'imparfait altéré",
     };
     document.getElementById('titre-jeu').innerText = titres[type] || '';
     chargerSerie();
@@ -633,20 +631,17 @@ function getLecon() {
                 ⚠️ Verbes du <span style="color:#ff9f7f;">2<sup>e</sup> groupe</span> en <b>-ISSENT</b> au pluriel<br>
                 ⚠️ Verbes en <b>-DRE</b> conservent le <b>-d</b> · Verbes en <b>-TRE</b> conservent le <b>-t</b>`;
         case 'imparfait1':
-            return `<strong>L'imparfait est un des temps les plus faciles.</strong>
+            return `<strong>L'imparfait est l'un des temps les plus faciles.</strong>
                 Au radical, on ajoute la terminaison :<br>
                 <b>je / tu → -ais &nbsp;|&nbsp; il / elle / on → -ait &nbsp;|&nbsp;
-                nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils / elles → -aient</b>`;
+                nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils / elles → -aient</b><br>
+                💬 <i>Conseil de Juju : n'oublie pas le pronom des verbes pronominaux. Exemple : tu t'élançais.</i>`;
         case 'imparfait2':
-            return `<strong>L'imparfait peut surprendre par ses variantes :</strong><br>
-                Les verbes du 2<sup>e</sup> groupe en <b>-ISS-</b> et les verbes en <b>-aître</b> en <b>-AISS-</b> &nbsp;|&nbsp;
-                Certains verbes en <b>-OIR</b> prennent un <b>-Y-</b> (je voyais), d'autres un <b>-V-</b> (je buvais) &nbsp;|&nbsp;
-                Certains verbes en <b>-IRE</b> prennent un <b>-S-</b> (je faisais) &nbsp;|&nbsp;
-                Le verbe être prend un accent aigu : <b>j'étais</b> &nbsp;|&nbsp;
-                Les verbes en <b>-eindre/-aindre</b> → <b>-gn-</b> &nbsp;|&nbsp; les verbes en <b>-soudre</b> → <b>-solv-</b> &nbsp;|&nbsp;
-                Les verbes en <b>-OYER/-AYER/-IER</b> conservent leur <b>-Y-/-I-</b> avec <b>-IONS/-IEZ</b><br>
-                <b>Rappel :</b> je / tu → -ais &nbsp;|&nbsp; il / elle / on → -ait &nbsp;|&nbsp;
-                nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils / elles → -aient`;
+            return `<strong>L'imparfait a toujours les terminaisons suivantes :</strong><br>
+                <b>je / tu → -ais &nbsp;|&nbsp; il / elle / on → -ait &nbsp;|&nbsp;
+                nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils / elles → -aient</b><br>
+                Il peut surprendre par ses changements dans le radical :<br>
+                <i>Manger : je mangeais &nbsp;|&nbsp; Prononcer : je prononçais &nbsp;|&nbsp; Finir : tu finissais &nbsp;|&nbsp; Croire : je croyais</i>`;
     }
 }
 
