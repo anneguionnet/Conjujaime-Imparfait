@@ -110,6 +110,7 @@
         <div id="zone-present-pelotes" style="display:none; text-align:center;">
             <div class="infinitif-display" id="present-infinitif"></div>
             <div class="conjugaison-display" id="present-conjugaison"></div>
+            <div class="msg-zone" id="msg-p1-pelotes"></div>
             <div class="pelotes-zone" id="present-pelotes"
                  style="justify-content:center; gap:20px;"></div>
         </div>
@@ -133,6 +134,7 @@
         <div id="zone-present2-pelotes" style="display:none; text-align:center;">
             <div class="infinitif-display" id="p2-infinitif"></div>
             <div class="conjugaison-display" id="p2-conjugaison"></div>
+            <div class="msg-zone" id="msg-p2-pelotes"></div>
             <div class="pelotes-zone" id="p2-pelotes"
                  style="justify-content:center; gap:20px;"></div>
         </div>
@@ -156,6 +158,7 @@
         <div id="zone-presenttous-pelotes" style="display:none; text-align:center;">
             <div class="infinitif-display" id="pt-infinitif"></div>
             <div class="conjugaison-display" id="pt-conjugaison"></div>
+            <div class="msg-zone" id="msg-pt-pelotes"></div>
             <div class="pelotes-zone" id="pt-pelotes"
                  style="justify-content:center; gap:20px;"></div>
         </div>
@@ -287,7 +290,7 @@
 </div>
 
 <script src="data.js"></script>
-<script src="verbesImparfait_mini.js"></script>
+<script src="verbesImparfait_gd.js"></script>
 <script>
 // ============================================================
 // ENGINE — Voix, confettis, utilitaires
@@ -700,6 +703,9 @@ function majInterface() {
     const nbSeries = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
     document.getElementById('info-serie').innerText = `Série ${serie}/${nbSeries} · Q${qIndex + 1}/8`;
     document.getElementById('msg-zone').innerText = '';
+    document.getElementById('msg-p1-pelotes').innerText = '';
+    document.getElementById('msg-p2-pelotes').innerText = '';
+    document.getElementById('msg-pt-pelotes').innerText = '';
     document.getElementById('pelote-indice-zone').innerHTML = '';
     document.getElementById('pelotes-zone').innerHTML = '';
     document.getElementById('input-zone').style.display = 'none';
@@ -1076,7 +1082,7 @@ function verifierTerminaison(term, btn, zone) {
     const bonne  = zone.dataset.terminaison;
     const sujet  = zone.dataset.sujet;
     const radical = zone.dataset.radical;
-    const msg    = document.getElementById('msg-zone');
+    const msg    = document.getElementById('msg-p1-pelotes');
 
     document.querySelectorAll('.pelote-terminaison').forEach(b => b.disabled = true);
 
@@ -1176,7 +1182,7 @@ function validerForm() {
 
 // Vérification pelote present2
 function verifierP2Pelote(p, btn, zone) {
-    const msg = document.getElementById('msg-zone');
+    const msg = document.getElementById('msg-p2-pelotes');
     const sujet  = zone.dataset.sujet;
     const radical = zone.dataset.radical;
     const terminaison = zone.dataset.terminaison;
@@ -1491,7 +1497,7 @@ function afficherPresentTousForm(v) {
 }
 
 function verifierPTPelote(p, btn, zone) {
-    const msg       = document.getElementById('msg-zone');
+    const msg       = document.getElementById('msg-pt-pelotes');
     const sujet     = zone.dataset.sujet;
     const radical   = zone.dataset.radical;
     const terminaison = zone.dataset.terminaison;
@@ -2016,6 +2022,9 @@ function majInterface() {
     const v = verbesPioches[qIndex];
     document.getElementById('info-serie').innerText = `Série ${serie}/8 · Q${qIndex + 1}/8`;
     document.getElementById('msg-zone').innerText = '';
+    document.getElementById('msg-p1-pelotes').innerText = '';
+    document.getElementById('msg-p2-pelotes').innerText = '';
+    document.getElementById('msg-pt-pelotes').innerText = '';
     document.getElementById('pelote-indice-zone').innerHTML = '';
     document.getElementById('pelotes-zone').innerHTML = '';
     document.getElementById('input-zone').style.display = 'none';
@@ -2393,7 +2402,7 @@ function verifierTerminaison(term, btn, zone) {
     const bonne  = zone.dataset.terminaison;
     const sujet  = zone.dataset.sujet;
     const radical = zone.dataset.radical;
-    const msg    = document.getElementById('msg-zone');
+    const msg    = document.getElementById('msg-p1-pelotes');
 
     document.querySelectorAll('.pelote-terminaison').forEach(b => b.disabled = true);
 
@@ -2493,7 +2502,7 @@ function validerForm() {
 
 // Vérification pelote present2
 function verifierP2Pelote(p, btn, zone) {
-    const msg = document.getElementById('msg-zone');
+    const msg = document.getElementById('msg-p2-pelotes');
     const sujet  = zone.dataset.sujet;
     const radical = zone.dataset.radical;
     const terminaison = zone.dataset.terminaison;
@@ -2810,7 +2819,7 @@ function afficherPresentTousForm(v) {
 }
 
 function verifierPTPelote(p, btn, zone) {
-    const msg       = document.getElementById('msg-zone');
+    const msg       = document.getElementById('msg-pt-pelotes');
     const sujet     = zone.dataset.sujet;
     const radical   = zone.dataset.radical;
     const terminaison = zone.dataset.terminaison;
