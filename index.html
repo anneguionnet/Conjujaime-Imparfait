@@ -1862,11 +1862,11 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
 
     if (termChoisie === bonneTerminaison) {
         msg.style.color = '#2ecc71';
-        msg.innerHTML = `✅ <span style="color:#6c3483; font-weight:bold; font-size:1.3em;">${formeComplete}</span>`;
+        msg.innerText = '✅ Bravo !';
         scoreSerie++;
         scoreTotal++;
         document.getElementById('total-score').innerText = scoreTotal;
-        // Désactiver toutes les pelotes et afficher forme complète
+        // Désactiver toutes les pelotes et afficher forme complète en haut
         document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
             b.disabled = true;
             if (b.innerText.replace('-','') === bonneTerminaison) b.classList.add('correct');
