@@ -1727,7 +1727,8 @@ function allerASerie() {
 let impEssaiCount = 0;
 
 function getRadicalImp(v, sujet) {
-    if ((sujet === 'nous' || sujet === 'vous') && v.radicalNousVous) return v.radicalNousVous;
+    if (sujet === 'nous' && v.radicalNous) return v.radicalNous;
+    if (sujet === 'vous' && v.radicalVous) return v.radicalVous;
     if (sujet === 'je'  && v.radicalJe)      return v.radicalJe;
     if (sujet === 'tu'  && v.radicalTu)      return v.radicalTu;
     if (['il','elle','on'].includes(sujet)   && v.radicalIl)      return v.radicalIl;

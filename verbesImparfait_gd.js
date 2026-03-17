@@ -158,6 +158,8 @@ const verbesImparfait1 = [
     radicalTu: "te dévou-",
     radicalIl: "se dévou-",
     radicalPluriel: "se dévou-",
+    radicalNous: "nous nous dévou-",
+    radicalVous: "vous vous dévou-",
   },
   {
     infinitif: "secouer",
@@ -499,6 +501,8 @@ const verbesImparfait1 = [
     radicalTu: "te mépren-",
     radicalIl: "se mépren-",
     radicalPluriel: "se mépren-",
+    radicalNous: "nous nous mépren-",
+    radicalVous: "vous vous mépren-",
   },
   {
     infinitif: "obtenir",
@@ -721,6 +725,8 @@ const verbesImparfait1 = [
     radicalTu: "te morfond-",
     radicalIl: "se morfond-",
     radicalPluriel: "se morfond-",
+    radicalNous: "nous nous morfond-",
+    radicalVous: "vous vous morfond-",
   },
   {
     infinitif: "se rendormir",
@@ -731,6 +737,8 @@ const verbesImparfait1 = [
     radicalTu: "te rendorm-",
     radicalIl: "se rendorm-",
     radicalPluriel: "se rendorm-",
+    radicalNous: "nous nous rendorm-",
+    radicalVous: "vous vous rendorm-",
   },
   {
     infinitif: "se rendre",
@@ -741,6 +749,8 @@ const verbesImparfait1 = [
     radicalTu: "te rend-",
     radicalIl: "se rend-",
     radicalPluriel: "se rend-",
+    radicalNous: "nous nous rend-",
+    radicalVous: "vous vous rend-",
   },
   {
     infinitif: "se repentir",
@@ -751,6 +761,8 @@ const verbesImparfait1 = [
     radicalTu: "te repent-",
     radicalIl: "se repent-",
     radicalPluriel: "se repent-",
+    radicalNous: "nous nous repent-",
+    radicalVous: "vous vous repent-",
   },
   {
     infinitif: "se souvenir",
@@ -761,6 +773,8 @@ const verbesImparfait1 = [
     radicalTu: "te souven-",
     radicalIl: "se souven-",
     radicalPluriel: "se souven-",
+    radicalNous: "nous nous souven-",
+    radicalVous: "vous vous souven-",
   },
   {
     infinitif: "secourir",
@@ -837,6 +851,8 @@ const verbesImparfait1 = [
     radicalTu: "t'absten-",
     radicalIl: "s'absten-",
     radicalPluriel: "s'absten-",
+    radicalNous: "nous nous absten-",
+    radicalVous: "vous vous absten-",
   },
   {
     infinitif: "s'endormir",
@@ -847,6 +863,8 @@ const verbesImparfait1 = [
     radicalTu: "t'endorm-",
     radicalIl: "s'endorm-",
     radicalPluriel: "s'endorm-",
+    radicalNous: "nous nous endorm-",
+    radicalVous: "vous vous endorm-",
   },
   {
     infinitif: "s'enquérir",
@@ -857,6 +875,8 @@ const verbesImparfait1 = [
     radicalTu: "t'enquér-",
     radicalIl: "s'enquér-",
     radicalPluriel: "s'enquér-",
+    radicalNous: "nous nous enquér-",
+    radicalVous: "vous vous enquér-",
   },
   {
     infinitif: "s'ensuivre",
@@ -875,6 +895,8 @@ const verbesImparfait1 = [
     radicalTu: "t'épren-",
     radicalIl: "s'épren-",
     radicalPluriel: "s'épren-",
+    radicalNous: "nous nous épren-",
+    radicalVous: "vous vous épren-",
   },
   {
     infinitif: "tendre",
@@ -1603,6 +1625,8 @@ const verbesImparfait2 = [
     radicalTu: "te bonifi-",
     radicalIl: "se bonifi-",
     radicalPluriel: "se bonifi-",
+    radicalNous: "nous nous bonifi-",
+    radicalVous: "vous vous bonifi-",
   },
   {
     infinitif: "se frayer",
@@ -1613,6 +1637,8 @@ const verbesImparfait2 = [
     radicalTu: "te fray-",
     radicalIl: "se fray-",
     radicalPluriel: "se fray-",
+    radicalNous: "nous nous fray-",
+    radicalVous: "vous vous fray-",
   },
   {
     infinitif: "se méfier",
@@ -1623,6 +1649,8 @@ const verbesImparfait2 = [
     radicalTu: "te méfi-",
     radicalIl: "se méfi-",
     radicalPluriel: "se méfi-",
+    radicalNous: "nous nous méfi-",
+    radicalVous: "vous vous méfi-",
   },
   {
     infinitif: "se réfugier",
@@ -1633,6 +1661,8 @@ const verbesImparfait2 = [
     radicalTu: "te réfugi-",
     radicalIl: "se réfugi-",
     radicalPluriel: "se réfugi-",
+    radicalNous: "nous nous réfugi-",
+    radicalVous: "vous vous réfugi-",
   },
   {
     infinitif: "se soucier",
@@ -1643,6 +1673,8 @@ const verbesImparfait2 = [
     radicalTu: "te souci-",
     radicalIl: "se souci-",
     radicalPluriel: "se souci-",
+    radicalNous: "nous nous souci-",
+    radicalVous: "vous vous souci-",
   },
   {
     infinitif: "signifier",
@@ -1701,6 +1733,8 @@ const verbesImparfait2 = [
     radicalTu: "t'apitoy-",
     radicalIl: "s'apitoy-",
     radicalPluriel: "s'apitoy-",
+    radicalNous: "nous nous apitoy-",
+    radicalVous: "vous vous apitoy-",
   },
   {
     infinitif: "s'approprier",
@@ -1711,6 +1745,8 @@ const verbesImparfait2 = [
     radicalTu: "t'appropri-",
     radicalIl: "s'appropri-",
     radicalPluriel: "s'appropri-",
+    radicalNous: "nous nous appropri-",
+    radicalVous: "vous vous appropri-",
   },
   {
     infinitif: "s'extasier",
@@ -1721,6 +1757,8 @@ const verbesImparfait2 = [
     radicalTu: "t'extasi-",
     radicalIl: "s'extasi-",
     radicalPluriel: "s'extasi-",
+    radicalNous: "nous nous extasi-",
+    radicalVous: "vous vous extasi-",
   },
   {
     infinitif: "s'écrier",
@@ -1731,6 +1769,8 @@ const verbesImparfait2 = [
     radicalTu: "t'écri-",
     radicalIl: "s'écri-",
     radicalPluriel: "s'écri-",
+    radicalNous: "nous nous écri-",
+    radicalVous: "vous vous écri-",
   },
   {
     infinitif: "tournoyer",
@@ -1983,6 +2023,8 @@ sujetsPossibles: ["il", "elle", "ils", "elles"],
     radicalTu: "te blottiss-",
     radicalIl: "se blottiss-",
     radicalPluriel: "se blottiss-",
+    radicalNous: "nous nous blottiss-",
+    radicalVous: "vous vous blottiss-",
   },
   {
     infinitif: "s'enhardir",
@@ -1993,6 +2035,8 @@ sujetsPossibles: ["il", "elle", "ils", "elles"],
     radicalTu: "t'enhardiss-",
     radicalIl: "s'enhardiss-",
     radicalPluriel: "s'enhardiss-",
+    radicalNous: "nous nous enhardiss-",
+    radicalVous: "vous vous enhardiss-",
   },
 {
   infinitif: "hennir",
@@ -2533,6 +2577,8 @@ sujetsPossibles: ["il", "elle", "ils", "elles"],
     radicalTu: "te tais-",
     radicalIl: "se tais-",
     radicalPluriel: "se tais-",
+    radicalNous: "nous nous tais-",
+    radicalVous: "vous vous tais-",
   },
  {
     infinitif: "se dédire",
@@ -2543,6 +2589,8 @@ sujetsPossibles: ["il", "elle", "ils", "elles"],
     radicalTu: "te dédis-",
     radicalIl: "se dédis-",
     radicalPluriel: "se dédis-",
+    radicalNous: "nous nous dédis-",
+    radicalVous: "vous vous dédis-",
   },
  {
     infinitif: "réécrire",
@@ -2619,6 +2667,8 @@ sujetsPossibles: ["il", "elle", "ils", "elles"],
     radicalTu: "t'enfuy-",
     radicalIl: "s'enfuy-",
     radicalPluriel: "s'enfuy-",
+    radicalNous: "nous nous enfuy-",
+    radicalVous: "vous vous enfuy-",
   },
  {
     infinitif: "surproduire",
