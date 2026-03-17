@@ -60,7 +60,7 @@
         </button>
         <p class="menu-encouragement">Peux-tu conjuguer l'imparfait au pluriel ? Juju t'attend !</p>
         <button class="btn-menu-jeu violet" onclick="lancerJeu('imparfait3')">
-            🟣 Nous, vous, ils/elles
+            🟣 L'imparfait au pluriel
         </button>
     </div>
 
@@ -437,34 +437,34 @@ const CONFIG = {
         8: { niv:[3,4],   mode:'form',    nb:8, opa:0,    g1:10, g2:40, g3:50 },
     },
     imparfait1: {
-        1: { niv:[1],       mode:'pelotes', nb:8, opa:1   },
-        2: { niv:[1,2],     mode:'pelotes', nb:8, opa:1   },
-        3: { niv:[1,2],     mode:'pelotes', nb:8, opa:0.5 },
-        4: { niv:[2,3],     mode:'pelotes', nb:8, opa:0.3 },
-        5: { niv:[2,3],     mode:'pelotes', nb:8, opa:0.1 },
-        6: { niv:[2,3,4],   mode:'form',    nb:8, opa:0.5 },
-        7: { niv:[3,4],     mode:'form',    nb:8, opa:0.2 },
-        8: { niv:[1,2,3,4], mode:'form',    nb:8, opa:0   },
+        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:false },
+        2: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
+        3: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
+        4: { niv:[2,3],     mode:'form-terminaison', nb:8, opa:0.75 },
+        5: { niv:[2,3],     mode:'form-terminaison', nb:8, opa:0.5  },
+        6: { niv:[2,3,4],   mode:'form-entiere',     nb:8, opa:0.75 },
+        7: { niv:[3,4],     mode:'form-entiere',     nb:8, opa:0.5  },
+        8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
     imparfait2: {
-        1: { niv:[1,2],     mode:'pelotes', nb:8, opa:1   },
-        2: { niv:[1,2,3],   mode:'pelotes', nb:8, opa:1   },
-        3: { niv:[1,2],     mode:'pelotes', nb:8, opa:0.5 },
-        4: { niv:[2,3],     mode:'pelotes', nb:8, opa:0.3 },
-        5: { niv:[2,3],     mode:'pelotes', nb:8, opa:0.1 },
-        6: { niv:[2,3,4],   mode:'form',    nb:8, opa:0.5 },
-        7: { niv:[3,4],     mode:'form',    nb:8, opa:0.2 },
-        8: { niv:[1,2,3,4], mode:'form',    nb:8, opa:0   },
+        1: { niv:[1,2],     mode:'pelotes',          nb:8, opa:1,    shuffle:false },
+        2: { niv:[1,2,3],   mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
+        3: { niv:[1,2,3],   mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
+        4: { niv:[2,3],     mode:'form-terminaison', nb:8, opa:0.75 },
+        5: { niv:[2,3,4],   mode:'form-terminaison', nb:8, opa:0.5  },
+        6: { niv:[2,3,4],   mode:'form-entiere',     nb:8, opa:0.75 },
+        7: { niv:[3,4],     mode:'form-entiere',     nb:8, opa:0.5  },
+        8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
     imparfait3: {
-        1: { niv:[1,2],     mode:'pelotes', nb:8, opa:1,    shuffle:false },
-        2: { niv:[1,2,3],   mode:'pelotes', nb:8, opa:1,    shuffle:false },
-        3: { niv:[2,3],     mode:'pelotes', nb:8, opa:0.5,  shuffle:true  },
-        4: { niv:[2,3,4],   mode:'pelotes', nb:8, opa:0.3,  shuffle:true  },
-        5: { niv:[2,3,4],   mode:'pelotes', nb:8, opa:0.1,  shuffle:true  },
-        6: { niv:[1,2,3],   mode:'form',    nb:8, opa:0.5 },
-        7: { niv:[2,3,4],   mode:'form',    nb:8, opa:0.2 },
-        8: { niv:[1,2,3,4], mode:'form',    nb:8, opa:0   },
+        1: { niv:[1,2],     mode:'pelotes',          nb:8, opa:1,    shuffle:false },
+        2: { niv:[1,2,3],   mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
+        3: { niv:[2,3],     mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
+        4: { niv:[2,3],     mode:'form-terminaison', nb:8, opa:0.75 },
+        5: { niv:[2,3,4],   mode:'form-terminaison', nb:8, opa:0.5  },
+        6: { niv:[2,3,4],   mode:'form-entiere',     nb:8, opa:0.75 },
+        7: { niv:[3,4],     mode:'form-entiere',     nb:8, opa:0.5  },
+        8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
     present2: {
         // Séries 1-3 : pelotes, niveaux 1-2, pelotes fixes (pas de shuffle)
@@ -516,7 +516,7 @@ function lancerJeu(type) {
         presentTous: 'Le présent — Tous les groupes',
         imparfait1:  "L'imparfait — régulier",
         imparfait2:  "L'imparfait altéré",
-        imparfait3:  "L'imparfait — nous et vous",
+        imparfait3:  "L'imparfait au pluriel",
     };
     document.getElementById('titre-jeu').innerText = titres[type] || '';
     chargerSerie();
@@ -1777,15 +1777,9 @@ function afficherImparfait(v) {
     const radicalNet = radical.replace(/-$/, '');
     const bonneTerminaison = getTerminaisonImp(sujet);
 
-    // Déterminer le mode d'affichage
-    let modeSerie;
-    if (serie <= 5) {
-        modeSerie = 'pelotes';
-    } else if (serie === 6) {
-        modeSerie = 'form-terminaison';
-    } else {
-        modeSerie = 'form-entiere';
-    }
+    // Déterminer le mode depuis la config
+    const cfg = getConfig();
+    const modeSerie = cfg.mode;
 
     if (modeSerie === 'pelotes') {
         // Mode pelotes
@@ -1804,7 +1798,7 @@ function afficherImparfait(v) {
         if (sujet === 'nous')      terminaisons = ['ais', 'ait', 'ions'];
         else if (sujet === 'vous') terminaisons = ['ais', 'ait', 'iez'];
         else                       terminaisons = ['ais', 'ait', 'aient'];
-        if (serie >= 3) terminaisons = melangerTableau([...terminaisons]);
+        if (cfg.shuffle) terminaisons = melangerTableau([...terminaisons]);
         const pzone = document.getElementById('imp-pelotes-zone');
         pzone.innerHTML = '';
         terminaisons.forEach(term => {
@@ -1929,14 +1923,16 @@ function validerImpForm() {
         document.getElementById('total-score').innerText = scoreTotal;
         input.disabled = true;
         document.getElementById('btn-valider-impform').style.display = 'none';
-        // Afficher forme complète en violet à la place du sujet
-        document.getElementById('zone-imparfait-form').style.display = 'none';
+        // Afficher forme complète en violet à la place du sujet+radical
+        document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#6c3483; font-weight:bold; font-size:1.2em;">${formeComplete}</span>`;
+        document.getElementById('imp-form-input').style.display = 'none';
         msg.style.color = '#2ecc71';
-        msg.innerHTML = `✅ <span style="color:#6c3483; font-weight:bold; font-size:1.3em;">${formeComplete}</span>`;
+        msg.innerText = '✅ Bravo !';
         parler(formeComplete);
         setTimeout(() => {
             input.value = '';
             input.disabled = false;
+            input.style.display = 'inline-block';
             document.getElementById('btn-valider-impform').style.display = 'inline-block';
             prochain();
         }, 2000);
@@ -3086,30 +3082,36 @@ function afficherImparfait3(v) {
         parler(v.infinitif);
 
     } else {
-        // Mode form
+        // Mode form-terminaison ou form-entiere
         document.getElementById('zone-imparfait-pelotes').style.display = 'none';
         const zone = document.getElementById('zone-imparfait-form');
         zone.style.display = 'block';
         zone.dataset.sujet = sujet;
-        zone.dataset.bonne = radicalNet + bonneTerminaison;
 
         document.getElementById('imp-form-infinitif').innerText = v.infinitif;
-        document.getElementById('imp-form-sujet').innerText = sujetAff;
 
-        // Séries 6-7 : afficher le radical, série 8 : verbe entier
-        if (serie <= 7) {
-            document.getElementById('imp-form-radical').innerText = radicalNet + '-';
-            document.getElementById('imp-form-radical').style.display = 'inline';
-            document.getElementById('imp-form-input').placeholder = 'terminaison…';
-            zone.dataset.modeForm = 'terminaison';
+        const input = document.getElementById('imp-form-input');
+        input.value = '';
+        input.disabled = false;
+        document.getElementById('btn-valider-impform').style.display = 'inline-block';
+
+        if (cfg.mode === 'form-terminaison') {
+            document.getElementById('imp-form-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
+            input.placeholder = '…';
+            input.style.width = '100px';
+            input.style.fontSize = '28px';
+            input.style.textAlign = 'center';
+            zone.dataset.modeTerminaison = '1';
         } else {
-            document.getElementById('imp-form-radical').style.display = 'none';
-            document.getElementById('imp-form-input').placeholder = 'conjugue…';
-            zone.dataset.modeForm = 'entiere';
+            document.getElementById('imp-form-sujet').innerText = sujetAff;
+            input.placeholder = 'conjugue…';
+            input.style.width = '220px';
+            input.style.fontSize = '22px';
+            input.style.textAlign = 'left';
+            zone.dataset.modeTerminaison = '0';
         }
-        document.getElementById('imp-form-input').value = '';
-        document.getElementById('imp-form-input').focus();
         parler(v.infinitif);
+        setTimeout(() => input.focus(), 100);
     }
 }
 
