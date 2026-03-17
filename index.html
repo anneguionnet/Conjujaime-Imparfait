@@ -1631,7 +1631,7 @@ function validerPTForm() {
 
 function prochain() {
     qIndex++;
-    if (qIndex < 8) { essai = 0; p2EssaiCount = 0; ptEssaiCount = 0; majInterface(); }
+    if (qIndex < 8) { essai = 0; p2EssaiCount = 0; ptEssaiCount = 0; impEssaiCount = 0; majInterface(); }
     else finDeSerie();
 }
 
@@ -1725,6 +1725,7 @@ function allerASerie() {
 // ============================================================
 
 let impEssaiCount = 0;
+let impFormLocked = false;
 
 function getRadicalImp(v, sujet) {
     if (sujet === 'nous' && v.radicalNous) return v.radicalNous;
@@ -1924,6 +1925,8 @@ function validerImpForm() {
     const formeComplete = sujetAff + ' ' + radicalNet + bonneTerminaison;
 
     if (reponse === formeCorrecte) {
+        if (impFormLocked) return;
+        impFormLocked = true;
         msg.style.color = '#2ecc71';
         msg.innerText = '✅ Bravo !';
         scoreSerie++;
@@ -1942,6 +1945,7 @@ function validerImpForm() {
             input.disabled = false;
             input.style.display = 'inline-block';
             document.getElementById('btn-valider-impform').style.display = 'inline-block';
+            impFormLocked = false;
             prochain();
         }, 2000);
     } else {
@@ -2940,7 +2944,7 @@ function validerPTForm() {
 
 function prochain() {
     qIndex++;
-    if (qIndex < 8) { essai = 0; p2EssaiCount = 0; ptEssaiCount = 0; majInterface(); }
+    if (qIndex < 8) { essai = 0; p2EssaiCount = 0; ptEssaiCount = 0; impEssaiCount = 0; majInterface(); }
     else finDeSerie();
 }
 
