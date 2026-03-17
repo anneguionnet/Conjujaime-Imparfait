@@ -1791,7 +1791,11 @@ function afficherImparfait(v) {
         zone.dataset.bonne = bonneTerminaison;
 
         document.getElementById('imp-pelotes-infinitif').innerText = v.infinitif;
-        document.getElementById('imp-pelotes-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
+        // Si le radical contient déjà le sujet (pronominal), ne pas doubler
+        const affPelotes = radical.match(/^(nous|vous|me|te|se|m'|t'|s')/) 
+            ? radicalNet + '-' 
+            : sujetAff + ' ' + radicalNet + '-';
+        document.getElementById('imp-pelotes-sujet').innerText = affPelotes;
 
         // Construire les 3 pelotes
         const couleur = getCouleurImp(v);
@@ -1830,7 +1834,10 @@ function afficherImparfait(v) {
 
         if (modeSerie === 'form-terminaison') {
             // Terminaison seulement
-            document.getElementById('imp-form-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
+            const affFormT = radical.match(/^(nous|vous|me|te|se|m'|t'|s')/) 
+                ? radicalNet + '-' 
+                : sujetAff + ' ' + radicalNet + '-';
+            document.getElementById('imp-form-sujet').innerText = affFormT;
             input.placeholder = '…';
             input.style.width = '100px';
             input.style.fontSize = '28px';
@@ -3097,7 +3104,10 @@ function afficherImparfait3(v) {
         document.getElementById('btn-valider-impform').style.display = 'inline-block';
 
         if (cfg.mode === 'form-terminaison') {
-            document.getElementById('imp-form-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
+            const affFormT = radical.match(/^(nous|vous|me|te|se|m'|t'|s')/) 
+                ? radicalNet + '-' 
+                : sujetAff + ' ' + radicalNet + '-';
+            document.getElementById('imp-form-sujet').innerText = affFormT;
             input.placeholder = '…';
             input.style.width = '100px';
             input.style.fontSize = '28px';
