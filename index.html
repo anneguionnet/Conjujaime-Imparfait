@@ -1861,7 +1861,10 @@ function afficherImparfait(v) {
 
 function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v) {
     const msg = document.getElementById('msg-zone');
-    const formeComplete = sujetAff + ' ' + radicalNet + bonneTerminaison;
+    // Si le radical contient déjà le sujet (pronominal nous/vous), ne pas doubler
+    const formeComplete = radical.match(/^(nous |vous |me |te |se |m'|t'|s')/)
+        ? radicalNet + bonneTerminaison
+        : sujetAff + ' ' + radicalNet + bonneTerminaison;
 
     if (termChoisie === bonneTerminaison) {
         msg.style.color = '#2ecc71';
@@ -1922,7 +1925,10 @@ function validerImpForm() {
     const bonneTerminaison = getTerminaisonImp(sujet);
     const formeCorrecte = modeT ? bonneTerminaison : radicalNet + bonneTerminaison;
     const sujetAff = adapterSujet(sujet, radical, v.hAspire);
-    const formeComplete = sujetAff + ' ' + radicalNet + bonneTerminaison;
+    // Si le radical contient déjà le sujet (pronominal nous/vous), ne pas doubler
+    const formeComplete = radical.match(/^(nous |vous |me |te |se |m'|t'|s')/)
+        ? radicalNet + bonneTerminaison
+        : sujetAff + ' ' + radicalNet + bonneTerminaison;
 
     if (reponse === formeCorrecte) {
         if (impFormLocked) return;
@@ -3058,6 +3064,7 @@ document.getElementById('pt-form-input').addEventListener('keypress', e => {
 // ============================================================
 
 function afficherImparfait3(v) {
+    impEssaiCount = 0;
     const cfg = CONFIG['imparfait3'][serie];
     const sujets = ['nous', 'vous', 'ils', 'elles'];
     const sujet = sujets[Math.floor(Math.random() * sujets.length)];
