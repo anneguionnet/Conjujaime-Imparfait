@@ -1861,8 +1861,7 @@ function afficherImparfait(v) {
 
 function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v) {
     const msg = document.getElementById('msg-zone');
-    // Si le radical contient déjà le sujet (pronominal nous/vous), ne pas doubler
-    const formeComplete = radical.match(/^(nous |vous |me |te |se |m'|t'|s')/)
+    const formeComplete = radicalNet.match(/^(nous |vous |me |te |se |m'|t'|s')/)
         ? radicalNet + bonneTerminaison
         : sujetAff + ' ' + radicalNet + bonneTerminaison;
 
@@ -1925,7 +1924,6 @@ function validerImpForm() {
     const bonneTerminaison = getTerminaisonImp(sujet);
     const formeCorrecte = modeT ? bonneTerminaison : radicalNet + bonneTerminaison;
     const sujetAff = adapterSujet(sujet, radical, v.hAspire);
-    // Si le radical contient déjà le sujet (pronominal nous/vous), ne pas doubler
     const formeComplete = radical.match(/^(nous |vous |me |te |se |m'|t'|s')/)
         ? radicalNet + bonneTerminaison
         : sujetAff + ' ' + radicalNet + bonneTerminaison;
