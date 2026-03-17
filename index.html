@@ -58,6 +58,10 @@
         <button class="btn-menu-jeu orange" onclick="lancerJeu('imparfait2')">
             Imparfait altéré
         </button>
+        <p class="menu-encouragement">Peux-tu conjuguer l'imparfait au pluriel ? Juju t'attend !</p>
+        <button class="btn-menu-jeu violet" onclick="lancerJeu('imparfait3')">
+            🟣 Nous, vous, ils/elles
+        </button>
     </div>
 
 </div>
@@ -251,9 +255,14 @@
             💬 <i>Pense à la cédille pour faire le son [s] et au -e d'appui pour faire le son [j] suivi de -a.</i>
         </div>
 
+        <!-- Bulle Retiens imparfait3 -->
+        <div id="bulle-imparfait3" class="bulle-present1" style="display:none;">
+            <b>nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils / elles → -aient</b><br>
+            💬 <i>Attention aux doubles i : nous criions, vous payiez — et à la cédille : nous prononcions !</i>
+        </div>
+
 
     </div>
-
     <!-- Bulle participe présent -->
     <div id="bulle-participe" class="bulle-lecon"
          style="margin-top:15px; display:none;">
@@ -437,7 +446,6 @@ const CONFIG = {
         6: { niv:[2,3,4],   mode:'form',    nb:8, opa:0.5 },
         7: { niv:[3,4],     mode:'form',    nb:8, opa:0.2 },
         8: { niv:[1,2,3,4], mode:'form',    nb:8, opa:0   },
-        9: { niv:[1,2,3,4], mode:'nousVous',nb:8, opa:0.3 },
     },
     imparfait2: {
         1: { niv:[1,2],     mode:'pelotes', nb:8, opa:1   },
@@ -448,7 +456,16 @@ const CONFIG = {
         6: { niv:[2,3,4],   mode:'form',    nb:8, opa:0.5 },
         7: { niv:[3,4],     mode:'form',    nb:8, opa:0.2 },
         8: { niv:[1,2,3,4], mode:'form',    nb:8, opa:0   },
-        9: { niv:[1,2,3,4], mode:'nousVous',nb:8, opa:0.3 },
+    },
+    imparfait3: {
+        1: { niv:[1,2],     mode:'pelotes', nb:8, opa:1,    shuffle:false },
+        2: { niv:[1,2,3],   mode:'pelotes', nb:8, opa:1,    shuffle:false },
+        3: { niv:[2,3],     mode:'pelotes', nb:8, opa:0.5,  shuffle:true  },
+        4: { niv:[2,3,4],   mode:'pelotes', nb:8, opa:0.3,  shuffle:true  },
+        5: { niv:[2,3,4],   mode:'pelotes', nb:8, opa:0.1,  shuffle:true  },
+        6: { niv:[1,2,3],   mode:'form',    nb:8, opa:0.5 },
+        7: { niv:[2,3,4],   mode:'form',    nb:8, opa:0.2 },
+        8: { niv:[1,2,3,4], mode:'form',    nb:8, opa:0   },
     },
     present2: {
         // Séries 1-3 : pelotes, niveaux 1-2, pelotes fixes (pas de shuffle)
@@ -500,6 +517,7 @@ function lancerJeu(type) {
         presentTous: 'Le présent — Tous les groupes',
         imparfait1:  "L'imparfait — régulier",
         imparfait2:  "L'imparfait altéré",
+        imparfait3:  "L'imparfait — nous et vous",
     };
     document.getElementById('titre-jeu').innerText = titres[type] || '';
     chargerSerie();
@@ -585,6 +603,17 @@ function chargerSerie() {
         bulleImp2.style.display = 'none';
     }
 
+    // Bulle Retiens imparfait3
+    const bulleImp3 = document.getElementById('bulle-imparfait3');
+    if (bulleImp3) {
+        if (jeuActuel === 'imparfait3' && cfg.opa > 0) {
+            bulleImp3.style.display = 'block';
+            bulleImp3.style.opacity = cfg.opa;
+        } else {
+            bulleImp3.style.display = 'none';
+        }
+    }
+
     verbesPioches = piocher(cfg);
     majInterface();
 }
@@ -643,6 +672,10 @@ function getLecon() {
                 nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils / elles → -aient</b><br>
                 Son radical peut être altéré pour différentes raisons, parfois phonétiques :<br>
                 <i>Manger : je mangeais &nbsp;|&nbsp; Prononcer : je prononçais &nbsp;|&nbsp; Finir : tu finissais &nbsp;|&nbsp; Croire : je croyais</i>`;
+        case 'imparfait3':
+            return `<strong>Au pluriel, l'imparfait peut réserver des surprises !</strong><br>
+                <b>nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils / elles → -aient</b><br>
+                <i>Nous mangions &nbsp;|&nbsp; Vous prononciez &nbsp;|&nbsp; Ils finissaient &nbsp;|&nbsp; Nous criions</i>`;
     }
 }
 
@@ -651,9 +684,11 @@ function getLecon() {
 // ============================================================
 
 function piocher(cfg) {
-    if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') {
-        const pool = (jeuActuel === 'imparfait1' ? verbesImparfait1 : verbesImparfait2)
-            .filter(v => cfg.niv.includes(v.niveau));
+    if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') {
+        let pool;
+        if (jeuActuel === 'imparfait1') pool = verbesImparfait1;
+        else pool = verbesImparfait2; // imparfait2 et imparfait3 piochent dans verbesImparfait2
+        pool = pool.filter(v => cfg.niv.includes(v.niveau));
         return melangerTableau([...pool]).slice(0, cfg.nb);
     }
 
@@ -700,7 +735,7 @@ function piocher(cfg) {
 
 function majInterface() {
     const v = verbesPioches[qIndex];
-    const nbSeries = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    const nbSeries = 8;
     document.getElementById('info-serie').innerText = `Série ${serie}/${nbSeries} · Q${qIndex + 1}/8`;
     document.getElementById('msg-zone').innerText = '';
     document.getElementById('msg-p1-pelotes').innerText = '';
@@ -727,6 +762,7 @@ function majInterface() {
     else if (jeuActuel === 'present1')    afficherPresent(v);
     else if (jeuActuel === 'present2')    afficherPresent2(v);
     else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
+    else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
 }
 
 // ============================================================
@@ -1605,7 +1641,7 @@ function finDeSerie() {
     document.getElementById('ecran-intermediaire').style.display = 'block';
 
     const passe    = scoreSerie >= 5;
-    const maxSeries = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    const maxSeries = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') ? 8 : 8;
     const derniere = serie >= maxSeries;
 
     const titre = document.getElementById('inter-titre');
@@ -1653,7 +1689,7 @@ function prochaineSerie() {
 }
 
 function rejouerSerie() {
-    const maxS = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    const maxS = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') ? 8 : 8;
     if (serie >= maxS) serie = 1;
     document.getElementById('ecran-intermediaire').style.display = 'none';
     document.getElementById('cartouche-jeu').style.display       = 'block';
@@ -1676,7 +1712,7 @@ function clicJuju() {
 
 function allerASerie() {
     const val = parseInt(document.getElementById('debug-input').value);
-    const maxDbg = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    const maxDbg = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') ? 8 : 8;
     if (val >= 1 && val <= maxDbg) {
         serie = val;
         document.getElementById('debug-panel').style.display = 'none';
@@ -1735,13 +1771,8 @@ function getCouleurImp(v) {
 function afficherImparfait(v) {
     impEssaiCount = 0;
     let sujet;
-    if (serie === 9) {
-        sujet = Math.random() < 0.5 ? 'nous' : 'vous';
-    } else {
-        const avecNV = false; // nous/vous uniquement en série 9 (géré séparément)
-        const sujets = getSujetsImp(v, avecNV);
-        sujet = sujets[Math.floor(Math.random() * sujets.length)];
-    }
+    const sujets = getSujetsImp(v, false);
+    sujet = sujets[Math.floor(Math.random() * sujets.length)];
     const radical = getRadicalImp(v, sujet);
     const sujetAff = adapterSujet(sujet, radical, v.hAspire);
     const radicalNet = radical.replace(/-$/, '');
@@ -1751,11 +1782,6 @@ function afficherImparfait(v) {
     let modeSerie;
     if (serie <= 5) {
         modeSerie = 'pelotes';
-    } else if (serie === 9) {
-        // Série 9 : progression interne selon qIndex
-        if (qIndex <= 2)      modeSerie = 'pelotes';
-        else if (qIndex <= 4) modeSerie = 'form-terminaison';
-        else                  modeSerie = 'form-entiere';
     } else if (serie === 6) {
         modeSerie = 'form-terminaison';
     } else {
@@ -1776,28 +1802,17 @@ function afficherImparfait(v) {
         // Construire les 3 pelotes
         const couleur = getCouleurImp(v);
         let terminaisons;
-        if (serie === 9) {
-            if (sujet === 'nous') terminaisons = ['ions', 'iez', 'ont'];
-            else                  terminaisons = ['iez', 'ions', 'aient'];
-            terminaisons = melangerTableau([...terminaisons]);
-        } else {
-            if (sujet === 'nous')      terminaisons = ['ais', 'ait', 'ions'];
-            else if (sujet === 'vous') terminaisons = ['ais', 'ait', 'iez'];
-            else                       terminaisons = ['ais', 'ait', 'aient'];
-            if (serie >= 3) terminaisons = melangerTableau([...terminaisons]);
-        }
+        if (sujet === 'nous')      terminaisons = ['ais', 'ait', 'ions'];
+        else if (sujet === 'vous') terminaisons = ['ais', 'ait', 'iez'];
+        else                       terminaisons = ['ais', 'ait', 'aient'];
+        if (serie >= 3) terminaisons = melangerTableau([...terminaisons]);
         const pzone = document.getElementById('imp-pelotes-zone');
         pzone.innerHTML = '';
         terminaisons.forEach(term => {
             const btn = document.createElement('button');
             const estBonne = term === bonneTerminaison;
-            if (serie === 9) {
-                btn.className = 'pelote-terminaison ' + (estBonne ? couleur.cls : 'gris');
-                btn.style.background = estBonne ? couleur.hex : '#b0b0b0';
-            } else {
-                btn.className = 'pelote-terminaison ' + couleur.cls;
-                btn.style.background = couleur.hex;
-            }
+            btn.className = 'pelote-terminaison ' + couleur.cls;
+            btn.style.background = couleur.hex;
             btn.innerText = term;
             btn.onclick = () => validerImpPelote(term, bonneTerminaison, sujetAff, radicalNet, v);
             pzone.appendChild(btn);
@@ -1971,9 +1986,11 @@ document.getElementById('pt-form-input').addEventListener('keypress', e => {
 
 function piocher(cfg) {
 
-    if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') {
-        const pool = (jeuActuel === 'imparfait1' ? verbesImparfait1 : verbesImparfait2)
-            .filter(v => cfg.niv.includes(v.niveau));
+    if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') {
+        let pool;
+        if (jeuActuel === 'imparfait1') pool = verbesImparfait1;
+        else pool = verbesImparfait2; // imparfait2 et imparfait3 piochent dans verbesImparfait2
+        pool = pool.filter(v => cfg.niv.includes(v.niveau));
         return melangerTableau([...pool]).slice(0, cfg.nb);
     }
 
@@ -2047,6 +2064,7 @@ function majInterface() {
     else if (jeuActuel === 'present2')    afficherPresent2(v);
     else if (jeuActuel === 'presentTous') afficherPresentTous(v);
     else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
+    else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
 }
 
 // ============================================================
@@ -2927,7 +2945,7 @@ function finDeSerie() {
     document.getElementById('ecran-intermediaire').style.display = 'block';
 
     const passe    = scoreSerie >= 5;
-    const maxSeries = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    const maxSeries = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') ? 8 : 8;
     const derniere = serie >= maxSeries;
 
     const titre = document.getElementById('inter-titre');
@@ -2975,7 +2993,7 @@ function prochaineSerie() {
 }
 
 function rejouerSerie() {
-    const maxS = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    const maxS = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') ? 8 : 8;
     if (serie >= maxS) serie = 1;
     document.getElementById('ecran-intermediaire').style.display = 'none';
     document.getElementById('cartouche-jeu').style.display       = 'block';
@@ -2998,7 +3016,7 @@ function clicJuju() {
 
 function allerASerie() {
     const val = parseInt(document.getElementById('debug-input').value);
-    const maxDbg = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') ? 9 : 8;
+    const maxDbg = (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') ? 8 : 8;
     if (val >= 1 && val <= maxDbg) {
         serie = val;
         document.getElementById('debug-panel').style.display = 'none';
@@ -3026,6 +3044,75 @@ document.getElementById('p2-form-input').addEventListener('keypress', e => {
 document.getElementById('pt-form-input').addEventListener('keypress', e => {
     if (e.key === 'Enter') validerPTForm();
 });
+
+// ============================================================
+// IMPARFAIT3 — nous / vous / ils / elles
+// ============================================================
+
+function afficherImparfait3(v) {
+    const cfg = CONFIG['imparfait3'][serie];
+    const sujets = ['nous', 'vous', 'ils', 'elles'];
+    const sujet = sujets[Math.floor(Math.random() * sujets.length)];
+    const radical = getRadicalImp(v, sujet);
+    const sujetAff = adapterSujet(sujet, radical, v.hAspire);
+    const radicalNet = radical.replace(/-$/, '');
+    const bonneTerminaison = getTerminaisonImp(sujet);
+    const couleur = getCouleurImp(v);
+
+    if (cfg.mode === 'pelotes') {
+        document.getElementById('zone-imparfait-form').style.display = 'none';
+        const zone = document.getElementById('zone-imparfait-pelotes');
+        zone.style.display = 'block';
+        zone.dataset.sujet = sujet;
+        zone.dataset.bonne = bonneTerminaison;
+
+        document.getElementById('imp-pelotes-infinitif').innerText = v.infinitif;
+        document.getElementById('imp-pelotes-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
+
+        // Pelotes : toujours -ions / -iez / -aient
+        let terminaisons = ['ions', 'iez', 'aient'];
+        if (cfg.shuffle) terminaisons = melangerTableau([...terminaisons]);
+
+        const pzone = document.getElementById('imp-pelotes-zone');
+        pzone.innerHTML = '';
+        terminaisons.forEach(term => {
+            const btn = document.createElement('button');
+            btn.className = 'pelote-terminaison ' + couleur.cls;
+            btn.style.background = couleur.hex;
+            btn.innerText = '-' + term;
+            btn.onclick = () => validerImpPelote(term, bonneTerminaison, sujetAff, radicalNet, v);
+            pzone.appendChild(btn);
+        });
+        parler(v.infinitif);
+
+    } else {
+        // Mode form
+        document.getElementById('zone-imparfait-pelotes').style.display = 'none';
+        const zone = document.getElementById('zone-imparfait-form');
+        zone.style.display = 'block';
+        zone.dataset.sujet = sujet;
+        zone.dataset.bonne = radicalNet + bonneTerminaison;
+
+        document.getElementById('imp-form-infinitif').innerText = v.infinitif;
+        document.getElementById('imp-form-sujet').innerText = sujetAff;
+
+        // Séries 6-7 : afficher le radical, série 8 : verbe entier
+        if (serie <= 7) {
+            document.getElementById('imp-form-radical').innerText = radicalNet + '-';
+            document.getElementById('imp-form-radical').style.display = 'inline';
+            document.getElementById('imp-form-input').placeholder = 'terminaison…';
+            zone.dataset.modeForm = 'terminaison';
+        } else {
+            document.getElementById('imp-form-radical').style.display = 'none';
+            document.getElementById('imp-form-input').placeholder = 'conjugue…';
+            zone.dataset.modeForm = 'entiere';
+        }
+        document.getElementById('imp-form-input').value = '';
+        document.getElementById('imp-form-input').focus();
+        parler(v.infinitif);
+    }
+}
+
 </script>
 
 </body>
