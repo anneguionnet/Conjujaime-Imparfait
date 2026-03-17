@@ -257,8 +257,7 @@
 
         <!-- Bulle Retiens imparfait3 -->
         <div id="bulle-imparfait3" class="bulle-present1" style="display:none;">
-            <b>nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils / elles → -aient</b><br>
-            💬 <i>Attention aux doubles i : nous criions, vous payiez — et à la cédille : nous prononcions !</i>
+            💬 <i>Conseil de Juju : garde le radical intact même avec -ii- ou -yi- (nous criions, vous payiez). Pour les verbes en -CER : cédille au singulier et au pluriel (elles prononçaient) mais pas avec -ions/-iez (nous prononcions). Pour les verbes en -GER : conserve le radical avec -ions/-iez (nous mangions), mais laisse le -e pour faire le son "j" dans elles mangeaient.</i>
         </div>
 
 
@@ -1863,15 +1862,16 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
 
     if (termChoisie === bonneTerminaison) {
         msg.style.color = '#2ecc71';
-        msg.innerText = '✅ Bravo !';
+        msg.innerHTML = `✅ <span style="color:#6c3483; font-weight:bold; font-size:1.3em;">${formeComplete}</span>`;
         scoreSerie++;
         scoreTotal++;
         document.getElementById('total-score').innerText = scoreTotal;
-        // Désactiver toutes les pelotes
+        // Désactiver toutes les pelotes et afficher forme complète
         document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
             b.disabled = true;
-            if (b.innerText === bonneTerminaison) b.classList.add('correct');
+            if (b.innerText.replace('-','') === bonneTerminaison) b.classList.add('correct');
         });
+        document.getElementById('imp-pelotes-sujet').innerHTML = `<span style="color:#6c3483; font-weight:bold;">${formeComplete}</span>`;
         parler(formeComplete);
         setTimeout(prochain, 1800);
     } else {
