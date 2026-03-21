@@ -1861,9 +1861,7 @@ function afficherImparfait(v) {
 
 function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v) {
     const msg = document.getElementById('msg-zone');
-    const formeComplete = radicalNet.match(/^(nous nous |vous vous )/)
-        ? radicalNet + bonneTerminaison
-        : sujetAff + ' ' + radicalNet + bonneTerminaison;
+    const formeComplete = sujetAff + ' ' + radicalNet + bonneTerminaison;
 
     if (termChoisie === bonneTerminaison) {
         msg.style.color = '#2ecc71';
@@ -1922,25 +1920,9 @@ function validerImpForm() {
     const radical = getRadicalImp(v, sujet);
     const radicalNet = radical.replace(/-$/, '');
     const bonneTerminaison = getTerminaisonImp(sujet);
-    // En mode form-entiere avec radical contenant le sujet (ex: "nous chang"),
-    // l'élève voit le sujet affiché et tape seulement le reste
-    let formeCorrecte;
-    if (modeT) {
-        formeCorrecte = bonneTerminaison;
-    } else if (radical.match(/^(nous nous |vous vous )/)) {
-        // Pronominal nous/vous : l'élève tape "nous nous changions" complet
-        formeCorrecte = radicalNet + bonneTerminaison;
-    } else if (radical.match(/^(nous |vous )/)) {
-        // Non pronominal avec radical contenant le sujet : enlever "nous " ou "vous "
-        const radSansPronom = radicalNet.replace(/^(nous |vous )/, '');
-        formeCorrecte = radSansPronom + bonneTerminaison;
-    } else {
-        formeCorrecte = radicalNet + bonneTerminaison;
-    }
+    const formeCorrecte = modeT ? bonneTerminaison : radicalNet + bonneTerminaison;
     const sujetAff = adapterSujet(sujet, radical, v.hAspire);
-    const formeComplete = radical.match(/^(nous nous |vous vous )/)
-        ? radicalNet + bonneTerminaison
-        : sujetAff + ' ' + radicalNet + bonneTerminaison;
+    const formeComplete = sujetAff + ' ' + radicalNet + bonneTerminaison;
 
     if (reponse === formeCorrecte) {
         if (impFormLocked) return;
