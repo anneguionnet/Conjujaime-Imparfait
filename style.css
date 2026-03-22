@@ -526,7 +526,9 @@ body {
    PRESENT TOUS LES GROUPES — ajouts
    ============================================================ */
 
-.btn-menu-jeu.violet { background: linear-gradient(135deg, #6c3483 0%, #a569bd 100%); }
+.btn-menu-jeu.violet    { background: linear-gradient(135deg, #6c3483 0%, #a569bd 100%); }
+.btn-menu-jeu.turquoise { background: linear-gradient(135deg, #00b4d8 0%, #0096c7 100%); }
+.btn-menu-jeu.turquoise2{ background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%); }
 
 /* Tableau leçon présent tous groupes */
 .tableau-lecon {

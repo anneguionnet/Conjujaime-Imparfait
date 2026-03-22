@@ -4,6 +4,8 @@
 // verbesFutur1 = réguliers | verbesFutur2 = irréguliers
 // ============================================================
 
+envoyer > enverr 
+
 const verbesFutur1 = [
 {
   infinitif: "abattre",
@@ -517,11 +519,6 @@ const verbesFutur1 = [
   niveau: 2,
 },
 {
-  infinitif: "décacheter",
-  groupe: 1,
-  niveau: 3,
-},
-{
   infinitif: "décider",
   groupe: 1,
   niveau: 1,
@@ -564,11 +561,6 @@ const verbesFutur1 = [
   groupe: 3,
   niveau: 1,
   radicalFut: "défendr",
-},
-{
-  infinitif: "déficeler",
-  groupe: 1,
-  niveau: 3,
 },
 {
   infinitif: "défier",
@@ -824,11 +816,6 @@ const verbesFutur1 = [
 },
 {
   infinitif: "haleter",
-  groupe: 1,
-  niveau: 3,
-},
-{
-  infinitif: "harceler",
   groupe: 1,
   niveau: 3,
 },
@@ -1836,6 +1823,7 @@ const verbesFutur1 = [
   infinitif: "transparaître",
   groupe: 3,
   niveau: 2,
+radicalFut: "transparaîtr",
 },
 {
   infinitif: "tressaillir",
@@ -2154,12 +2142,6 @@ const verbesFutur2 = [
   radicalFut: "enraier",
 },
 {
-  infinitif: "envoyer",
-  groupe: 1,
-  niveau: 1,
-  radicalFut: "envoier",
-},
-{
   infinitif: "essayer",
   groupe: 1,
   niveau: 2,
@@ -2201,7 +2183,7 @@ const verbesFutur2 = [
   infinitif: "festoyer",
   groupe: 1,
   niveau: 3,
-  radicalFut: "festoi",
+  radicalFut: "festoier",
 },
 {
   infinitif: "feuilleter",
@@ -2372,6 +2354,13 @@ const verbesFutur2 = [
   niveau: 4,
   radicalFut: "ressemeller",
   radicalFutAlt: ["ressemèler"],
+},
+{
+  infinitif: "décacheter",
+  groupe: 1,
+  niveau: 3,
+  radicalFut: "décachetter",
+  radicalFutAlt: ["décachèter"],
 },
 {
   infinitif: "succéder",
@@ -2774,5 +2763,24 @@ radicalFutAlt: ["assoir"],
   groupe: 3,
   niveau: 4,
   radicalFut: "recueiller",
+},
+{
+  infinitif: "déficeler",
+  groupe: 1,
+  niveau: 3,
+radicalFut: "déficèler",
+radicalFutAlt: ["déficeller"],
+},
+{
+  infinitif: "harceler",
+  groupe: 1,
+  niveau: 3,
+  radicalFut: "harcèler",
+},
+{
+  infinitif: "envoyer",
+  groupe: 1,
+  niveau: 1,
+  radicalFut: "enverr",
 },
 ];

@@ -55,7 +55,7 @@
         <button class="btn-menu-jeu turquoise" onclick="lancerJeu('futur1')">
             🟡 Futur simple
         </button>
-        <button class="btn-menu-jeu turquoise-fonce" onclick="lancerJeu('futur2')">
+        <button class="btn-menu-jeu turquoise2" onclick="lancerJeu('futur2')">
             🟠 Futur irrégulier
         </button>
     </div>
@@ -75,6 +75,16 @@
     </div>
 
 </div>
+
+    <div class="menu-section">
+        <div class="menu-section-titre">🟡 Le futur</div>
+        <button class="btn-menu-jeu turquoise" onclick="lancerJeu('futur1')">
+            🟡 Futur simple
+        </button>
+        <button class="btn-menu-jeu turquoise2" onclick="lancerJeu('futur2')">
+            🟠 Futur irrégulier
+        </button>
+    </div>
 
 </div>
 
@@ -254,7 +264,7 @@
 
         <!-- Bulle Retiens futur2 -->
         <div id="bulle-futur2" class="bulle-present1" style="display:none;">
-            💬 <i>Retiens : certains verbes ont un radical irrégulier au futur. Il faut les connaître — entraîne-toi !</i>
+            💬 <i>Retiens l'astuce de Juju : pour les verbes irréguliers, Juju est là pour t'aider. Les verbes en <b>-YER</b> perdent le <b>-Y-</b> pour un <b>-i-</b>. Certains prennent un accent grave, d'autres une double consonne, certains ont même plusieurs orthographes comme <b>ouïr</b> : j'ouïerai, tu oiras, elle orra. C'est joli, n'est-ce pas ? Allez, à toi de jouer !</i>
         </div>
 
         <!-- Bulle Retiens imparfait1 -->
@@ -729,8 +739,7 @@ function getLecon() {
         case 'futur2':
             return `<strong>Au futur, on ajoute les terminaisons du verbe <i>avoir</i> :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp;
-                nous → -ons &nbsp;|&nbsp; vous → -ez &nbsp;|&nbsp; ils/elles → -ont</b><br>
-                💬 <i>Astuce de Juju : ces verbes ont un radical irrégulier — entraîne-toi !</i>`;
+                nous → -ons &nbsp;|&nbsp; vous → -ez &nbsp;|&nbsp; ils/elles → -ont</b>`;
         case 'imparfait1':
             return `<strong>L'imparfait est l'un des temps les plus faciles.</strong>
                 Au radical, on ajoute la terminaison :<br>
@@ -755,9 +764,19 @@ function getLecon() {
 
 function piocher(cfg) {
     if (jeuActuel === 'futur1' || jeuActuel === 'futur2') {
-        const pool = (jeuActuel === 'futur1' ? verbesFutur1 : verbesFutur2)
+        let pool = (jeuActuel === 'futur1' ? verbesFutur1 : verbesFutur2)
             .filter(v => cfg.niv.includes(v.niveau));
-        return melangerTableau([...pool]).slice(0, cfg.nb);
+        // Anti-répétition : exclure les verbes récemment piochés
+        const key = jeuActuel;
+        if (!recentlyPicked[key]) recentlyPicked[key] = [];
+        const seuil = Math.min(30, Math.floor(pool.length * 0.6));
+        let filtered = pool.filter(v => !recentlyPicked[key].includes(v.infinitif));
+        if (filtered.length < cfg.nb) filtered = pool; // assouplir si pas assez
+        const picked = melangerTableau([...filtered]).slice(0, cfg.nb);
+        // Mettre à jour l'historique
+        picked.forEach(v => recentlyPicked[key].push(v.infinitif));
+        if (recentlyPicked[key].length > seuil) recentlyPicked[key].splice(0, cfg.nb);
+        return picked;
     }
 
     if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') {
@@ -1803,6 +1822,7 @@ function allerASerie() {
 // ============================================================
 
 let impEssaiCount = 0;
+const recentlyPicked = {};
 let impFormLocked = false;
 
 function getRadicalImp(v, sujet) {
@@ -1874,7 +1894,7 @@ function getCouleurFut(v) {
 }
 
 function getSujetsFut(v) {
-    return v.sujetsPossibles || ['je','tu','il','elle','ils','elles'];
+    return v.sujetsPossibles || ['je','tu','il','elle','nous','vous','ils','elles'];
 }
 
 function afficherFutur(v) {
@@ -2006,10 +2026,12 @@ function validerFutForm() {
     const radical = getRadicalFut(v, sujet);
     const bonneTerminaison = getTerminaisonFut(sujet);
     const formeCorrecte = modeT ? bonneTerminaison : radical + bonneTerminaison;
+    // Formes alternatives acceptées (radicalFutAlt)
+    const formesAlt = (v.radicalFutAlt || []).map(r => modeT ? bonneTerminaison : r + bonneTerminaison);
     const sujetAff = adapterSujet(sujet, radical, v.hAspire);
     const formeComplete = sujetAff + ' ' + radical + bonneTerminaison;
 
-    if (reponse === formeCorrecte) {
+    if (reponse === formeCorrecte || formesAlt.includes(reponse)) {
         if (futFormLocked) return;
         futFormLocked = true;
         msg.style.color = '#2ecc71';
@@ -2281,9 +2303,19 @@ document.getElementById('pt-form-input').addEventListener('keypress', e => {
 function piocher(cfg) {
 
     if (jeuActuel === 'futur1' || jeuActuel === 'futur2') {
-        const pool = (jeuActuel === 'futur1' ? verbesFutur1 : verbesFutur2)
+        let pool = (jeuActuel === 'futur1' ? verbesFutur1 : verbesFutur2)
             .filter(v => cfg.niv.includes(v.niveau));
-        return melangerTableau([...pool]).slice(0, cfg.nb);
+        // Anti-répétition : exclure les verbes récemment piochés
+        const key = jeuActuel;
+        if (!recentlyPicked[key]) recentlyPicked[key] = [];
+        const seuil = Math.min(30, Math.floor(pool.length * 0.6));
+        let filtered = pool.filter(v => !recentlyPicked[key].includes(v.infinitif));
+        if (filtered.length < cfg.nb) filtered = pool; // assouplir si pas assez
+        const picked = melangerTableau([...filtered]).slice(0, cfg.nb);
+        // Mettre à jour l'historique
+        picked.forEach(v => recentlyPicked[key].push(v.infinitif));
+        if (recentlyPicked[key].length > seuil) recentlyPicked[key].splice(0, cfg.nb);
+        return picked;
     }
 
     if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') {
