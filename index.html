@@ -51,16 +51,6 @@
 
 
     <div class="menu-section">
-        <div class="menu-section-titre">🟡 Le futur</div>
-        <button class="btn-menu-jeu turquoise" onclick="lancerJeu('futur1')">
-            🟡 Futur simple
-        </button>
-        <button class="btn-menu-jeu turquoise2" onclick="lancerJeu('futur2')">
-            🟠 Futur irrégulier
-        </button>
-    </div>
-
-    <div class="menu-section">
         <div class="menu-section-titre">🔵 L'imparfait</div>
         <button class="btn-menu-jeu vert" onclick="lancerJeu('imparfait1')">
             Imparfait régulier
@@ -73,8 +63,6 @@
             🟣 L'imparfait au pluriel
         </button>
     </div>
-
-</div>
 
     <div class="menu-section">
         <div class="menu-section-titre">🟡 Le futur</div>
@@ -766,14 +754,12 @@ function piocher(cfg) {
     if (jeuActuel === 'futur1' || jeuActuel === 'futur2') {
         let pool = (jeuActuel === 'futur1' ? verbesFutur1 : verbesFutur2)
             .filter(v => cfg.niv.includes(v.niveau));
-        // Anti-répétition : exclure les verbes récemment piochés
         const key = jeuActuel;
         if (!recentlyPicked[key]) recentlyPicked[key] = [];
         const seuil = Math.min(30, Math.floor(pool.length * 0.6));
         let filtered = pool.filter(v => !recentlyPicked[key].includes(v.infinitif));
-        if (filtered.length < cfg.nb) filtered = pool; // assouplir si pas assez
+        if (filtered.length < cfg.nb) { filtered = pool; recentlyPicked[key] = []; }
         const picked = melangerTableau([...filtered]).slice(0, cfg.nb);
-        // Mettre à jour l'historique
         picked.forEach(v => recentlyPicked[key].push(v.infinitif));
         if (recentlyPicked[key].length > seuil) recentlyPicked[key].splice(0, cfg.nb);
         return picked;
@@ -1822,7 +1808,6 @@ function allerASerie() {
 // ============================================================
 
 let impEssaiCount = 0;
-const recentlyPicked = {};
 let impFormLocked = false;
 
 function getRadicalImp(v, sujet) {
@@ -2026,7 +2011,6 @@ function validerFutForm() {
     const radical = getRadicalFut(v, sujet);
     const bonneTerminaison = getTerminaisonFut(sujet);
     const formeCorrecte = modeT ? bonneTerminaison : radical + bonneTerminaison;
-    // Formes alternatives acceptées (radicalFutAlt)
     const formesAlt = (v.radicalFutAlt || []).map(r => modeT ? bonneTerminaison : r + bonneTerminaison);
     const sujetAff = adapterSujet(sujet, radical, v.hAspire);
     const formeComplete = sujetAff + ' ' + radical + bonneTerminaison;
@@ -2305,14 +2289,12 @@ function piocher(cfg) {
     if (jeuActuel === 'futur1' || jeuActuel === 'futur2') {
         let pool = (jeuActuel === 'futur1' ? verbesFutur1 : verbesFutur2)
             .filter(v => cfg.niv.includes(v.niveau));
-        // Anti-répétition : exclure les verbes récemment piochés
         const key = jeuActuel;
         if (!recentlyPicked[key]) recentlyPicked[key] = [];
         const seuil = Math.min(30, Math.floor(pool.length * 0.6));
         let filtered = pool.filter(v => !recentlyPicked[key].includes(v.infinitif));
-        if (filtered.length < cfg.nb) filtered = pool; // assouplir si pas assez
+        if (filtered.length < cfg.nb) { filtered = pool; recentlyPicked[key] = []; }
         const picked = melangerTableau([...filtered]).slice(0, cfg.nb);
-        // Mettre à jour l'historique
         picked.forEach(v => recentlyPicked[key].push(v.infinitif));
         if (recentlyPicked[key].length > seuil) recentlyPicked[key].splice(0, cfg.nb);
         return picked;
