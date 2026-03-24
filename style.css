@@ -527,8 +527,9 @@ body {
    ============================================================ */
 
 .btn-menu-jeu.violet    { background: linear-gradient(135deg, #6c3483 0%, #a569bd 100%); }
-.btn-menu-jeu.turquoise { background: linear-gradient(135deg, #00b4d8 0%, #0096c7 100%); }
-.btn-menu-jeu.turquoise2{ background: linear-gradient(135deg, #0077b6 0%, #023e8a 100%); }
+.btn-menu-jeu.turquoise { background: linear-gradient(135deg, #8DDCDC 0%, #6BCECE 100%); }
+.btn-menu-jeu.turquoise2{ background: linear-gradient(135deg, #5BBEBE 0%, #3DA0A0 100%); }
+.btn-menu-jeu.vert-bleu { background: linear-gradient(135deg, #2E9090 0%, #1A7070 100%); }
 
 /* Tableau leçon présent tous groupes */
 .tableau-lecon {
