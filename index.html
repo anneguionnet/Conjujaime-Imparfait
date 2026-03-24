@@ -836,12 +836,15 @@ function majInterface() {
     document.getElementById('verbe-txt').innerText = '';
     p2EssaiCount = 0;
     ptEssaiCount = 0;
+    impEssaiCount = 0;
+    futEssaiCount = 0;
 
     if      (jeuActuel === 'infinitif')   afficherInfinitif(v);
     else if (jeuActuel === 'conjugue')    afficherConjugue(v);
     else if (jeuActuel === 'participe')   afficherParticipe(v);
     else if (jeuActuel === 'present1')    afficherPresent(v);
     else if (jeuActuel === 'present2')    afficherPresent2(v);
+    else if (jeuActuel === 'presentTous') afficherPresentTous(v);
     else if (jeuActuel === 'futur1' || jeuActuel === 'futur2') afficherFutur(v);
     else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
     else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
