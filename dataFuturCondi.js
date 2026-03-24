@@ -4,7 +4,6 @@
 // verbesFutur1 = réguliers | verbesFutur2 = irréguliers
 // ============================================================
 
-envoyer > enverr 
 
 const verbesFutur1 = [
 {
