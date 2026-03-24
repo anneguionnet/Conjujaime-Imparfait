@@ -72,6 +72,10 @@
         <button class="btn-menu-jeu turquoise2" onclick="lancerJeu('futur2')">
             🟠 Futur irrégulier
         </button>
+        <p class="menu-encouragement">Maintenant que tu es un as du futur, lance-toi dans le conditionnel !</p>
+        <button class="btn-menu-jeu vert-bleu" onclick="lancerJeu('conditionnel')">
+            🟢 Le conditionnel
+        </button>
     </div>
 
 </div>
@@ -244,6 +248,11 @@
         </div>
 
         <div class="msg-zone" id="msg-zone"></div>
+
+        <!-- Bulle Retiens conditionnel -->
+        <div id="bulle-conditionnel" class="bulle-present1" style="display:none;">
+            💬 <i>Retiens : le radical du conditionnel est le même que celui du futur. Seules les terminaisons changent !</i>
+        </div>
 
         <!-- Bulle Retiens futur1 -->
         <div id="bulle-futur1" class="bulle-present1" style="display:none;">
@@ -495,6 +504,16 @@ const CONFIG = {
         7: { niv:[3,4],     mode:'form-entiere',     nb:8, opa:0.1  },
         8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
+    conditionnel: {
+        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:false },
+        2: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
+        3: { niv:[2,3],     mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
+        4: { niv:[1,2],     mode:'form-terminaison', nb:8, opa:0.75 },
+        5: { niv:[1,2],     mode:'form-entiere',     nb:8, opa:0.5  },
+        6: { niv:[2,3],     mode:'form-entiere',     nb:8, opa:0.25 },
+        7: { niv:[3,4],     mode:'form-entiere',     nb:8, opa:0.1  },
+        8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
+    },
     futur2: {
         1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:false },
         2: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
@@ -550,6 +569,7 @@ function lancerJeu(type) {
         infinitif: 'Les trois groupes',
         conjugue:  "L'infinitif conjugué",
         participe: 'Le participe présent',
+        conditionnel: 'Le conditionnel présent',
         futur1:    'Le futur simple',
         futur2:    'Le futur des verbes irréguliers',
         present1:  'Le présent - 1er groupe',
@@ -565,6 +585,7 @@ function lancerJeu(type) {
 
 function retourMenu() {
     recentTermsFut.length = 0;
+    if (recentlyPicked['conditionnel']) recentlyPicked['conditionnel'] = [];
     document.getElementById('page-jeu').classList.remove('active');
     document.getElementById('page-menu').classList.add('active');
     window.speechSynthesis.cancel();
@@ -624,6 +645,15 @@ function chargerSerie() {
         bulleEx.style.opacity = cfg.opa;
     } else {
         bulleEx.style.display = 'none';
+    }
+
+    // Bulle Retiens conditionnel
+    const bulleCond = document.getElementById('bulle-conditionnel');
+    if (bulleCond) {
+        if (jeuActuel === 'conditionnel' && cfg.opa > 0) {
+            bulleCond.style.display = 'block';
+            bulleCond.style.opacity = cfg.opa;
+        } else { bulleCond.style.display = 'none'; }
     }
 
     // Bulle Retiens futur1
@@ -720,6 +750,11 @@ function getLecon() {
                 <b>ils / elles</b> → <b>-ent</b><br>
                 ⚠️ Verbes du <span style="color:#ff9f7f;">2<sup>e</sup> groupe</span> en <b>-ISSENT</b> au pluriel<br>
                 ⚠️ Verbes en <b>-DRE</b> conservent le <b>-d</b> · Verbes en <b>-TRE</b> conservent le <b>-t</b>`;
+        case 'conditionnel':
+            return `<strong>Le conditionnel se construit comme le futur, mais avec les terminaisons de l'imparfait :</strong><br>
+                <b>je/tu → -ais &nbsp;|&nbsp; il/elle/on → -ait &nbsp;|&nbsp;
+                nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils/elles → -aient</b><br>
+                💬 <i>Astuce de Juju : si tu connais le futur et l'imparfait, le conditionnel n'a plus de secret pour toi !</i>`;
         case 'futur1':
             return `<strong>Au futur, on ajoute les terminaisons du verbe <i>avoir</i> à l'infinitif :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp;
@@ -752,9 +787,12 @@ function getLecon() {
 // ============================================================
 
 function piocher(cfg) {
-    if (jeuActuel === 'futur1' || jeuActuel === 'futur2') {
-        let pool = (jeuActuel === 'futur1' ? verbesFutur1 : verbesFutur2)
-            .filter(v => cfg.niv.includes(v.niveau));
+    if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') {
+        let pool;
+        if (jeuActuel === 'futur1') pool = verbesFutur1;
+        else if (jeuActuel === 'futur2') pool = verbesFutur2;
+        else pool = [...verbesFutur1, ...verbesFutur2];
+        pool = pool.filter(v => cfg.niv.includes(v.niveau));
         const key = jeuActuel;
         if (!recentlyPicked[key]) recentlyPicked[key] = [];
         const seuil = Math.min(30, Math.floor(pool.length * 0.6));
@@ -846,7 +884,7 @@ function majInterface() {
     else if (jeuActuel === 'present1')    afficherPresent(v);
     else if (jeuActuel === 'present2')    afficherPresent2(v);
     else if (jeuActuel === 'presentTous') afficherPresentTous(v);
-    else if (jeuActuel === 'futur1' || jeuActuel === 'futur2') afficherFutur(v);
+    else if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') afficherFutur(v);
     else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
     else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
 }
@@ -1868,6 +1906,14 @@ function getRadicalFut(v, sujet) {
     return rad;
 }
 
+function getTerminaisonCond(sujet) {
+    if (sujet === 'je' || sujet === 'tu')                    return 'ais';
+    if (['il','elle','on'].includes(sujet))                   return 'ait';
+    if (sujet === 'nous')                                     return 'ions';
+    if (sujet === 'vous')                                     return 'iez';
+    return 'aient'; // ils/elles
+}
+
 function getTerminaisonFut(sujet) {
     if (sujet === 'je')  return 'ai';
     if (sujet === 'tu')  return 'as';
@@ -1919,7 +1965,9 @@ function afficherFutur(v) {
     const sujet = getSujetFutSansRepetition(v);
     const radical = getRadicalFut(v, sujet);
     const sujetAff = adapterSujet(sujet, radical, v.hAspire);
-    const bonneTerminaison = getTerminaisonFut(sujet);
+    const bonneTerminaison = (jeuActuel === 'conditionnel')
+        ? getTerminaisonCond(sujet)
+        : getTerminaisonFut(sujet);
     const couleur = getCouleurFut(v);
 
     if (cfg.mode === 'pelotes') {
@@ -1932,14 +1980,24 @@ function afficherFutur(v) {
         document.getElementById('imp-pelotes-infinitif').innerText = v.infinitif;
         document.getElementById('imp-pelotes-sujet').innerText = sujetAff + ' ' + radical + '-';
 
-        // Pelotes spécifiques par sujet (pièges phonétiques)
+        // Pelotes spécifiques par sujet
         let terminaisons;
-        if      (sujet === 'je')                              terminaisons = ['ai', 'a', 'ez'];
-        else if (sujet === 'tu')                              terminaisons = ['as', 'ai', 'a'];
-        else if (['il','elle','on'].includes(sujet))          terminaisons = ['a', 'ai', 'as'];
-        else if (sujet === 'nous')                            terminaisons = ['ons', 'ez', 'ont'];
-        else if (sujet === 'vous')                            terminaisons = ['ez', 'ont', 'ai'];
-        else                                                  terminaisons = ['ont', 'ons', 'ez'];
+        if (jeuActuel === 'conditionnel') {
+            // Pelotes conditionnel
+            if      (sujet === 'je' || sujet === 'tu')        terminaisons = ['ais', 'ait', 'aient'];
+            else if (['il','elle','on'].includes(sujet))       terminaisons = ['ait', 'ais', 'aient'];
+            else if (sujet === 'nous')                         terminaisons = ['ions', 'iez', 'aient'];
+            else if (sujet === 'vous')                         terminaisons = ['iez', 'ions', 'aient'];
+            else                                               terminaisons = ['aient', 'ions', 'iez'];
+        } else {
+            // Pelotes futur (pièges phonétiques)
+            if      (sujet === 'je')                           terminaisons = ['ai', 'a', 'ez'];
+            else if (sujet === 'tu')                           terminaisons = ['as', 'ai', 'a'];
+            else if (['il','elle','on'].includes(sujet))       terminaisons = ['a', 'ai', 'as'];
+            else if (sujet === 'nous')                         terminaisons = ['ons', 'ez', 'ont'];
+            else if (sujet === 'vous')                         terminaisons = ['ez', 'ont', 'ai'];
+            else                                               terminaisons = ['ont', 'ons', 'ez'];
+        }
         if (cfg.shuffle) terminaisons = melangerTableau([...terminaisons]);
 
         const pzone = document.getElementById('imp-pelotes-zone');
@@ -2039,7 +2097,9 @@ function validerFutForm() {
     const msg    = document.getElementById('msg-zone');
 
     const radical = getRadicalFut(v, sujet);
-    const bonneTerminaison = getTerminaisonFut(sujet);
+    const bonneTerminaison = (jeuActuel === 'conditionnel')
+        ? getTerminaisonCond(sujet)
+        : getTerminaisonFut(sujet);
     const formeCorrecte = modeT ? bonneTerminaison : radical + bonneTerminaison;
     const formesAlt = (v.radicalFutAlt || []).map(r => modeT ? bonneTerminaison : r + bonneTerminaison);
     const sujetAff = adapterSujet(sujet, radical, v.hAspire);
@@ -2316,9 +2376,12 @@ document.getElementById('pt-form-input').addEventListener('keypress', e => {
 
 function piocher(cfg) {
 
-    if (jeuActuel === 'futur1' || jeuActuel === 'futur2') {
-        let pool = (jeuActuel === 'futur1' ? verbesFutur1 : verbesFutur2)
-            .filter(v => cfg.niv.includes(v.niveau));
+    if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') {
+        let pool;
+        if (jeuActuel === 'futur1') pool = verbesFutur1;
+        else if (jeuActuel === 'futur2') pool = verbesFutur2;
+        else pool = [...verbesFutur1, ...verbesFutur2];
+        pool = pool.filter(v => cfg.niv.includes(v.niveau));
         const key = jeuActuel;
         if (!recentlyPicked[key]) recentlyPicked[key] = [];
         const seuil = Math.min(30, Math.floor(pool.length * 0.6));
@@ -2407,7 +2470,7 @@ function majInterface() {
     else if (jeuActuel === 'present1')    afficherPresent(v);
     else if (jeuActuel === 'present2')    afficherPresent2(v);
     else if (jeuActuel === 'presentTous') afficherPresentTous(v);
-    else if (jeuActuel === 'futur1' || jeuActuel === 'futur2') afficherFutur(v);
+    else if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') afficherFutur(v);
     else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
     else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
 }
