@@ -1975,7 +1975,7 @@ const verbesFutur2 = [
   groupe: 1,
   niveau: 2,
   radicalFut: "accèder",
-radicalFutAlt: "accéder",
+radicalFutAlt: ["accéder"],
 },
 {
   infinitif: "acheter",
