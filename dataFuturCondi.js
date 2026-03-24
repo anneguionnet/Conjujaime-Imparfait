@@ -269,7 +269,7 @@ const verbesFutur1 = [
   niveau: 3,
 },
 {
-  infinitif: "coincider",
+  infinitif: "coïncider",
   groupe: 1,
   niveau: 2,
 },
@@ -583,11 +583,6 @@ const verbesFutur1 = [
 },
 {
   infinitif: "déléguer",
-  groupe: 1,
-  niveau: 3,
-},
-{
-  infinitif: "démanteler",
   groupe: 1,
   niveau: 3,
 },
@@ -1132,6 +1127,12 @@ const verbesFutur1 = [
   groupe: 3,
   niveau: 2,
   radicalFut: "pendr",
+},
+{
+  infinitif: "démanteler",
+  groupe: 1,
+  niveau: 3,
+radicalFut: "démantèler",
 },
 {
   infinitif: "perdre",
@@ -1974,6 +1975,7 @@ const verbesFutur2 = [
   groupe: 1,
   niveau: 2,
   radicalFut: "accèder",
+radicalFutAlt: "accéder",
 },
 {
   infinitif: "acheter",
@@ -2366,7 +2368,7 @@ const verbesFutur2 = [
   groupe: 1,
   niveau: 3,
   radicalFut: "succèder",
-  radicalFutAlt: ["succèder"],
+  radicalFutAlt: ["succéder"],
 },
 {
   infinitif: "surpayer",
