@@ -564,6 +564,7 @@ function lancerJeu(type) {
 }
 
 function retourMenu() {
+    recentTermsFut.length = 0;
     document.getElementById('page-jeu').classList.remove('active');
     document.getElementById('page-menu').classList.add('active');
     window.speechSynthesis.cancel();
@@ -1886,11 +1887,36 @@ function getSujetsFut(v) {
     return v.sujetsPossibles || ['je','tu','il','elle','nous','vous','ils','elles'];
 }
 
+// Historique des terminaisons récentes pour éviter les répétitions
+const recentTermsFut = [];
+const MAX_RECENT_TERMS = 4;
+
+function getSujetFutSansRepetition(v) {
+    const sujets = getSujetsFut(v);
+    // Grouper par terminaison
+    const terminaisonsParSujet = {
+        'je': 'ai', 'tu': 'as', 'il': 'a', 'elle': 'a', 'on': 'a',
+        'nous': 'ons', 'vous': 'ez', 'ils': 'ont', 'elles': 'ont'
+    };
+    // Filtrer les sujets dont la terminaison n'a pas été vue récemment
+    const sujetsDispos = sujets.filter(s => {
+        const term = terminaisonsParSujet[s] || '';
+        return !recentTermsFut.includes(term);
+    });
+    // Si tous exclus, on repart de zéro
+    const pool = sujetsDispos.length > 0 ? sujetsDispos : sujets;
+    const sujet = pool[Math.floor(Math.random() * pool.length)];
+    // Mémoriser la terminaison
+    const term = terminaisonsParSujet[sujet] || '';
+    recentTermsFut.push(term);
+    if (recentTermsFut.length > MAX_RECENT_TERMS) recentTermsFut.shift();
+    return sujet;
+}
+
 function afficherFutur(v) {
     futEssaiCount = 0;
     const cfg = getConfig();
-    const sujets = getSujetsFut(v);
-    const sujet = sujets[Math.floor(Math.random() * sujets.length)];
+    const sujet = getSujetFutSansRepetition(v);
     const radical = getRadicalFut(v, sujet);
     const sujetAff = adapterSujet(sujet, radical, v.hAspire);
     const bonneTerminaison = getTerminaisonFut(sujet);
@@ -1906,14 +1932,14 @@ function afficherFutur(v) {
         document.getElementById('imp-pelotes-infinitif').innerText = v.infinitif;
         document.getElementById('imp-pelotes-sujet').innerText = sujetAff + ' ' + radical + '-';
 
-        // Pelotes : singulier ou pluriel
+        // Pelotes spécifiques par sujet (pièges phonétiques)
         let terminaisons;
-        const estPluriel = ['nous','vous','ils','elles'].includes(sujet);
-        if (estPluriel) {
-            terminaisons = ['ons', 'ez', 'ont'];
-        } else {
-            terminaisons = ['ai', 'as', 'a'];
-        }
+        if      (sujet === 'je')                              terminaisons = ['ai', 'a', 'ez'];
+        else if (sujet === 'tu')                              terminaisons = ['as', 'ai', 'a'];
+        else if (['il','elle','on'].includes(sujet))          terminaisons = ['a', 'ai', 'as'];
+        else if (sujet === 'nous')                            terminaisons = ['ons', 'ez', 'ont'];
+        else if (sujet === 'vous')                            terminaisons = ['ez', 'ont', 'ai'];
+        else                                                  terminaisons = ['ont', 'ons', 'ez'];
         if (cfg.shuffle) terminaisons = melangerTableau([...terminaisons]);
 
         const pzone = document.getElementById('imp-pelotes-zone');
