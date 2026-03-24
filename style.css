@@ -119,9 +119,16 @@ body {
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
-.btn-menu-jeu.mauve   { background: linear-gradient(135deg, var(--mauve) 0%, #9b59b6 100%); }
-.btn-menu-jeu.vert    { background: linear-gradient(135deg, var(--vert-gr1) 0%, var(--vert-gr1-f) 100%); }
-.btn-menu-jeu.orange  { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); }
+.btn-menu-jeu.mauve   { background: linear-gradient(135deg, #724a91 0%, #9b59b6 100%); } /* Infinitif — violet */
+.btn-menu-jeu.bleu    { background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); } /* Présent 1 — bleu clair */
+.btn-menu-jeu.bleu2   { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); } /* Présent 2 — bleu */
+.btn-menu-jeu.bleu3   { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%); } /* Présent 3 — bleu foncé */
+.btn-menu-jeu.vert    { background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%); } /* Imparfait 1 — vert clair */
+.btn-menu-jeu.vert2   { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); } /* Imparfait 2 — vert */
+.btn-menu-jeu.vert3   { background: linear-gradient(135deg, #15803d 0%, #166534 100%); } /* Imparfait 3 — vert foncé */
+.btn-menu-jeu.jaune   { background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%); } /* Passé simple — jaune */
+.btn-menu-jeu.orange  { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); } /* Subjonctif — orangé */
+.btn-menu-jeu.rose    { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); } /* Accents — rose */
 .btn-menu-jeu.desactive {
     background: linear-gradient(135deg, #bdc3c7 0%, #95a5a6 100%);
     cursor: not-allowed;
