@@ -2032,6 +2032,8 @@ function afficherFutur(v) {
             input.style.fontSize = '28px';
             input.style.textAlign = 'center';
             zone.dataset.modeTerminaison = '1';
+            zone.dataset.radical = radical;
+            zone.dataset.sujetAff = sujetAff;
         } else {
             document.getElementById('imp-form-sujet').innerText = sujetAff;
             input.placeholder = 'conjugue…';
@@ -2039,6 +2041,8 @@ function afficherFutur(v) {
             input.style.fontSize = '22px';
             input.style.textAlign = 'left';
             zone.dataset.modeTerminaison = '0';
+            zone.dataset.radical = radical;
+            zone.dataset.sujetAff = sujetAff;
         }
         parler(v.infinitif);
         setTimeout(() => input.focus(), 100);
@@ -2096,13 +2100,13 @@ function validerFutForm() {
     const reponse = input.value.trim().toLowerCase();
     const msg    = document.getElementById('msg-zone');
 
-    const radical = getRadicalFut(v, sujet);
+    const radical = zone.dataset.radical || getRadicalFut(v, sujet);
+    const sujetAff = zone.dataset.sujetAff || adapterSujet(sujet, radical, v.hAspire);
     const bonneTerminaison = (jeuActuel === 'conditionnel')
         ? getTerminaisonCond(sujet)
         : getTerminaisonFut(sujet);
     const formeCorrecte = modeT ? bonneTerminaison : radical + bonneTerminaison;
     const formesAlt = (v.radicalFutAlt || []).map(r => modeT ? bonneTerminaison : r + bonneTerminaison);
-    const sujetAff = adapterSujet(sujet, radical, v.hAspire);
     const formeComplete = sujetAff + ' ' + radical + bonneTerminaison;
 
     if (reponse === formeCorrecte || formesAlt.includes(reponse)) {
