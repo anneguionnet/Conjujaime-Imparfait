@@ -244,7 +244,7 @@
                        autocomplete="off" autocorrect="off" spellcheck="false">
             </div>
             <button class="btn-valider" id="btn-valider-impform"
-                    onclick="jeuActuel.startsWith('futur') ? validerFutForm() : validerImpForm()" style="margin-top:15px;">OK</button>
+                    onclick="jeuActuel.startsWith('futur') || jeuActuel === 'conditionnel' ? validerFutForm() : validerImpForm()" style="margin-top:15px;">OK</button>
         </div>
 
         <div class="msg-zone" id="msg-zone"></div>
@@ -2354,7 +2354,7 @@ function validerImpForm() {
 
 document.getElementById('imp-form-input').addEventListener('keypress', e => {
     if (e.key === 'Enter') {
-        if (jeuActuel === 'futur1' || jeuActuel === 'futur2') validerFutForm();
+        if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') validerFutForm();
         else validerImpForm();
     }
 });
