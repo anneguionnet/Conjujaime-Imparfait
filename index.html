@@ -38,13 +38,13 @@
     <!-- PRÉSENT -->
     <div class="menu-section">
         <div class="menu-section-titre">🟢 Le présent</div>
-        <button class="btn-menu-jeu bleu" onclick="lancerJeu('present1')">
+        <button class="btn-menu-jeu vert" onclick="lancerJeu('present1')">
             🟢 1er groupe
         </button>
-        <button class="btn-menu-jeu bleu2" onclick="lancerJeu('present2')">
+        <button class="btn-menu-jeu orange" onclick="lancerJeu('present2')">
             🟠 2e et 3e groupe
         </button>
-        <button class="btn-menu-jeu bleu3" onclick="lancerJeu('presentTous')">
+        <button class="btn-menu-jeu violet" onclick="lancerJeu('presentTous')">
             🟣 Tous les groupes
         </button>
     </div>
@@ -55,11 +55,11 @@
         <button class="btn-menu-jeu vert" onclick="lancerJeu('imparfait1')">
             Imparfait régulier
         </button>
-        <button class="btn-menu-jeu vert2" onclick="lancerJeu('imparfait2')">
+        <button class="btn-menu-jeu orange" onclick="lancerJeu('imparfait2')">
             Imparfait altéré
         </button>
         <p class="menu-encouragement">Peux-tu conjuguer l'imparfait au pluriel ? Juju t'attend !</p>
-        <button class="btn-menu-jeu vert3" onclick="lancerJeu('imparfait3')">
+        <button class="btn-menu-jeu violet" onclick="lancerJeu('imparfait3')">
             🟣 L'imparfait au pluriel
         </button>
     </div>
@@ -2016,7 +2016,9 @@ function afficherFutur(v) {
         document.getElementById('zone-imparfait-pelotes').style.display = 'none';
         const zone = document.getElementById('zone-imparfait-form');
         zone.style.display = 'block';
-        zone.dataset.sujet = sujet;
+        zone.dataset.sujet    = sujet;
+        zone.dataset.radical  = radical;
+        zone.dataset.sujetAff = sujetAff;
 
         document.getElementById('imp-form-infinitif').innerText = v.infinitif;
 
@@ -2032,8 +2034,6 @@ function afficherFutur(v) {
             input.style.fontSize = '28px';
             input.style.textAlign = 'center';
             zone.dataset.modeTerminaison = '1';
-            zone.dataset.radical = radical;
-            zone.dataset.sujetAff = sujetAff;
         } else {
             document.getElementById('imp-form-sujet').innerText = sujetAff;
             input.placeholder = 'conjugue…';
@@ -2041,8 +2041,6 @@ function afficherFutur(v) {
             input.style.fontSize = '22px';
             input.style.textAlign = 'left';
             zone.dataset.modeTerminaison = '0';
-            zone.dataset.radical = radical;
-            zone.dataset.sujetAff = sujetAff;
         }
         parler(v.infinitif);
         setTimeout(() => input.focus(), 100);
@@ -2100,13 +2098,13 @@ function validerFutForm() {
     const reponse = input.value.trim().toLowerCase();
     const msg    = document.getElementById('msg-zone');
 
-    const radical = zone.dataset.radical || getRadicalFut(v, sujet);
-    const sujetAff = zone.dataset.sujetAff || adapterSujet(sujet, radical, v.hAspire);
+    const radical    = zone.dataset.radical  || getRadicalFut(v, sujet);
+    const sujetAff   = zone.dataset.sujetAff || adapterSujet(sujet, radical, v ? v.hAspire : false);
     const bonneTerminaison = (jeuActuel === 'conditionnel')
         ? getTerminaisonCond(sujet)
         : getTerminaisonFut(sujet);
     const formeCorrecte = modeT ? bonneTerminaison : radical + bonneTerminaison;
-    const formesAlt = (v.radicalFutAlt || []).map(r => modeT ? bonneTerminaison : r + bonneTerminaison);
+    const formesAlt = (v ? v.radicalFutAlt || [] : []).map(r => modeT ? bonneTerminaison : r + bonneTerminaison);
     const formeComplete = sujetAff + ' ' + radical + bonneTerminaison;
 
     if (reponse === formeCorrecte || formesAlt.includes(reponse)) {
