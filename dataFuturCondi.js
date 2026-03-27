@@ -916,11 +916,6 @@ const verbesFutur1 = [
   radicalFut: "luir",
 },
 {
-  infinitif: "maintenir",
-  groupe: 3,
-  niveau: 2,
-},
-{
   infinitif: "manier",
   groupe: 1,
   niveau: 2,
@@ -2428,6 +2423,12 @@ radicalFutAlt: ["ficeller"],
   groupe: 3,
   niveau: 1,
   radicalFut: "tiendr",
+},
+{
+  infinitif: "maintenir",
+  groupe: 3,
+  niveau: 2,
+radicalFut: "maintiendr",
 },
 {
   infinitif: "survenir",
