@@ -470,11 +470,6 @@ const verbesFutur1 = [
   radicalFut: "dir",
 },
 {
-  infinitif: "discourir",
-  groupe: 3,
-  niveau: 3,
-},
-{
   infinitif: "disparaître",
   groupe: 3,
   niveau: 3,
@@ -671,11 +666,6 @@ const verbesFutur1 = [
   infinitif: "emplir",
   groupe: 2,
   niveau: 2,
-},
-{
-  infinitif: "encourir",
-  groupe: 3,
-  niveau: 3,
 },
 {
   infinitif: "enduire",
@@ -2392,6 +2382,18 @@ radicalFutAlt: ["ficeller"],
   groupe: 3,
   niveau: 3,
   radicalFut: "secourr",
+},
+{
+  infinitif: "encourir",
+  groupe: 3,
+  niveau: 3,
+radicalFut: "encourr",
+},
+{
+  infinitif: "discourir",
+  groupe: 3,
+  niveau: 3,
+radicalFut: "discourr",
 },
 {
   infinitif: "vouloir",
