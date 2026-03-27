@@ -421,12 +421,6 @@ const verbesFutur1 = [
   niveau: 2,
 },
 {
-  infinitif: "crocheter",
-  groupe: 1,
-  niveau: 3,
-  radicalFut: "crochèter",
-},
-{
   infinitif: "croire",
   groupe: 3,
   niveau: 1,
@@ -802,11 +796,6 @@ const verbesFutur1 = [
   infinitif: "habituer",
   groupe: 1,
   niveau: 2,
-},
-{
-  infinitif: "haleter",
-  groupe: 1,
-  niveau: 3,
 },
 {
   infinitif: "haïr",
@@ -2789,5 +2778,17 @@ radicalFutAlt: ["lèguer"],
   niveau: 3,
   radicalFut: "reléguer",
 radicalFutAlt: ["relèguer"],
+},
+{
+  infinitif: "haleter",
+  groupe: 1,
+  niveau: 3,
+ radicalFut: "halèter",
+},
+{
+  infinitif: "crocheter",
+  groupe: 1,
+  niveau: 3,
+  radicalFut: "crochèter",
 },
 ];
