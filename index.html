@@ -327,6 +327,7 @@
 <script src="data.js"></script>
 <script src="verbesImparfait_gd.js"></script>
 <script src="dataFuturCondi.js"></script>
+<script src="dataFuturCondiPron.js"></script>
 <script>
 // ============================================================
 // ENGINE — Voix, confettis, utilitaires
@@ -789,9 +790,9 @@ function getLecon() {
 function piocher(cfg) {
     if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') {
         let pool;
-        if (jeuActuel === 'futur1') pool = verbesFutur1;
-        else if (jeuActuel === 'futur2') pool = verbesFutur2;
-        else pool = [...verbesFutur1, ...verbesFutur2];
+        if (jeuActuel === 'futur1') pool = [...verbesFutur1, ...(verbesFuturPron1 || [])];
+        else if (jeuActuel === 'futur2') pool = [...verbesFutur2, ...(verbesFuturPron2 || [])];
+        else pool = [...verbesFutur1, ...verbesFutur2, ...(verbesFuturPron1 || []), ...(verbesFuturPron2 || [])];
         pool = pool.filter(v => cfg.niv.includes(v.niveau));
         const key = jeuActuel;
         if (!recentlyPicked[key]) recentlyPicked[key] = [];
@@ -1900,10 +1901,17 @@ function getCouleurImp(v) {
 let futFormLocked = false;
 
 function getRadicalFut(v, sujet) {
-    // Radical futur = radicalFut si présent, sinon infinitif
-    // Pour les verbes en -re : enlever le -e final
-    let rad = v.radicalFut || v.infinitif;
-    return rad;
+    // Pronominaux : radical spécifique par sujet
+    if (v.pronominal) {
+        if (sujet === 'je')                              return v.radicalJe   || v.infinitif;
+        if (sujet === 'tu')                              return v.radicalTu   || v.infinitif;
+        if (['il','elle','on'].includes(sujet))          return v.radicalIl   || v.infinitif;
+        if (sujet === 'nous')                            return v.radicalNous || v.infinitif;
+        if (sujet === 'vous')                            return v.radicalVous || v.infinitif;
+        return v.radicalPluriel || v.infinitif; // ils/elles
+    }
+    // Non pronominal : radicalFut si présent, sinon infinitif
+    return v.radicalFut || v.infinitif;
 }
 
 function getTerminaisonCond(sujet) {
@@ -2380,9 +2388,9 @@ function piocher(cfg) {
 
     if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') {
         let pool;
-        if (jeuActuel === 'futur1') pool = verbesFutur1;
-        else if (jeuActuel === 'futur2') pool = verbesFutur2;
-        else pool = [...verbesFutur1, ...verbesFutur2];
+        if (jeuActuel === 'futur1') pool = [...verbesFutur1, ...(verbesFuturPron1 || [])];
+        else if (jeuActuel === 'futur2') pool = [...verbesFutur2, ...(verbesFuturPron2 || [])];
+        else pool = [...verbesFutur1, ...verbesFutur2, ...(verbesFuturPron1 || []), ...(verbesFuturPron2 || [])];
         pool = pool.filter(v => cfg.niv.includes(v.niveau));
         const key = jeuActuel;
         if (!recentlyPicked[key]) recentlyPicked[key] = [];
