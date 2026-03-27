@@ -269,11 +269,6 @@ const verbesFutur1 = [
   niveau: 3,
 },
 {
-  infinitif: "coïncider",
-  groupe: 1,
-  niveau: 2,
-},
-{
   infinitif: "colorier",
   groupe: 1,
   niveau: 3,
@@ -1798,11 +1793,6 @@ radicalFut: "transparaîtr",
   infinitif: "trier",
   groupe: 1,
   niveau: 2,
-},
-{
-  infinitif: "tuer",
-  groupe: 1,
-  niveau: 1,
 },
 {
   infinitif: "varier",
