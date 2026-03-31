@@ -327,6 +327,7 @@
 <script src="data.js"></script>
 <script src="verbesImparfait_gd.js"></script>
 <script src="dataFuturCondi.js"></script>
+<script src="verbesImparfaitPron.js"></script>
 <script src="dataFuturCondiPron.js"></script>
 <script>
 // ============================================================
@@ -376,7 +377,7 @@ function toggleSon(btn) {
 
 function creerConfettis() {
     const couleurs = ['#f1c40f','#e74c3c','#3498db','#2ecc71','#a8e6cf','#724a91'];
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 80; i++) {
         const c = document.createElement('div');
         c.className = 'confetti';
         c.style.left = Math.random() * 100 + '%';
@@ -506,7 +507,7 @@ const CONFIG = {
         8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
     conditionnel: {
-        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:false },
+        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:true  },
         2: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
         3: { niv:[2,3],     mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
         4: { niv:[1,2],     mode:'form-terminaison', nb:8, opa:0.75 },
@@ -807,8 +808,14 @@ function piocher(cfg) {
 
     if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') {
         let pool;
-        if (jeuActuel === 'imparfait1') pool = verbesImparfait1;
-        else pool = verbesImparfait2; // imparfait2 et imparfait3 piochent dans verbesImparfait2
+        if (jeuActuel === 'imparfait1') pool = [...verbesImparfait1, ...(verbesImparfaitPron1 || [])];
+        else {
+            pool = [...verbesImparfait2, ...(verbesImparfaitPron2 || [])]; // imparfait2 et imparfait3 piochent dans verbesImparfait2
+            // imparfait3 : exclure les verbes qui n'ont pas de forme plurielle
+            if (jeuActuel === 'imparfait3') {
+                pool = pool.filter(v => !v.sujetsPossibles || v.sujetsPossibles.some(s => ['nous','vous','ils','elles'].includes(s)));
+            }
+        }
         pool = pool.filter(v => cfg.niv.includes(v.niveau));
         return melangerTableau([...pool]).slice(0, cfg.nb);
     }
@@ -1803,7 +1810,7 @@ function finDeSerie() {
         btnM.style.display = 'inline-block';
     }
 
-    if (passe) creerConfettis();
+    creerConfettis();
 }
 
 function prochaineSerie() {
@@ -2182,10 +2189,7 @@ function afficherImparfait(v) {
 
         document.getElementById('imp-pelotes-infinitif').innerText = v.infinitif;
         // Si le radical contient déjà le sujet (pronominal), ne pas doubler
-        const affPelotes = radical.match(/^(nous|vous|me|te|se|m'|t'|s')/) 
-            ? radicalNet + '-' 
-            : sujetAff + ' ' + radicalNet + '-';
-        document.getElementById('imp-pelotes-sujet').innerText = affPelotes;
+        document.getElementById('imp-pelotes-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
 
         // Construire les 3 pelotes
         const couleur = getCouleurImp(v);
@@ -2224,10 +2228,7 @@ function afficherImparfait(v) {
 
         if (modeSerie === 'form-terminaison') {
             // Terminaison seulement
-            const affFormT = radical.match(/^(nous|vous|me|te|se|m'|t'|s')/) 
-                ? radicalNet + '-' 
-                : sujetAff + ' ' + radicalNet + '-';
-            document.getElementById('imp-form-sujet').innerText = affFormT;
+            document.getElementById('imp-form-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
             input.placeholder = '…';
             input.style.width = '100px';
             input.style.fontSize = '28px';
@@ -2405,8 +2406,14 @@ function piocher(cfg) {
 
     if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2' || jeuActuel === 'imparfait3') {
         let pool;
-        if (jeuActuel === 'imparfait1') pool = verbesImparfait1;
-        else pool = verbesImparfait2; // imparfait2 et imparfait3 piochent dans verbesImparfait2
+        if (jeuActuel === 'imparfait1') pool = [...verbesImparfait1, ...(verbesImparfaitPron1 || [])];
+        else {
+            pool = [...verbesImparfait2, ...(verbesImparfaitPron2 || [])]; // imparfait2 et imparfait3 piochent dans verbesImparfait2
+            // imparfait3 : exclure les verbes qui n'ont pas de forme plurielle
+            if (jeuActuel === 'imparfait3') {
+                pool = pool.filter(v => !v.sujetsPossibles || v.sujetsPossibles.some(s => ['nous','vous','ils','elles'].includes(s)));
+            }
+        }
         pool = pool.filter(v => cfg.niv.includes(v.niveau));
         return melangerTableau([...pool]).slice(0, cfg.nb);
     }
@@ -3400,7 +3407,7 @@ function finDeSerie() {
         btnM.style.display = 'inline-block';
     }
 
-    if (passe) creerConfettis();
+    creerConfettis();
 }
 
 function prochaineSerie() {
@@ -3516,10 +3523,7 @@ function afficherImparfait3(v) {
         document.getElementById('btn-valider-impform').style.display = 'inline-block';
 
         if (cfg.mode === 'form-terminaison') {
-            const affFormT = radical.match(/^(nous|vous|me|te|se|m'|t'|s')/) 
-                ? radicalNet + '-' 
-                : sujetAff + ' ' + radicalNet + '-';
-            document.getElementById('imp-form-sujet').innerText = affFormT;
+            document.getElementById('imp-form-sujet').innerText = sujetAff + ' ' + radicalNet + '-';
             input.placeholder = '…';
             input.style.width = '100px';
             input.style.fontSize = '28px';
