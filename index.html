@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conju J'aime 🐾</title>
+    <meta property="og:title" content="Conju J'aime 🐾" />
+    <meta property="og:description" content="Conju J'aime a été conçu pour faire comprendre le fonctionnement de la conjugaison française tout en s'amusant. Chaque jeu s'accompagne de petits cours et de conseils pour progresser durablement." />
+    <meta property="og:url" content="https://anneguionnet.github.io/conjujaime" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://anneguionnet.github.io/conjujaime/purpleJuju.jpg" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z79SK6G80K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-Z79SK6G80K');
+    </script>
+    <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -497,7 +511,7 @@ const CONFIG = {
         8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
     futur1: {
-        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:false },
+        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:true  },
         2: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
         3: { niv:[2,3],     mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
         4: { niv:[1,2],     mode:'form-terminaison', nb:8, opa:0.75 },
@@ -517,7 +531,7 @@ const CONFIG = {
         8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
     futur2: {
-        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:false },
+        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:true  },
         2: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
         3: { niv:[2,3],     mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
         4: { niv:[1,2],     mode:'form-terminaison', nb:8, opa:0.75 },
@@ -3544,5 +3558,8 @@ function afficherImparfait3(v) {
 
 </script>
 
+<footer style="text-align:right; padding: 10px 15px; border-top: 1px solid #ccc; font-size: 13px; color: #888;">
+  Juju le chat <a href="https://www.instagram.com/Louguionnet" target="_blank" style="color:#888; text-decoration:none;">@Louguionnet</a>
+</footer>
 </body>
 </html>
