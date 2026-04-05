@@ -265,17 +265,17 @@
 
         <!-- Bulle Retiens conditionnel -->
         <div id="bulle-conditionnel" class="bulle-present1" style="display:none;">
-            💬 <i>Retiens : le radical du conditionnel est le même que celui du futur. Seules les terminaisons changent !</i>
+            💬 <i>Conseils de Juju : n'oublie pas le <b>-E</b> des verbes en <b>-ER</b>. On l'entend à peine… mais il est là ! Pour les verbes en <b>-RE</b>, on enlève le <b>-e</b> final : dire → je dirais. Les verbes en <b>-YER</b> perdent le <b>-Y-</b> pour un <b>-i-</b> : je tutoierais. Certains prennent un accent grave : j'achèterais. D'autres, une double consonne comme j'enverrais, ou un nouveau radical comme je viendrais, je ferais, il pleuvrait. Certains ont même plusieurs orthographes comme <b>ouïr</b> : j'ouïerais, tu oirais, elle orrait. C'est joli, n'est-ce pas ? Allez, à toi de jouer !</i>
         </div>
 
         <!-- Bulle Retiens futur1 -->
         <div id="bulle-futur1" class="bulle-present1" style="display:none;">
-            💬 <i>Retiens : n'oublie pas le <b>-E</b> des verbes en <b>-ER</b>. On l'entend à peine… mais il est là !</i>
+            💬 <i>Conseil de Juju : n'oublie pas le <b>-E</b> des verbes en <b>-ER</b>. On l'entend à peine… mais il est là !</i>
         </div>
 
         <!-- Bulle Retiens futur2 -->
         <div id="bulle-futur2" class="bulle-present1" style="display:none;">
-            💬 <i>Retiens l'astuce de Juju : pour les verbes irréguliers, Juju est là pour t'aider. Les verbes en <b>-YER</b> perdent le <b>-Y-</b> pour un <b>-i-</b>. Certains prennent un accent grave, d'autres une double consonne, certains ont même plusieurs orthographes comme <b>ouïr</b> : j'ouïerai, tu oiras, elle orra. C'est joli, n'est-ce pas ? Allez, à toi de jouer !</i>
+            💬 <i>Conseils de Juju : les verbes en <b>-YER</b> perdent le <b>-Y-</b> pour un <b>-i-</b> : je tutoierai. Certains prennent un accent grave : j'achèterai. D'autres, une double consonne comme j'enverrai, ou un nouveau radical comme je viendrai, je ferai, il pleuvra. Certains ont même plusieurs orthographes comme <b>ouïr</b> : j'ouïerai, tu oiras, elle orra. C'est joli, n'est-ce pas ? Allez, à toi de jouer !</i>
         </div>
 
         <!-- Bulle Retiens imparfait1 -->
@@ -772,14 +772,15 @@ function getLecon() {
                 nous → -ions &nbsp;|&nbsp; vous → -iez &nbsp;|&nbsp; ils/elles → -aient</b><br>
                 💬 <i>Astuce de Juju : si tu connais le futur et l'imparfait, le conditionnel n'a plus de secret pour toi !</i>`;
         case 'futur1':
-            return `<strong>Au futur, on ajoute les terminaisons du verbe <i>avoir</i> à l'infinitif :</strong><br>
+            return `<strong>Au futur, on ajoute les terminaisons suivantes :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp;
                 nous → -ons &nbsp;|&nbsp; vous → -ez &nbsp;|&nbsp; ils/elles → -ont</b><br>
-                💬 <i>Astuce de Juju : pour les verbes en <b>-RE</b>, on enlève le <b>-e</b> final : dire → je dirai</i>`;
+                💬 <i>Tu as reconnu ? Ce sont les mêmes que le verbe <b>avoir</b> au présent. On conserve l'infinitif pour les verbes du 1<sup>er</sup> groupe. Pour les verbes en <b>-RE</b>, on enlève le <b>-e</b> final : dire → je dirai</i>`;
         case 'futur2':
-            return `<strong>Au futur, on ajoute les terminaisons du verbe <i>avoir</i> :</strong><br>
+            return `<strong>Au futur, on ajoute les terminaisons suivantes :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp;
-                nous → -ons &nbsp;|&nbsp; vous → -ez &nbsp;|&nbsp; ils/elles → -ont</b>`;
+                nous → -ons &nbsp;|&nbsp; vous → -ez &nbsp;|&nbsp; ils/elles → -ont</b><br>
+                💬 <i>Tu as reconnu ? Ce sont les mêmes que le verbe <b>avoir</b> au présent.</i>`;
         case 'imparfait1':
             return `<strong>L'imparfait est l'un des temps les plus faciles.</strong>
                 Au radical, on ajoute la terminaison :<br>
