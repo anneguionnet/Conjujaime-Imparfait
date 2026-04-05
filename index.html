@@ -32,7 +32,7 @@
         <div class="menu-sous-titre">L'univers de Juju 🐾</div>
     </div>
 
-    <img src="purpleJuju.jpg" alt="Juju le chat" class="juju-menu">
+    <img src="mainbodyJuju.png" alt="Juju le chat" class="juju-menu">
 
     <!-- INFINITIF -->
     <div class="menu-section">
@@ -117,7 +117,7 @@
             <small id="titre-jeu" style="color:#724a91; font-size:16px; font-weight:bold;"></small>
         </div>
 
-        <img src="purpleJuju.jpg" alt="Juju" class="juju-jeu" onclick="clicJuju()">
+        <img src="purpleJuju.jpg" alt="Juju" class="juju-jeu" id="juju-jeu" onclick="clicJuju()">
 
         <!-- Verbe affiché (jeux infinitif) -->
         <div class="verbe-display" id="verbe-txt"></div>
@@ -1847,6 +1847,13 @@ function rejouerSerie() {
 // DEBUG
 // ============================================================
 
+function fuzzJuju() {
+    const img = document.getElementById('juju-jeu');
+    if (!img) return;
+    img.src = 'fuzzedJuju.png';
+    setTimeout(() => { img.src = 'purpleJuju.jpg'; }, 2500);
+}
+
 function clicJuju() {
     clicksJuju++;
     if (clicksJuju >= 3) {
@@ -2101,7 +2108,7 @@ function validerFutPelote(termChoisie, bonneTerminaison, sujetAff, radical, v) {
         });
         if (futEssaiCount === 1) {
             msg.style.color = '#e74c3c';
-            msg.innerText = '❌ Essaie encore…';
+            msg.innerText = '❌ Essaie encore…'; fuzzJuju();
             setTimeout(() => {
                 document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
                     if (!b.classList.contains('wrong')) b.disabled = false;
@@ -2109,7 +2116,7 @@ function validerFutPelote(termChoisie, bonneTerminaison, sujetAff, radical, v) {
             }, 800);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText = `❌ C'était : ${formeComplete}`;
+            msg.innerText = `❌ C'était : ${formeComplete}`; fuzzJuju();
             document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
                 if (b.innerText.replace(/-/g,'') === bonneTerminaison) b.classList.add('correct');
             });
@@ -2161,13 +2168,13 @@ function validerFutForm() {
         futEssaiCount++;
         if (futEssaiCount === 1) {
             msg.style.color = '#e74c3c';
-            msg.innerText = '❌ Essaie encore…';
+            msg.innerText = '❌ Essaie encore…'; fuzzJuju();
             input.value = '';
             input.focus();
         } else {
             document.getElementById('zone-imparfait-form').style.display = 'none';
             msg.style.color = '#e74c3c';
-            msg.innerHTML = `❌ C'était : <span style="font-weight:bold;">${formeComplete}</span>`;
+            msg.innerHTML = `❌ C'était : <span style="font-weight:bold;">${formeComplete}</span>`; fuzzJuju();
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
             parler(formeComplete);
@@ -2290,7 +2297,7 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
         });
         if (impEssaiCount === 1) {
             msg.style.color = '#e74c3c';
-            msg.innerText = '❌ Essaie encore…';
+            msg.innerText = '❌ Essaie encore…'; fuzzJuju();
             // Réactiver les pelotes restantes après 800ms
             setTimeout(() => {
                 document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
@@ -2299,7 +2306,7 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
             }, 800);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText = `❌ C'était : ${formeComplete}`;
+            msg.innerText = `❌ C'était : ${formeComplete}`; fuzzJuju();
             document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
                 if (b.innerText.replace(/-/g,'') === bonneTerminaison) b.classList.add('correct');
             });
@@ -2357,13 +2364,13 @@ function validerImpForm() {
         impEssaiCount++;
         if (impEssaiCount === 1) {
             msg.style.color = '#e74c3c';
-            msg.innerText = '❌ Essaie encore…';
+            msg.innerText = '❌ Essaie encore…'; fuzzJuju();
             input.value = '';
             input.focus();
         } else {
             document.getElementById('zone-imparfait-form').style.display = 'none';
             msg.style.color = '#e74c3c';
-            msg.innerHTML = `❌ C'était : <span style="font-weight:bold;">${formeComplete}</span>`;
+            msg.innerHTML = `❌ C'était : <span style="font-weight:bold;">${formeComplete}</span>`; fuzzJuju();
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
             parler(formeComplete);
