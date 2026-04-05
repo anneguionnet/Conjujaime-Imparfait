@@ -1280,7 +1280,7 @@ function verifierTerminaison(term, btn, zone) {
     } else {
         btn.classList.add('wrong');
         msg.style.color = '#e74c3c';
-        msg.innerText   = '✗ Regarde bien le sujet';
+        msg.innerText   = '✗ Regarde bien le sujet'; setTimeout(fuzzJuju, 0);
         document.querySelectorAll('.pelote-terminaison').forEach(b => {
             if (b.textContent === '-' + bonne) b.classList.add('correct');
         });
@@ -1351,12 +1351,12 @@ function validerForm() {
             const affichageReponse = bonneAlt
                 ? `${sujet} ${bonne} (ou ${bonneAlt})`
                 : `${sujet} ${bonne}`;
-            msg.innerText = `✗ La réponse : ${affichageReponse}`;
+            msg.innerText = `✗ La réponse : ${affichageReponse}`; setTimeout(fuzzJuju, 0);
             parler(sujet + ' ' + bonne);
             setTimeout(() => { inp.disabled = false; btnV.disabled = false; prochain(); }, 2500);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             inp.value = '';
             inp.focus();
         }
@@ -1389,7 +1389,7 @@ function verifierP2Pelote(p, btn, zone) {
         btn.classList.add('wrong');
         if (p2EssaiCount >= 2) {
             msg.style.color = '#e74c3c';
-            msg.innerText   = `✗ La réponse : ${sujet} ${radical}${terminaison}`;
+            msg.innerText   = `✗ La réponse : ${sujet} ${radical}${terminaison}`; setTimeout(fuzzJuju, 0);
             document.getElementById('p2-conjugaison').innerText = `${sujet} ${radical}${terminaison}`;
             document.querySelectorAll('#p2-pelotes .pelote-terminaison').forEach(b => {
                 if (b.dataset.correct === '1') b.classList.add('correct-p2');
@@ -1398,7 +1398,7 @@ function verifierP2Pelote(p, btn, zone) {
             setTimeout(prochain, 3000);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             document.querySelectorAll('#p2-pelotes .pelote-terminaison').forEach(b => {
                 if (!b.classList.contains('wrong')) b.disabled = false;
             });
@@ -1447,12 +1447,12 @@ function validerP2Form() {
             inp.disabled  = true;
             btnV.disabled = true;
             msg.style.color = '#e74c3c';
-            msg.innerText   = `✗ La réponse : ${sujet} ${bonne}`;
+            msg.innerText   = `✗ La réponse : ${sujet} ${bonne}`; setTimeout(fuzzJuju, 0);
             parler(sujet + ' ' + bonne);
             setTimeout(() => { inp.disabled = false; btnV.disabled = false; prochain(); }, 2500);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             inp.value = '';
             inp.focus();
         }
@@ -1701,7 +1701,7 @@ function verifierPTPelote(p, btn, zone) {
         btn.classList.add('wrong');
         if (ptEssaiCount >= 2) {
             msg.style.color = '#e74c3c';
-            msg.innerText   = `✗ La réponse : ${sujet} ${radical}${terminaison}`;
+            msg.innerText   = `✗ La réponse : ${sujet} ${radical}${terminaison}`; setTimeout(fuzzJuju, 0);
             document.getElementById('pt-conjugaison').innerText = `${sujet} ${radical}${terminaison}`;
             document.querySelectorAll('#pt-pelotes .pelote-terminaison').forEach(b => {
                 if (b.dataset.correct === '1') b.classList.add('correct-p2');
@@ -1710,7 +1710,7 @@ function verifierPTPelote(p, btn, zone) {
             setTimeout(prochain, 3000);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             document.querySelectorAll('#pt-pelotes .pelote-terminaison').forEach(b => {
                 if (!b.classList.contains('wrong')) b.disabled = false;
             });
@@ -1761,12 +1761,12 @@ function validerPTForm() {
             btnV.disabled = true;
             msg.style.color = '#e74c3c';
             const affichage = bonneAlt ? `${sujet} ${bonne} (ou ${bonneAlt})` : `${sujet} ${bonne}`;
-            msg.innerText = `✗ La réponse : ${affichage}`;
+            msg.innerText = `✗ La réponse : ${affichage}`; setTimeout(fuzzJuju, 0);
             parler(sujet + ' ' + bonne);
             setTimeout(() => { inp.disabled = false; btnV.disabled = false; prochain(); }, 2500);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             inp.value = '';
             inp.focus();
         }
@@ -2108,7 +2108,7 @@ function validerFutPelote(termChoisie, bonneTerminaison, sujetAff, radical, v) {
         });
         if (futEssaiCount === 1) {
             msg.style.color = '#e74c3c';
-            msg.innerText = '❌ Essaie encore…'; fuzzJuju();
+            msg.innerText = '❌ Essaie encore…'; setTimeout(fuzzJuju, 0);
             setTimeout(() => {
                 document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
                     if (!b.classList.contains('wrong')) b.disabled = false;
@@ -2116,7 +2116,7 @@ function validerFutPelote(termChoisie, bonneTerminaison, sujetAff, radical, v) {
             }, 800);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText = `❌ C'était : ${formeComplete}`; fuzzJuju();
+            msg.innerText = `❌ C'était : ${formeComplete}`; setTimeout(fuzzJuju, 0);
             document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
                 if (b.innerText.replace(/-/g,'') === bonneTerminaison) b.classList.add('correct');
             });
@@ -2168,13 +2168,13 @@ function validerFutForm() {
         futEssaiCount++;
         if (futEssaiCount === 1) {
             msg.style.color = '#e74c3c';
-            msg.innerText = '❌ Essaie encore…'; fuzzJuju();
+            msg.innerText = '❌ Essaie encore…'; setTimeout(fuzzJuju, 0);
             input.value = '';
             input.focus();
         } else {
             document.getElementById('zone-imparfait-form').style.display = 'none';
             msg.style.color = '#e74c3c';
-            msg.innerHTML = `❌ C'était : <span style="font-weight:bold;">${formeComplete}</span>`; fuzzJuju();
+            msg.innerHTML = `❌ C'était : <span style="font-weight:bold;">${formeComplete}</span>`; setTimeout(fuzzJuju, 0);
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
             parler(formeComplete);
@@ -2297,7 +2297,7 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
         });
         if (impEssaiCount === 1) {
             msg.style.color = '#e74c3c';
-            msg.innerText = '❌ Essaie encore…'; fuzzJuju();
+            msg.innerText = '❌ Essaie encore…'; setTimeout(fuzzJuju, 0);
             // Réactiver les pelotes restantes après 800ms
             setTimeout(() => {
                 document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
@@ -2306,7 +2306,7 @@ function validerImpPelote(termChoisie, bonneTerminaison, sujetAff, radicalNet, v
             }, 800);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText = `❌ C'était : ${formeComplete}`; fuzzJuju();
+            msg.innerText = `❌ C'était : ${formeComplete}`; setTimeout(fuzzJuju, 0);
             document.querySelectorAll('#imp-pelotes-zone .pelote-terminaison').forEach(b => {
                 if (b.innerText.replace(/-/g,'') === bonneTerminaison) b.classList.add('correct');
             });
@@ -2364,13 +2364,13 @@ function validerImpForm() {
         impEssaiCount++;
         if (impEssaiCount === 1) {
             msg.style.color = '#e74c3c';
-            msg.innerText = '❌ Essaie encore…'; fuzzJuju();
+            msg.innerText = '❌ Essaie encore…'; setTimeout(fuzzJuju, 0);
             input.value = '';
             input.focus();
         } else {
             document.getElementById('zone-imparfait-form').style.display = 'none';
             msg.style.color = '#e74c3c';
-            msg.innerHTML = `❌ C'était : <span style="font-weight:bold;">${formeComplete}</span>`; fuzzJuju();
+            msg.innerHTML = `❌ C'était : <span style="font-weight:bold;">${formeComplete}</span>`; setTimeout(fuzzJuju, 0);
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
             parler(formeComplete);
@@ -2882,7 +2882,7 @@ function verifierTerminaison(term, btn, zone) {
     } else {
         btn.classList.add('wrong');
         msg.style.color = '#e74c3c';
-        msg.innerText   = '✗ Regarde bien le sujet';
+        msg.innerText   = '✗ Regarde bien le sujet'; setTimeout(fuzzJuju, 0);
         document.querySelectorAll('.pelote-terminaison').forEach(b => {
             if (b.textContent === '-' + bonne) b.classList.add('correct');
         });
@@ -2953,12 +2953,12 @@ function validerForm() {
             const affichageReponse = bonneAlt
                 ? `${sujet} ${bonne} (ou ${bonneAlt})`
                 : `${sujet} ${bonne}`;
-            msg.innerText = `✗ La réponse : ${affichageReponse}`;
+            msg.innerText = `✗ La réponse : ${affichageReponse}`; setTimeout(fuzzJuju, 0);
             parler(sujet + ' ' + bonne);
             setTimeout(() => { inp.disabled = false; btnV.disabled = false; prochain(); }, 2500);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             inp.value = '';
             inp.focus();
         }
@@ -2991,7 +2991,7 @@ function verifierP2Pelote(p, btn, zone) {
         btn.classList.add('wrong');
         if (p2EssaiCount >= 2) {
             msg.style.color = '#e74c3c';
-            msg.innerText   = `✗ La réponse : ${sujet} ${radical}${terminaison}`;
+            msg.innerText   = `✗ La réponse : ${sujet} ${radical}${terminaison}`; setTimeout(fuzzJuju, 0);
             document.getElementById('p2-conjugaison').innerText = `${sujet} ${radical}${terminaison}`;
             document.querySelectorAll('#p2-pelotes .pelote-terminaison').forEach(b => {
                 if (b.dataset.correct === '1') b.classList.add('correct-p2');
@@ -3000,7 +3000,7 @@ function verifierP2Pelote(p, btn, zone) {
             setTimeout(prochain, 3000);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             document.querySelectorAll('#p2-pelotes .pelote-terminaison').forEach(b => {
                 if (!b.classList.contains('wrong')) b.disabled = false;
             });
@@ -3049,12 +3049,12 @@ function validerP2Form() {
             inp.disabled  = true;
             btnV.disabled = true;
             msg.style.color = '#e74c3c';
-            msg.innerText   = `✗ La réponse : ${sujet} ${bonne}`;
+            msg.innerText   = `✗ La réponse : ${sujet} ${bonne}`; setTimeout(fuzzJuju, 0);
             parler(sujet + ' ' + bonne);
             setTimeout(() => { inp.disabled = false; btnV.disabled = false; prochain(); }, 2500);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             inp.value = '';
             inp.focus();
         }
@@ -3305,7 +3305,7 @@ function verifierPTPelote(p, btn, zone) {
         btn.classList.add('wrong');
         if (ptEssaiCount >= 2) {
             msg.style.color = '#e74c3c';
-            msg.innerText   = `✗ La réponse : ${sujet} ${radical}${terminaison}`;
+            msg.innerText   = `✗ La réponse : ${sujet} ${radical}${terminaison}`; setTimeout(fuzzJuju, 0);
             document.getElementById('pt-conjugaison').innerText = `${sujet} ${radical}${terminaison}`;
             document.querySelectorAll('#pt-pelotes .pelote-terminaison').forEach(b => {
                 if (b.dataset.correct === '1') b.classList.add('correct-p2');
@@ -3314,7 +3314,7 @@ function verifierPTPelote(p, btn, zone) {
             setTimeout(prochain, 3000);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             document.querySelectorAll('#pt-pelotes .pelote-terminaison').forEach(b => {
                 if (!b.classList.contains('wrong')) b.disabled = false;
             });
@@ -3365,12 +3365,12 @@ function validerPTForm() {
             btnV.disabled = true;
             msg.style.color = '#e74c3c';
             const affichage = bonneAlt ? `${sujet} ${bonne} (ou ${bonneAlt})` : `${sujet} ${bonne}`;
-            msg.innerText = `✗ La réponse : ${affichage}`;
+            msg.innerText = `✗ La réponse : ${affichage}`; setTimeout(fuzzJuju, 0);
             parler(sujet + ' ' + bonne);
             setTimeout(() => { inp.disabled = false; btnV.disabled = false; prochain(); }, 2500);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '✗ Essaie encore !';
+            msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
             inp.value = '';
             inp.focus();
         }
