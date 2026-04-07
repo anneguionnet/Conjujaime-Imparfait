@@ -20,6 +20,7 @@
       gtag('config', 'G-Z79SK6G80K');
     </script>
     <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -432,6 +433,7 @@ let scoreSerie  = 0;
 let verbesPioches = [];
 let dejaVus     = new Set();
 let essai       = 0;
+let partTries   = 0;
 let dernierOrdrePelotes = [1, 2, 3];
 let clicksJuju  = 0;
 let p2EssaiCount = 0; // compteur d'erreurs pour present2
@@ -958,7 +960,7 @@ function afficherParticipe(v) {
     const inp = document.getElementById('input-participe');
     inp.value = '';
     inp.disabled = false;
-    inp.dataset.tries = '0';
+    partTries = 0;
     inp.focus();
     essai = 0;
     document.getElementById('pelote-indice-zone').innerHTML = '';
@@ -1252,10 +1254,10 @@ function validerParticipe() {
         parler(v.part);
         creerConfettis();
         inp.disabled = true;
-        inp.dataset.tries = '0';
+        partTries = 0;
         setTimeout(prochain, 2000);
-    } else if (inp.dataset.tries !== '1') {
-        inp.dataset.tries = '1';
+    } else if (partTries < 1) {
+        partTries = 1;
         indice.innerHTML = '';
         msg.style.color = COULEURS_GR[v.gr];
         msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : '');
@@ -1264,7 +1266,7 @@ function validerParticipe() {
         inp.disabled = false;
         inp.focus();
     } else {
-        inp.dataset.tries = '0';
+        partTries = 0;
         indice.innerHTML = '';
         msg.style.color = '#e74c3c';
         msg.innerText   = `La réponse : ${v.part}`; setTimeout(fuzzJuju, 0);
@@ -2584,7 +2586,7 @@ function afficherParticipe(v) {
     const inp = document.getElementById('input-participe');
     inp.value = '';
     inp.disabled = false;
-    inp.dataset.tries = '0';
+    partTries = 0;
     inp.focus();
     essai = 0;
     document.getElementById('pelote-indice-zone').innerHTML = '';
@@ -2878,10 +2880,10 @@ function validerParticipe() {
         parler(v.part);
         creerConfettis();
         inp.disabled = true;
-        inp.dataset.tries = '0';
+        partTries = 0;
         setTimeout(prochain, 2000);
-    } else if (inp.dataset.tries !== '1') {
-        inp.dataset.tries = '1';
+    } else if (partTries < 1) {
+        partTries = 1;
         indice.innerHTML = '';
         msg.style.color = COULEURS_GR[v.gr];
         msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : '');
@@ -2890,7 +2892,7 @@ function validerParticipe() {
         inp.disabled = false;
         inp.focus();
     } else {
-        inp.dataset.tries = '0';
+        partTries = 0;
         indice.innerHTML = '';
         msg.style.color = '#e74c3c';
         msg.innerText   = `La réponse : ${v.part}`; setTimeout(fuzzJuju, 0);
