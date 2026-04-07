@@ -1258,7 +1258,7 @@ function validerParticipe() {
         inp.dataset.tries = '1';
         indice.innerHTML = '';
         msg.style.color = COULEURS_GR[v.gr];
-        msg.innerText   = '✗ Essaie encore !';
+        msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : '');
         setTimeout(fuzzJuju, 0);
         inp.value = '';
         inp.disabled = false;
@@ -2884,7 +2884,7 @@ function validerParticipe() {
         inp.dataset.tries = '1';
         indice.innerHTML = '';
         msg.style.color = COULEURS_GR[v.gr];
-        msg.innerText   = '✗ Essaie encore !';
+        msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : '');
         setTimeout(fuzzJuju, 0);
         inp.value = '';
         inp.disabled = false;
