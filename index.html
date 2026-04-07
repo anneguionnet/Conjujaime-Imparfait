@@ -963,6 +963,7 @@ function afficherParticipe(v) {
     inp.focus();
     essai = 0;
     document.getElementById('pelote-indice-zone').innerHTML = '';
+    document.getElementById('input-zone').dataset.partCount = '0';
     parler(texte);
 }
 
@@ -1242,13 +1243,13 @@ function validerParticipe() {
     const v       = verbesPioches[qIndex];
     const inp     = document.getElementById('input-participe');
     const reponse = inp.value.trim().toLowerCase();
-    const correct = v.part.toLowerCase();
+    const correct = v.part ? v.part.toLowerCase() : '';
     const msg     = document.getElementById('msg-zone');
     const indice  = document.getElementById('pelote-indice-zone');
-
-    essai++;
+    const zone    = document.getElementById('input-zone');
 
     if (reponse === correct) {
+        zone.dataset.partCount = '0';
         msg.style.color = '#2ecc71';
         msg.innerText   = 'Bravo ! 🎉';
         scoreTotal++; scoreSerie++;
@@ -1257,8 +1258,9 @@ function validerParticipe() {
         creerConfettis();
         inp.disabled = true;
         setTimeout(prochain, 2000);
-    } else if (essai === 1) {
-        // 1er essai raté : message coloré selon le groupe, pas de pelote
+    } else if (zone.dataset.partCount !== '1') {
+        // 1er essai raté
+        zone.dataset.partCount = '1';
         indice.innerHTML = '';
         msg.style.color = COULEURS_GR[v.gr];
         msg.innerText   = '✗ Essaie encore !';
@@ -1267,7 +1269,8 @@ function validerParticipe() {
         inp.disabled = false;
         inp.focus();
     } else {
-        // 2e essai raté : réponse donnée
+        // 2e essai raté
+        zone.dataset.partCount = '0';
         indice.innerHTML = '';
         msg.style.color = '#e74c3c';
         msg.innerText   = `La réponse : ${v.part}`; setTimeout(fuzzJuju, 0);
@@ -2590,6 +2593,7 @@ function afficherParticipe(v) {
     inp.focus();
     essai = 0;
     document.getElementById('pelote-indice-zone').innerHTML = '';
+    document.getElementById('input-zone').dataset.partCount = '0';
     parler(texte);
 }
 
@@ -2869,13 +2873,13 @@ function validerParticipe() {
     const v       = verbesPioches[qIndex];
     const inp     = document.getElementById('input-participe');
     const reponse = inp.value.trim().toLowerCase();
-    const correct = v.part.toLowerCase();
+    const correct = v.part ? v.part.toLowerCase() : '';
     const msg     = document.getElementById('msg-zone');
     const indice  = document.getElementById('pelote-indice-zone');
-
-    essai++;
+    const zone    = document.getElementById('input-zone');
 
     if (reponse === correct) {
+        zone.dataset.partCount = '0';
         msg.style.color = '#2ecc71';
         msg.innerText   = 'Bravo ! 🎉';
         scoreTotal++; scoreSerie++;
@@ -2884,8 +2888,9 @@ function validerParticipe() {
         creerConfettis();
         inp.disabled = true;
         setTimeout(prochain, 2000);
-    } else if (essai === 1) {
-        // 1er essai raté : message coloré selon le groupe, pas de pelote
+    } else if (zone.dataset.partCount !== '1') {
+        // 1er essai raté
+        zone.dataset.partCount = '1';
         indice.innerHTML = '';
         msg.style.color = COULEURS_GR[v.gr];
         msg.innerText   = '✗ Essaie encore !';
@@ -2894,7 +2899,8 @@ function validerParticipe() {
         inp.disabled = false;
         inp.focus();
     } else {
-        // 2e essai raté : réponse donnée
+        // 2e essai raté
+        zone.dataset.partCount = '0';
         indice.innerHTML = '';
         msg.style.color = '#e74c3c';
         msg.innerText   = `La réponse : ${v.part}`; setTimeout(fuzzJuju, 0);
