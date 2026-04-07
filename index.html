@@ -12,6 +12,10 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z79SK6G80K"></script>
     <script>
+
+// Sécurité : variables pronominales imparfait (si fichier absent)
+if (typeof verbesImparfaitPron1 === 'undefined') var verbesImparfaitPron1 = [];
+if (typeof verbesImparfaitPron2 === 'undefined') var verbesImparfaitPron2 = [];
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
@@ -1226,7 +1230,8 @@ function verifierGroupe(choix) {
         setTimeout(prochain, 1000);
     } else {
         msg.style.color = COULEURS_GR[v.gr];
-        msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : '');
+        msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : ''); setTimeout(fuzzJuju, 0);
+        setTimeout(fuzzJuju, 0);
     }
 }
 
@@ -1256,7 +1261,7 @@ function validerParticipe() {
         indice.appendChild(pelote);
     } else {
         msg.style.color = '#e74c3c';
-        msg.innerText   = `La réponse : ${v.part}`;
+        msg.innerText   = `La réponse : ${v.part}`; setTimeout(fuzzJuju, 0);
         parler(v.infi);
         inp.disabled = true;
         setTimeout(prochain, 2500);
@@ -1853,7 +1858,7 @@ function fuzzJuju() {
     const img = document.getElementById('juju-jeu');
     if (!img) return;
     img.src = 'fuzzedJuju.png';
-    setTimeout(() => { img.src = 'purpleJuju.jpg'; }, 2500);
+    setTimeout(() => { img.src = 'purpleJuju.jpg'; }, 1500);
 }
 
 function clicJuju() {
@@ -2830,7 +2835,8 @@ function verifierGroupe(choix) {
         setTimeout(prochain, 1000);
     } else {
         msg.style.color = COULEURS_GR[v.gr];
-        msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : '');
+        msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : ''); setTimeout(fuzzJuju, 0);
+        setTimeout(fuzzJuju, 0);
     }
 }
 
@@ -2860,7 +2866,7 @@ function validerParticipe() {
         indice.appendChild(pelote);
     } else {
         msg.style.color = '#e74c3c';
-        msg.innerText   = `La réponse : ${v.part}`;
+        msg.innerText   = `La réponse : ${v.part}`; setTimeout(fuzzJuju, 0);
         parler(v.infi);
         inp.disabled = true;
         setTimeout(prochain, 2500);
