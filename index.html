@@ -62,6 +62,7 @@ if (typeof verbesImparfaitPron2 === 'undefined') var verbesImparfaitPron2 = [];
         <button class="btn-menu-jeu bleu2" onclick="lancerJeu('present2')">
             🟠 2e et 3e groupe
         </button>
+        <p class="menu-encouragement">Jongle avec toutes les combinaisons possibles du présent !</p>
         <button class="btn-menu-jeu bleu3" onclick="lancerJeu('presentTous')">
             🟣 Tous les groupes
         </button>
@@ -987,6 +988,7 @@ function afficherPresentPelotes(v) {
     zone.dataset.sujet       = sujet;
     zone.dataset.radical     = radicalNet;
     zone.dataset.terminaison = terminaison;
+    zone.dataset.essai       = '0';
 
     document.getElementById('present-infinitif').innerText = v.infinitif;
     document.getElementById('present-conjugaison').innerText = `${sujet} ${radicalNet}-`;
@@ -1260,6 +1262,7 @@ function validerParticipe() {
         pelote.style.cssText = `width:55px;height:55px;border-radius:50%;background:${COULEURS_GR[v.gr]};margin:8px auto;`;
         indice.appendChild(pelote);
         inp.value = '';
+        inp.disabled = false;
         inp.focus();
         setTimeout(fuzzJuju, 0);
     } else {
@@ -1636,6 +1639,7 @@ function afficherPresentTousPelotes(v) {
     zone.dataset.sujet       = sujet;
     zone.dataset.radical     = radicalNet;
     zone.dataset.terminaison = terminaison;
+    zone.dataset.essai       = '0';
 
     document.getElementById('pt-infinitif').innerText   = v.infinitif;
     document.getElementById('pt-conjugaison').innerText = `${sujet} ${radicalNet}-`;
@@ -2608,6 +2612,7 @@ function afficherPresentPelotes(v) {
     zone.dataset.sujet       = sujet;
     zone.dataset.radical     = radicalNet;
     zone.dataset.terminaison = terminaison;
+    zone.dataset.essai       = '0';
 
     document.getElementById('present-infinitif').innerText = v.infinitif;
     document.getElementById('present-conjugaison').innerText = `${sujet} ${radicalNet}-`;
@@ -2881,6 +2886,7 @@ function validerParticipe() {
         pelote.style.cssText = `width:55px;height:55px;border-radius:50%;background:${COULEURS_GR[v.gr]};margin:8px auto;`;
         indice.appendChild(pelote);
         inp.value = '';
+        inp.disabled = false;
         inp.focus();
         setTimeout(fuzzJuju, 0);
     } else {
@@ -3259,6 +3265,7 @@ function afficherPresentTousPelotes(v) {
     zone.dataset.sujet       = sujet;
     zone.dataset.radical     = radicalNet;
     zone.dataset.terminaison = terminaison;
+    zone.dataset.essai       = '0';
 
     document.getElementById('pt-infinitif').innerText   = v.infinitif;
     document.getElementById('pt-conjugaison').innerText = `${sujet} ${radicalNet}-`;
