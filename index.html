@@ -1259,6 +1259,9 @@ function validerParticipe() {
         const pelote = document.createElement('div');
         pelote.style.cssText = `width:55px;height:55px;border-radius:50%;background:${COULEURS_GR[v.gr]};margin:8px auto;`;
         indice.appendChild(pelote);
+        inp.value = '';
+        inp.focus();
+        setTimeout(fuzzJuju, 0);
     } else {
         msg.style.color = '#e74c3c';
         msg.innerText   = `La réponse : ${v.part}`; setTimeout(fuzzJuju, 0);
@@ -1284,15 +1287,28 @@ function verifierTerminaison(term, btn, zone) {
         scoreTotal++; scoreSerie++;
         document.getElementById('total-score').innerText = scoreTotal;
         creerConfettis();
+        setTimeout(prochain, 2000);
+    } else if (zone.dataset.essai !== '1') {
+        // 1er essai raté : indice visuel, on réactive les pelotes restantes
+        zone.dataset.essai = '1';
+        btn.classList.add('wrong');
+        msg.style.color = '#e74c3c';
+        msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
+        setTimeout(() => {
+            document.querySelectorAll('.pelote-terminaison').forEach(b => {
+                if (!b.classList.contains('wrong')) b.disabled = false;
+            });
+        }, 600);
     } else {
+        // 2e essai raté : réponse donnée
         btn.classList.add('wrong');
         msg.style.color = '#e74c3c';
         msg.innerText   = '✗ Regarde bien le sujet'; setTimeout(fuzzJuju, 0);
         document.querySelectorAll('.pelote-terminaison').forEach(b => {
             if (b.textContent === '-' + bonne) b.classList.add('correct');
         });
+        setTimeout(prochain, 2000);
     }
-    setTimeout(prochain, 2000);
 }
 
 function afficherFormeComplete(sujetEl, inputEl, btnEl, formeComplete) {
@@ -2864,6 +2880,9 @@ function validerParticipe() {
         const pelote = document.createElement('div');
         pelote.style.cssText = `width:55px;height:55px;border-radius:50%;background:${COULEURS_GR[v.gr]};margin:8px auto;`;
         indice.appendChild(pelote);
+        inp.value = '';
+        inp.focus();
+        setTimeout(fuzzJuju, 0);
     } else {
         msg.style.color = '#e74c3c';
         msg.innerText   = `La réponse : ${v.part}`; setTimeout(fuzzJuju, 0);
@@ -2889,15 +2908,28 @@ function verifierTerminaison(term, btn, zone) {
         scoreTotal++; scoreSerie++;
         document.getElementById('total-score').innerText = scoreTotal;
         creerConfettis();
+        setTimeout(prochain, 2000);
+    } else if (zone.dataset.essai !== '1') {
+        // 1er essai raté : indice visuel, on réactive les pelotes restantes
+        zone.dataset.essai = '1';
+        btn.classList.add('wrong');
+        msg.style.color = '#e74c3c';
+        msg.innerText   = '✗ Essaie encore !'; setTimeout(fuzzJuju, 0);
+        setTimeout(() => {
+            document.querySelectorAll('.pelote-terminaison').forEach(b => {
+                if (!b.classList.contains('wrong')) b.disabled = false;
+            });
+        }, 600);
     } else {
+        // 2e essai raté : réponse donnée
         btn.classList.add('wrong');
         msg.style.color = '#e74c3c';
         msg.innerText   = '✗ Regarde bien le sujet'; setTimeout(fuzzJuju, 0);
         document.querySelectorAll('.pelote-terminaison').forEach(b => {
             if (b.textContent === '-' + bonne) b.classList.add('correct');
         });
+        setTimeout(prochain, 2000);
     }
-    setTimeout(prochain, 2000);
 }
 
 function afficherFormeComplete(sujetEl, inputEl, btnEl, formeComplete) {
