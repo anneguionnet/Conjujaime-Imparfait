@@ -134,7 +134,7 @@
             <input type="text" id="input-participe" class="input-reponse"
                    placeholder="Tape le participe…"
                    autocomplete="off" autocorrect="off" spellcheck="false">
-            <button class="btn-valider" onclick="validerParticipe()">OK</button>
+            <button class="btn-valider" id="btn-ok-participe" onclick="validerParticipe()">OK</button>
         </div>
 
         <!-- Pelote indice (jeu 3) -->
@@ -1262,9 +1262,15 @@ function validerParticipe() {
         msg.style.color = COULEURS_GR[v.gr];
         msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : '');
         setTimeout(fuzzJuju, 0);
+        const btnOK = document.getElementById('btn-ok-participe');
+        if (btnOK) btnOK.disabled = true;
         inp.value = '';
-        inp.disabled = false;
-        inp.focus();
+        inp.disabled = true;
+        setTimeout(() => {
+            inp.disabled = false;
+            if (btnOK) btnOK.disabled = false;
+            inp.focus();
+        }, 800);
     } else {
         partTries = 0;
         indice.innerHTML = '';
@@ -2888,9 +2894,15 @@ function validerParticipe() {
         msg.style.color = COULEURS_GR[v.gr];
         msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : '');
         setTimeout(fuzzJuju, 0);
+        const btnOK = document.getElementById('btn-ok-participe');
+        if (btnOK) btnOK.disabled = true;
         inp.value = '';
-        inp.disabled = false;
-        inp.focus();
+        inp.disabled = true;
+        setTimeout(() => {
+            inp.disabled = false;
+            if (btnOK) btnOK.disabled = false;
+            inp.focus();
+        }, 800);
     } else {
         partTries = 0;
         indice.innerHTML = '';
