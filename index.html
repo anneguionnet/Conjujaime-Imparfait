@@ -133,7 +133,8 @@
         <div class="input-zone" id="input-zone" style="display:none;">
             <input type="text" id="input-participe" class="input-reponse"
                    placeholder="Tape le participe…"
-                   autocomplete="off" autocorrect="off" spellcheck="false">
+                   autocomplete="off" autocorrect="off" spellcheck="false"
+                   onkeydown="if(event.key==='Enter'){const b=document.getElementById('btn-ok-participe'); if(b&&!b.disabled) validerParticipe();}">
             <button class="btn-valider" id="btn-ok-participe" onclick="validerParticipe()">OK</button>
         </div>
 
