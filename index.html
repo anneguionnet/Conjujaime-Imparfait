@@ -302,7 +302,7 @@
         </div>
         <!-- Bulle Retiens ps3 -->
         <div id="bulle-ps3" class="bulle-present1" style="display:none;">
-            💬 <i>Conseil de Juju : regarde bien le sujet et pense à l'infinitif pour trouver quel son s'emploie au passé simple.</i>
+            💬 <i>Conseil de Juju : d'abord, pense à l'infinitif du verbe, ensuite, regarde son sujet, enfin, n'oublie pas les particularités des verbes comme <b>venir</b> et <b>tenir</b>.</i>
         </div>
 
         <!-- Bulle Retiens conditionnel -->
@@ -2011,8 +2011,9 @@ function getCouleurPS(v, sujetNorm) {
     return '#b22222'; // rouge — U = 3e groupe
 }
 
-function getCouleurPelotePS(terminaison) {
-    // Couleur selon la terminaison plurielle
+function getCouleurPelotePS(terminaison, v) {
+    // Aller au pluriel → rose clair comme au singulier
+    if (v && v.inf === 'aller') return 'linear-gradient(135deg, #f48fb1 0%, #f06292 100%)';
     if (terminaison === 'èrent') return 'linear-gradient(135deg, #a8e6cf 0%, #7fdbb6 100%)'; // vert
     if (terminaison === 'irent') return 'linear-gradient(135deg, #ff9f7f 0%, #b22222 100%)'; // orange→rouge
     if (terminaison === 'urent') return 'linear-gradient(135deg, #b22222 0%, #880e0e 100%)'; // rouge foncé
@@ -2136,7 +2137,7 @@ function afficherPS(v) {
             const term = p.text.replace('-','');
             // Pluriel : couleur selon la terminaison ; singulier : couleur du groupe
             if (sujetNorm === 'elles') {
-                btn.style.background = getCouleurPelotePS(term);
+                btn.style.background = getCouleurPelotePS(term, v);
             } else {
                 btn.style.background = couleurHex;
             }
