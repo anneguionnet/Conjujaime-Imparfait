@@ -594,13 +594,13 @@ const CONFIG = {
         8: { niv:[1,2], mode:'form-entiere',     nb:8, opa:0,    catA:8, catI:0, catU:0 },
     },
     ps2: {
-        1: { niv:[1],   mode:'pelotes',          nb:8, opa:1,    shuffle:true, catA:0, catI:6, catU:2 },
+        1: { niv:[1,2], mode:'pelotes',          nb:8, opa:1,    shuffle:true, catA:0, catI:6, catU:2 },
         2: { niv:[1,2], mode:'pelotes',          nb:8, opa:0.75, shuffle:true, catA:0, catI:5, catU:3 },
         3: { niv:[1,2], mode:'pelotes',          nb:8, opa:0.5,  shuffle:true, catA:0, catI:4, catU:4 },
         4: { niv:[1,2], mode:'form-terminaison', nb:8, opa:0.75, catA:0, catI:5, catU:3 },
         5: { niv:[1,2], mode:'form-entiere',     nb:8, opa:0.5,  catA:0, catI:5, catU:3 },
         6: { niv:[1,2], mode:'form-entiere',     nb:8, opa:0.25, catA:0, catI:4, catU:4 },
-        7: { niv:[2,3], mode:'form-entiere',     nb:8, opa:0.1,  catA:0, catI:4, catU:4 },
+        7: { niv:[1,2], mode:'form-entiere',     nb:8, opa:0.1,  catA:0, catI:4, catU:4 },
         8: { niv:[1,2], mode:'form-entiere',     nb:8, opa:0,    catA:0, catI:4, catU:4 },
     },
     ps3: {
@@ -962,15 +962,14 @@ function piocher(cfg) {
         const cfg = getConfig();
         const niveaux = cfg.niv;
         let pool = [];
-        if ((cfg.catA||0) > 0) pool = pool.concat(
-            melangerTableau(verbesPSpetit_A.filter(v => niveaux.includes(v.niv)))
-            .slice(0, cfg.catA).map(v => ({...v, cat:'A'})));
-        if ((cfg.catI||0) > 0) pool = pool.concat(
-            melangerTableau(verbesPSpetit_I.filter(v => niveaux.includes(v.niv)))
-            .slice(0, cfg.catI).map(v => ({...v, cat:'I'})));
-        if ((cfg.catU||0) > 0) pool = pool.concat(
-            melangerTableau(verbesPSpetit_U.filter(v => niveaux.includes(v.niv)))
-            .slice(0, cfg.catU).map(v => ({...v, cat:'U'})));
+        const pickCat = (arr, cat, n) => {
+            let pool = arr.filter(v => niveaux.includes(v.niv));
+            if (pool.length < n) pool = arr; // fallback sans filtre niveau
+            return melangerTableau(pool).slice(0, n).map(v => ({...v, cat}));
+        };
+        if ((cfg.catA||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_A, 'A', cfg.catA));
+        if ((cfg.catI||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_I, 'I', cfg.catI));
+        if ((cfg.catU||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_U, 'U', cfg.catU));
         return melangerTableau([...pool]);
     }
 
@@ -2000,16 +1999,16 @@ const PS_TERM = {
 
 function getCouleurPS(v, sujetNorm) {
     const cat = v.cat || 'A';
-    // Pour pluriel (elles/ils), couleur selon la terminaison
-    if (sujetNorm === 'elles') {
-        // Les pelotes seront colorées individuellement dans afficherPS
-        return null;
-    }
+    if (sujetNorm === 'elles') return null;
     if (cat === 'A') {
         if (v.inf === 'aller') return '#b22222';
         return '#a8e6cf';
     }
-    if (cat === 'I' || cat === 'I_venir') return '#ff9f7f';
+    if (cat === 'I' || cat === 'I_venir') {
+        // 2e groupe → orange, 3e groupe → rouge
+        if (v.gr === 2) return '#ff9f7f';
+        return '#b22222';
+    }
     return '#b22222';
 }
 
@@ -2941,15 +2940,14 @@ function piocher(cfg) {
         const cfg = getConfig();
         const niveaux = cfg.niv;
         let pool = [];
-        if ((cfg.catA||0) > 0) pool = pool.concat(
-            melangerTableau(verbesPSpetit_A.filter(v => niveaux.includes(v.niv)))
-            .slice(0, cfg.catA).map(v => ({...v, cat:'A'})));
-        if ((cfg.catI||0) > 0) pool = pool.concat(
-            melangerTableau(verbesPSpetit_I.filter(v => niveaux.includes(v.niv)))
-            .slice(0, cfg.catI).map(v => ({...v, cat:'I'})));
-        if ((cfg.catU||0) > 0) pool = pool.concat(
-            melangerTableau(verbesPSpetit_U.filter(v => niveaux.includes(v.niv)))
-            .slice(0, cfg.catU).map(v => ({...v, cat:'U'})));
+        const pickCat = (arr, cat, n) => {
+            let pool = arr.filter(v => niveaux.includes(v.niv));
+            if (pool.length < n) pool = arr; // fallback sans filtre niveau
+            return melangerTableau(pool).slice(0, n).map(v => ({...v, cat}));
+        };
+        if ((cfg.catA||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_A, 'A', cfg.catA));
+        if ((cfg.catI||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_I, 'I', cfg.catI));
+        if ((cfg.catU||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_U, 'U', cfg.catU));
         return melangerTableau([...pool]);
     }
 
