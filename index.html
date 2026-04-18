@@ -2162,8 +2162,8 @@ function afficherPS(v) {
         if (mode === 'form-terminaison') {
             document.getElementById('imp-form-sujet').innerText = sujetAff + radical + '-';
             input.placeholder = '…';
-            input.style.width = '100px';
-            input.style.fontSize = '28px';
+            input.style.width = '140px';
+            input.style.fontSize = '26px';
             input.style.textAlign = 'center';
             zone.dataset.modeTerminaison = '1';
             zone.dataset.reponse = bonneTerminaison;
@@ -2254,9 +2254,10 @@ function validerPSForm() {
         }, 2000);
     } else {
         futEssaiCount++;
+        const msgErrPS = getMsgErreurPSForm(reponse, bonne, zone.dataset.modeTerminaison === '1', zone.dataset.cat, zone.dataset.sujetAff, zone.dataset.radical, zone.dataset.formeComplete);
         if (futEssaiCount === 1) {
             msg.style.color = '#e74c3c';
-            msg.innerText   = '❌ Essaie encore…';
+            msg.innerText   = '❌ ' + msgErrPS;
             setTimeout(fuzzJuju, 0);
             input.value = '';
             input.focus();
@@ -2270,6 +2271,46 @@ function validerPSForm() {
             parler(formeComplete);
             setTimeout(prochain, 2500);
         }
+    }
+}
+
+function getMsgErreurPSForm(reponse, bonne, isTermMode, cat, sujetAff, radical, formeComplete) {
+    const r = reponse.trim().toLowerCase();
+
+    if (isTermMode === true || isTermMode === '1') {
+        // Mode terminaison : l'élève tape seulement la terminaison
+        if (['ais','ait','aient','ions','iez'].includes(r))
+            return "Tu confonds avec l'imparfait !";
+        if (r === 'i' || r === 'u')
+            return "Tu confonds avec un participe passé !";
+        return "Regarde bien le sujet !";
+    } else {
+        // Mode forme entière
+        const bonneNorm = bonne.trim().toLowerCase();
+        // Vérifier confusion imparfait : la fin correspond à une terminaison d'imparfait
+        const finImp = ['ais','ait','aient','ions','iez'];
+        if (finImp.some(t => r.endsWith(t)))
+            return "Tu confonds avec l'imparfait !";
+        // Vérifier verbe pronominal mal conjugué
+        // sujetAff contient "je " ou "j'" — chercher si le pronom réfléchi est faux
+        const sfx = sujetAff ? sujetAff.trim() : '';
+        if (radical && (radical.startsWith("m'") || radical.startsWith("t'") || radical.startsWith("s'"))) {
+            // Verbe pronominal : vérifier si l'élève a mis le bon pronom réfléchi
+            const bonneDebut = (bonneNorm.split(' ').slice(0,2).join(' '));
+            const repDebut   = (r.split(' ').slice(0,2).join(' '));
+            if (bonneDebut !== repDebut && r.length > 2)
+                return "Revois la conjugaison du verbe pronominal !";
+        }
+        // Vérifier si le radical est faux mais la terminaison bonne
+        const termOk = ['ai','as','a','èrent','is','it','irent','ins','int','inrent','us','ut','urent'];
+        const bonneTerminaison = termOk.find(t => bonneNorm.endsWith(t)) || '';
+        const repTerminaison   = termOk.find(t => r.endsWith(t)) || '';
+        if (bonneTerminaison && repTerminaison && bonneTerminaison === repTerminaison && r !== bonneNorm)
+            return "Essaie encore ! Vérifie le radical.";
+        // Vérifier si la terminaison est fausse
+        if (bonneTerminaison && repTerminaison && bonneTerminaison !== repTerminaison)
+            return "Regarde bien le sujet !";
+        return "Essaie encore !";
     }
 }
 
