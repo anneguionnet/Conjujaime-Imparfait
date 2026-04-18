@@ -2203,6 +2203,7 @@ function validerPSPelote(termChoisie, correct, btn, zone) {
         msg.innerText   = '✓ Bravo !';
         scoreTotal++; scoreSerie++;
         document.getElementById('total-score').innerText = scoreTotal;
+        document.getElementById('ps-pelotes-sujet').innerHTML = `<span style="color:#c2185b; font-weight:bold;">${formeComplete}</span>`;
         parler(formeComplete);
         creerConfettis();
         setTimeout(prochain, 2000);
