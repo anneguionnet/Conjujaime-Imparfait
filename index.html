@@ -962,9 +962,15 @@ function piocher(cfg) {
         const cfg = getConfig();
         const niveaux = cfg.niv;
         let pool = [];
-        if ((cfg.catA||0) > 0) pool = pool.concat(melangerTableau(verbesPSpetit_A.filter(v => niveaux.includes(v.niv))).slice(0, cfg.catA));
-        if ((cfg.catI||0) > 0) pool = pool.concat(melangerTableau(verbesPSpetit_I.filter(v => niveaux.includes(v.niv))).slice(0, cfg.catI));
-        if ((cfg.catU||0) > 0) pool = pool.concat(melangerTableau(verbesPSpetit_U.filter(v => niveaux.includes(v.niv))).slice(0, cfg.catU));
+        if ((cfg.catA||0) > 0) pool = pool.concat(
+            melangerTableau(verbesPSpetit_A.filter(v => niveaux.includes(v.niv)))
+            .slice(0, cfg.catA).map(v => ({...v, cat:'A'})));
+        if ((cfg.catI||0) > 0) pool = pool.concat(
+            melangerTableau(verbesPSpetit_I.filter(v => niveaux.includes(v.niv)))
+            .slice(0, cfg.catI).map(v => ({...v, cat:'I'})));
+        if ((cfg.catU||0) > 0) pool = pool.concat(
+            melangerTableau(verbesPSpetit_U.filter(v => niveaux.includes(v.niv)))
+            .slice(0, cfg.catU).map(v => ({...v, cat:'U'})));
         return melangerTableau([...pool]);
     }
 
@@ -2934,9 +2940,15 @@ function piocher(cfg) {
         const cfg = getConfig();
         const niveaux = cfg.niv;
         let pool = [];
-        if ((cfg.catA||0) > 0) pool = pool.concat(melangerTableau(verbesPSpetit_A.filter(v => niveaux.includes(v.niv))).slice(0, cfg.catA));
-        if ((cfg.catI||0) > 0) pool = pool.concat(melangerTableau(verbesPSpetit_I.filter(v => niveaux.includes(v.niv))).slice(0, cfg.catI));
-        if ((cfg.catU||0) > 0) pool = pool.concat(melangerTableau(verbesPSpetit_U.filter(v => niveaux.includes(v.niv))).slice(0, cfg.catU));
+        if ((cfg.catA||0) > 0) pool = pool.concat(
+            melangerTableau(verbesPSpetit_A.filter(v => niveaux.includes(v.niv)))
+            .slice(0, cfg.catA).map(v => ({...v, cat:'A'})));
+        if ((cfg.catI||0) > 0) pool = pool.concat(
+            melangerTableau(verbesPSpetit_I.filter(v => niveaux.includes(v.niv)))
+            .slice(0, cfg.catI).map(v => ({...v, cat:'I'})));
+        if ((cfg.catU||0) > 0) pool = pool.concat(
+            melangerTableau(verbesPSpetit_U.filter(v => niveaux.includes(v.niv)))
+            .slice(0, cfg.catU).map(v => ({...v, cat:'U'})));
         return melangerTableau([...pool]);
     }
 
