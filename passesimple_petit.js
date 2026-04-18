@@ -80,4 +80,5 @@ const verbesPSpetit_U = [
   { inf: "encourir", niv: 3, rad: "encour" },
 ];
 
+const verbesPSpetit_IVenir = [];
 const verbesPSpetit = [...verbesPSpetit_A, ...verbesPSpetit_I, ...verbesPSpetit_IVenir, ...verbesPSpetit_U];
