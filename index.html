@@ -965,7 +965,7 @@ function piocher(cfg) {
         const pickCat = (arr, cat, n) => {
             let pool = arr.filter(v => niveaux.includes(v.niv));
             if (pool.length < n) pool = arr; // fallback sans filtre niveau
-            return melangerTableau(pool).slice(0, n).map(v => ({...v, cat}));
+            return melangerTableau(pool).slice(0, n).map(v => ({...v, cat, gr: v.gr || (cat==='A' ? 1 : cat==='U' ? 3 : v.gr||3)}));
         };
         if ((cfg.catA||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_A, 'A', cfg.catA));
         if ((cfg.catI||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_I, 'I', cfg.catI));
@@ -2000,16 +2000,17 @@ const PS_TERM = {
 function getCouleurPS(v, sujetNorm) {
     const cat = v.cat || 'A';
     if (sujetNorm === 'elles') return null;
+    // PS3 (mélange tout) → rose neutre pour toutes les pelotes
+    if (jeuActuel === 'ps3') return '#e91e8c';
     if (cat === 'A') {
-        if (v.inf === 'aller') return '#b22222';
-        return '#a8e6cf';
+        if (v.inf === 'aller') return '#e91e8c'; // rose neutre — aller n'est pas 1er groupe
+        return '#a8e6cf'; // vert — 1er groupe
     }
     if (cat === 'I' || cat === 'I_venir') {
-        // 2e groupe → orange, 3e groupe → rouge
-        if (v.gr === 2) return '#ff9f7f';
-        return '#b22222';
+        if (v.gr === 2) return '#ff9f7f'; // orange — 2e groupe
+        return '#b22222'; // rouge — 3e groupe
     }
-    return '#b22222';
+    return '#b22222'; // rouge — U = 3e groupe
 }
 
 function getCouleurPelotePS(terminaison) {
@@ -2943,7 +2944,7 @@ function piocher(cfg) {
         const pickCat = (arr, cat, n) => {
             let pool = arr.filter(v => niveaux.includes(v.niv));
             if (pool.length < n) pool = arr; // fallback sans filtre niveau
-            return melangerTableau(pool).slice(0, n).map(v => ({...v, cat}));
+            return melangerTableau(pool).slice(0, n).map(v => ({...v, cat, gr: v.gr || (cat==='A' ? 1 : cat==='U' ? 3 : v.gr||3)}));
         };
         if ((cfg.catA||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_A, 'A', cfg.catA));
         if ((cfg.catI||0) > 0) pool = pool.concat(pickCat(verbesPSpetit_I, 'I', cfg.catI));
