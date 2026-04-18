@@ -276,7 +276,8 @@
                 <span class="sujet-inline" id="imp-form-sujet"></span>
                 <input type="text" id="imp-form-input" class="input-reponse"
                        placeholder="conjugue…"
-                       autocomplete="off" autocorrect="off" spellcheck="false">
+                       autocomplete="off" autocorrect="off" spellcheck="false"
+                       onkeydown="if(event.key==='Enter'){const b=document.getElementById('btn-valider-impform');if(b&&!b.disabled){if(jeuActuel.startsWith('futur')||jeuActuel==='conditionnel')validerFutForm();else if(jeuActuel.startsWith('ps'))validerPSForm();else validerImpForm();}}">
             </div>
             <button class="btn-valider" id="btn-valider-impform"
                     onclick="jeuActuel.startsWith('futur') || jeuActuel === 'conditionnel' ? validerFutForm() : jeuActuel.startsWith('ps') ? validerPSForm() : validerImpForm()" style="margin-top:15px;">OK</button>
@@ -2085,6 +2086,7 @@ let psEssaiCount = 0;
 
 function afficherPS(v) {
     psEssaiCount = 0;
+    futEssaiCount = 0;
     const cfg = getConfig();
     const mode = cfg.mode;
 
@@ -2155,6 +2157,7 @@ function afficherPS(v) {
         input.value = '';
         input.disabled = false;
         document.getElementById('btn-valider-impform').style.display = 'inline-block';
+        setTimeout(() => input.focus(), 100);
 
         if (mode === 'form-terminaison') {
             document.getElementById('imp-form-sujet').innerText = sujetAff + radical + '-';
