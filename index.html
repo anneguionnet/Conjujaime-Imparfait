@@ -298,7 +298,7 @@
         </div>
         <!-- Bulle Retiens ps2 -->
         <div id="bulle-ps2" class="bulle-present1" style="display:none;">
-            💬 <i>Conseil de Juju : regarde bien les verbes de la famille de <b>venir</b> et de <b>tenir</b>. Ils ont leur propre terminaison en <b>-in</b> !</i>
+            💬 <i>Conseil de Juju : les verbes en <b>[i]</b> prennent <b>-is/-it/-irent</b>, les verbes en <b>[u]</b> prennent <b>-us/-ut/-urent</b>. Les verbes de la famille de <b>venir</b> et <b>tenir</b> ont leur propre terminaison en <b>-in</b> : je vins, il tint, ils retinrent !</i>
         </div>
         <!-- Bulle Retiens ps3 -->
         <div id="bulle-ps3" class="bulle-present1" style="display:none;">
@@ -2000,10 +2000,8 @@ const PS_TERM = {
 function getCouleurPS(v, sujetNorm) {
     const cat = v.cat || 'A';
     if (sujetNorm === 'elles') return null;
-    // PS3 (mélange tout) → rose neutre pour toutes les pelotes
-    if (jeuActuel === 'ps3') return '#e91e8c';
     if (cat === 'A') {
-        if (v.inf === 'aller') return '#e91e8c'; // rose neutre — aller n'est pas 1er groupe
+        if (v.inf === 'aller') return '#f48fb1'; // rose clair — aller n'est pas 1er groupe
         return '#a8e6cf'; // vert — 1er groupe
     }
     if (cat === 'I' || cat === 'I_venir') {
