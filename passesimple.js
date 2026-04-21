@@ -351,4 +351,12 @@ const verbesPS_U = [
   { inf: "avoir", niv: 3, rad: "e" },
 ];
 
+const verbesPS_IVenir = [];
 const verbesPS = [...verbesPS_A, ...verbesPS_I, ...verbesPS_IVenir, ...verbesPS_U];
+
+// Aliases pour compatibilité avec le code des jeux
+const verbesPSpetit_A = verbesPS_A;
+const verbesPSpetit_I = verbesPS_I;
+const verbesPSpetit_U = verbesPS_U;
+const verbesPSpetit_IVenir = verbesPS_IVenir;
+const verbesPSpetit = verbesPS;
