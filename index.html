@@ -397,11 +397,14 @@ function nettoyerPourVoix(txt) {
     if (!txt) return '';
     return txt
         .replace(/-/g, '')
-        .replace(/'/g, "'")
+        .replace(/’/g, "'")
         .replace(/'\s+/g, "'")
-        // Éviter que le TTS prononce le S final de "ils" / "elles"
-        .replace(/\bills\b/gi, 'il')
-        .replace(/\belles\b/gi, 'elle')
+        // Liaison ils/elles devant voyelle ou h
+        .replace(/\bils\s+([aàâäeéèêëiîïoôöuùûüœhH])/g, function(m,c){return 'ilz '+c;})
+        .replace(/\belles\s+([aàâäeéèêëiîïoôöuùûüœhH])/g, function(m,c){return 'ellez '+c;})
+        // Supprimer le S final devant consonne ou fin
+        .replace(/\bils\b/g, 'il')
+        .replace(/\belles\b/g, 'elle')
         .replace(/\s+/g, ' ')
         .trim();
 }
