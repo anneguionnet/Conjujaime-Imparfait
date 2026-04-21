@@ -399,6 +399,9 @@ function nettoyerPourVoix(txt) {
         .replace(/-/g, '')
         .replace(/'/g, "'")
         .replace(/'\s+/g, "'")
+        // Éviter que le TTS prononce le S final de "ils" / "elles"
+        .replace(/\bills\b/gi, 'il')
+        .replace(/\belles\b/gi, 'elle')
         .replace(/\s+/g, ' ')
         .trim();
 }
@@ -411,7 +414,7 @@ function parler(txt) {
     const u = new SpeechSynthesisUtterance(txtNet);
     u.lang = 'fr-FR';
     u.rate = 0.9;
-    const setVoix = () => {
+    const choisirVoix = () => {
         const vs = window.speechSynthesis.getVoices();
         const f = vs.find(v => v.lang.startsWith('fr') &&
                 (v.name.includes('Amelie') || v.name.includes('Amélie') ||
@@ -420,10 +423,15 @@ function parler(txt) {
                || vs.find(v => v.lang === 'fr-FR')
                || vs.find(v => v.lang.startsWith('fr'));
         if (f) u.voice = f;
-        window.speechSynthesis.speak(u);
     };
-    if (window.speechSynthesis.getVoices().length > 0) setVoix();
-    else window.speechSynthesis.onvoiceschanged = setVoix;
+    choisirVoix();
+    window.speechSynthesis.speak(u);
+    // Workaround Chrome desktop : relancer si la synthèse se bloque après ~500ms
+    setTimeout(() => {
+        if (sonActif && window.speechSynthesis.speaking && window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+        }
+    }, 500);
 }
 
 function toggleSon(btn) {
@@ -681,6 +689,7 @@ function retourMenu() {
     document.getElementById('page-jeu').classList.remove('active');
     document.getElementById('page-menu').classList.add('active');
     window.speechSynthesis.cancel();
+    if (infVoixTimer) { clearTimeout(infVoixTimer); infVoixTimer = null; }
     document.getElementById('ecran-intermediaire').style.display = 'none';
     document.getElementById('cartouche-jeu').style.display = 'block';
 }
@@ -817,14 +826,14 @@ function getLecon() {
     switch (jeuActuel) {
         case 'infinitif':
             return `<strong>Le sais-tu ?</strong><br>
-                1) Verbes en <b>-ER</b> = 1<sup>er</sup> groupe (sauf <i>aller</i>).<br>
-                2) Verbes en <b>-IR</b> (participe en <b>-issant</b>) = 2<sup>e</sup> groupe.<br>
-                3) Tous les autres = 3<sup>e</sup> groupe.`;
+                <span style="color:#2ecc71;">⬤ 1) Verbes en <b>-ER</b> = 1<sup>er</sup> groupe (sauf <i>aller</i>).</span><br>
+                <span style="color:#ff9f7f;">⬤ 2) Verbes en <b>-IR</b> (participe en <b>-issant</b>) = 2<sup>e</sup> groupe.</span><br>
+                <span style="color:#b22222;">⬤ 3) Tous les autres = 3<sup>e</sup> groupe.</span>`;
         case 'conjugue':
             return `<strong>Retrouveras-tu l'infinitif ?</strong><br>
-                1) Terminaison en <b>-e, -es</b> ou <b>-é</b> → 1<sup>er</sup> groupe !<br>
-                2) On entend ou voit <b>-ss-</b> (-issant) → 2<sup>e</sup> groupe.<br>
-                3) Sinon, essaie <i>"Il faut…"</i> (faire, prendre, partir…).`;
+                <span style="color:#2ecc71;">⬤ 1) Terminaison en <b>-e, -es</b> ou <b>-é</b> → 1<sup>er</sup> groupe !</span><br>
+                <span style="color:#ff9f7f;">⬤ 2) On entend ou voit <b>-ss-</b> (-issant) → 2<sup>e</sup> groupe.</span><br>
+                <span style="color:#b22222;">⬤ 3) Sinon, essaie <i>"Il faut…"</i> (faire, prendre, partir…).</span>`;
         case 'participe':
             return `<strong>Trouve le bon participe présent !</strong><br>
                 1) Verbes en <b>-ER</b> → en <b>-ant</b> (chant<b>ant</b>)<br>
@@ -1035,19 +1044,29 @@ function majInterface() {
 }
 
 // ============================================================
-// JEUX INFINITIF / CONJUGUÉ / PARTICIPE (inchangés)
+// JEUX INFINITIF / CONJUGUÉ / PARTICIPE
 // ============================================================
 
+let infVoixTimer = null;
+
 function afficherInfinitif(v) {
+    if (infVoixTimer) { clearTimeout(infVoixTimer); infVoixTimer = null; }
     document.getElementById('verbe-txt').innerText = v.infi;
     afficherPelotesGroupes(getConfig().shuffle);
     parler(v.infi);
+    infVoixTimer = setTimeout(() => {
+        if (jeuActuel === 'infinitif') parler(v.part);
+    }, 8000);
 }
 
 function afficherConjugue(v) {
+    if (infVoixTimer) { clearTimeout(infVoixTimer); infVoixTimer = null; }
     document.getElementById('verbe-txt').innerText = v.v;
     afficherPelotesGroupes(CONFIG['infinitif'][serie].shuffle);
     parler(v.v);
+    infVoixTimer = setTimeout(() => {
+        if (jeuActuel === 'conjugue') parler(v.part);
+    }, 8000);
 }
 
 function afficherPelotesGroupes(shuffle) {
@@ -1336,6 +1355,7 @@ function afficherPresent2Form(v) {
 // ============================================================
 
 function verifierGroupe(choix) {
+    if (infVoixTimer) { clearTimeout(infVoixTimer); infVoixTimer = null; }
     const v   = verbesPioches[qIndex];
     const msg = document.getElementById('msg-zone');
     if (choix === v.gr) {
@@ -1344,7 +1364,8 @@ function verifierGroupe(choix) {
         scoreTotal++; scoreSerie++;
         document.getElementById('total-score').innerText = scoreTotal;
         creerConfettis();
-        setTimeout(prochain, 1000);
+        parler(v.part);
+        setTimeout(prochain, 2000);
     } else {
         msg.style.color = COULEURS_GR[v.gr];
         msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : ''); setTimeout(fuzzJuju, 0);
@@ -3014,323 +3035,6 @@ function majInterface() {
     else if (jeuActuel === 'ps1' || jeuActuel === 'ps2' || jeuActuel === 'ps3') afficherPS(v);
 }
 
-// ============================================================
-// JEUX INFINITIF / CONJUGUÉ / PARTICIPE (inchangés)
-// ============================================================
-
-function afficherInfinitif(v) {
-    document.getElementById('verbe-txt').innerText = v.infi;
-    afficherPelotesGroupes(getConfig().shuffle);
-    parler(v.infi);
-}
-
-function afficherConjugue(v) {
-    document.getElementById('verbe-txt').innerText = v.v;
-    afficherPelotesGroupes(CONFIG['infinitif'][serie].shuffle);
-    parler(v.v);
-}
-
-function afficherPelotesGroupes(shuffle) {
-    const zone = document.getElementById('pelotes-zone');
-    zone.innerHTML = '';
-    let ordre = [1, 2, 3];
-    if (shuffle) {
-        do { ordre = melangerTableau([...ordre]); }
-        while (JSON.stringify(ordre) === JSON.stringify(dernierOrdrePelotes));
-        dernierOrdrePelotes = [...ordre];
-    }
-    ordre.forEach(gr => {
-        const btn = document.createElement('button');
-        btn.className = `pelote p${gr}`;
-        btn.textContent = gr === 1 ? '1er' : gr === 2 ? '2e' : '3e';
-        btn.onclick = () => verifierGroupe(gr);
-        zone.appendChild(btn);
-    });
-}
-
-function afficherParticipe(v) {
-    const texte = serie <= 4 ? v.v : v.infi;
-    document.getElementById('verbe-txt').innerText = texte;
-    document.getElementById('input-zone').style.display = 'flex';
-    const inp = document.getElementById('input-participe');
-    inp.value = '';
-    inp.disabled = false;
-    inp.focus();
-    essai = 0;
-    parler(texte);
-}
-
-function afficherPresent(v) {
-    const cfg = CONFIG['present1'][serie];
-    if (cfg.mode === 'pelotes') afficherPresentPelotes(v);
-    else afficherPresentForm(v);
-}
-
-function afficherPresentPelotes(v) {
-    const zone = document.getElementById('zone-present-pelotes');
-    zone.style.display = 'block';
-
-    const sujetBrut = SUJETS[Math.floor(Math.random() * SUJETS.length)];
-    const radical = v.pronominal ? getRadicalPronominal(v, sujetBrut) : v.radical;
-    const sujet = adapterSujet(sujetBrut, radical, v.hAspire);
-    const radicalNet = radical.replace('-', '');
-
-    let terminaison;
-    if (sujetBrut === 'tu') terminaison = 'es';
-    else if (sujetBrut === 'ils' || sujetBrut === 'elles') terminaison = 'ent';
-    else terminaison = 'e';
-
-    zone.dataset.sujet       = sujet;
-    zone.dataset.radical     = radicalNet;
-    zone.dataset.terminaison = terminaison;
-    zone.dataset.essai       = '0';
-
-    document.getElementById('present-infinitif').innerText = v.infinitif;
-    document.getElementById('present-conjugaison').innerText = `${sujet} ${radicalNet}-`;
-
-    const pelotesZone = document.getElementById('present-pelotes');
-    pelotesZone.innerHTML = '';
-    let terminaisons = ['e', 'es', 'ent'];
-    if (serie >= 4) terminaisons = melangerTableau([...terminaisons]);
-    terminaisons.forEach(t => {
-        const btn = document.createElement('button');
-        btn.className = 'pelote-terminaison';
-        btn.textContent = t;
-        btn.onclick = () => verifierTerminaison(t, btn, zone);
-        pelotesZone.appendChild(btn);
-    });
-
-    parler(sujet + radicalNet + terminaison);
-}
-
-function afficherPresentForm(v) {
-    const zone = document.getElementById('zone-present-form');
-    zone.style.display = 'block';
-
-    const sujetBrut = SUJETS[Math.floor(Math.random() * SUJETS.length)];
-    const radical    = v.pronominal ? getRadicalPronominal(v, sujetBrut) : v.radical;
-    const radicalAlt = v.pronominal ? getRadicalAltPronominal(v, sujetBrut) : (v.radicalAlt || null);
-    const sujet      = adapterSujet(sujetBrut, radical, v.hAspire);
-    const radicalNet = radical.replace('-', '');
-
-    let terminaison;
-    if (sujetBrut === 'tu') terminaison = 'es';
-    else if (sujetBrut === 'ils' || sujetBrut === 'elles') terminaison = 'ent';
-    else terminaison = 'e';
-
-    zone.dataset.sujet      = sujet;
-    zone.dataset.terminaison = terminaison;
-    zone.dataset.reponse    = radicalNet + terminaison;
-    zone.dataset.reponseAlt = radicalAlt ? radicalAlt.replace('-', '') + terminaison : '';
-    // En série 6, l'élève tape seulement la terminaison
-    zone.dataset.modeTerminaison = (serie === 6) ? '1' : '0';
-
-    document.getElementById('form-infinitif').innerText = v.infinitif;
-
-    const inp = document.getElementById('form-input');
-    inp.value    = '';
-    inp.disabled = false;
-    essai = 0;
-
-    if (serie === 6) {
-        // Afficher : SUJET + RADICAL + champ
-        document.getElementById('form-sujet').innerText = sujet + ' ' + radicalNet;
-        inp.placeholder = '…';
-        inp.style.width = '80px'; inp.style.fontSize = '28px'; inp.style.textAlign = 'center'; inp.style.padding = '12px 8px';
-        inp.focus();
-        parler(sujet + ' ' + radicalNet + terminaison);
-    } else if (serie >= 7) {
-        // Afficher : SUJET seul + champ (forme entière)
-        document.getElementById('form-sujet').innerText = sujet;
-        inp.placeholder = 'conjugue…';
-        inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
-        inp.focus();
-        parler(v.infinitif);
-    } else {
-        document.getElementById('form-sujet').innerText = sujet;
-        inp.placeholder = 'conjugue…';
-        inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
-        inp.focus();
-        parler(sujet + ' ' + radicalNet + terminaison);
-    }
-}
-
-function getRadicalPronominal(v, sujetBrut) {
-    if (sujetBrut === 'je')   return v.radicalJe;
-    if (sujetBrut === 'tu')   return v.radicalTu;
-    if (sujetBrut === 'il' || sujetBrut === 'elle' || sujetBrut === 'on') return v.radicalIl;
-    return v.radicalPluriel;
-}
-
-function getRadicalAltPronominal(v, sujetBrut) {
-    if (!v.radicalAltJe) return null;
-    if (sujetBrut === 'je')   return v.radicalAltJe;
-    if (sujetBrut === 'tu')   return v.radicalAltTu;
-    if (sujetBrut === 'il' || sujetBrut === 'elle' || sujetBrut === 'on') return v.radicalAltIl;
-    return v.radicalAltPluriel;
-}
-
-// ============================================================
-// PRÉSENT 2e/3e GROUPE
-// ============================================================
-
-// Retourne le radical selon le sujet, en tenant compte des pronominaux
-function getRadicalP2(v, sujetBrut) {
-    if (v.pronominal) {
-        if (sujetBrut === 'je')   return v.radicalJe;
-        if (sujetBrut === 'tu')   return v.radicalTu;
-        if (sujetBrut === 'il' || sujetBrut === 'elle' || sujetBrut === 'on') return v.radicalIl;
-        return v.radicalPluriel;
-    }
-    // Non pronominal : radical unique pour je/tu/il, radicalPluriel pour ils/elles
-    if (sujetBrut === 'ils' || sujetBrut === 'elles') return v.radicalPluriel;
-    return v.radical;
-}
-
-// Retourne la terminaison correcte selon le sujet
-function getTerminaisonP2(sujetBrut, terminaisons) {
-    // terminaisons format : "ds|ds|d|ent" — parties [0]=je, [1]=tu, [2]=il, [3]=ils
-    if (terminaisons) {
-        const parts = terminaisons.split('|');
-        if (sujetBrut === 'je')                                    return parts[0];
-        if (sujetBrut === 'tu')                                    return parts[1];
-        if (sujetBrut === 'il' || sujetBrut === 'elle' || sujetBrut === 'on') return parts[2];
-        return parts[3]; // ils/elles
-    }
-    // Terminaisons standard 2e/3e groupe
-    if (sujetBrut === 'je' || sujetBrut === 'tu') return 's';
-    if (sujetBrut === 'ils' || sujetBrut === 'elles') return 'ent';
-    return 't'; // il/elle/on
-}
-
-// Génère les 3 pelotes orangées
-// Ordre fixe : S-forme | T-forme | -ENT  (jamais mélangées en séries 1-3)
-function genererPelotesP2(v, sujetBrut) {
-    const cT = v.terminaisons;
-    const bonneT = getTerminaisonP2(sujetBrut, cT);
-
-    let libS, libT;
-    if (cT && cT.includes('ds')) { libS = '-ds'; libT = '-d'; }
-    else if (cT && cT.includes('ts')) { libS = '-ts'; libT = '-t'; }
-    else if (cT && cT.includes('cs')) { libS = '-cs'; libT = '-c'; }
-    else if (cT && cT.startsWith('x')) { libS = '-x'; libT = '-t'; }
-    else { libS = '-s'; libT = '-t'; }
-
-    return [
-        { text: libS,   correct: bonneT === libS.replace('-','')   },
-        { text: libT,   correct: bonneT === libT.replace('-','')   },
-        { text: '-ent', correct: bonneT === 'ent' },
-    ];
-}
-
-function afficherPresent2(v) {
-    const cfg = CONFIG['present2'][serie];
-    if (cfg.mode === 'pelotes') afficherPresent2Pelotes(v);
-    else afficherPresent2Form(v);
-}
-
-function afficherPresent2Pelotes(v) {
-    const zone = document.getElementById('zone-present2-pelotes');
-    zone.style.display = 'block';
-
-    const pool = v.sujetsPossibles || (v.pronominal ? ['je','tu','il','elle','ils','elles'] : ['je','tu','il','elle','ils','elles']);
-    const sujetBrut = pool[Math.floor(Math.random() * pool.length)];
-    const radical    = getRadicalP2(v, sujetBrut);
-    const sujet      = adapterSujet(sujetBrut, radical, v.hAspire);
-    const radicalNet = radical.replace(/-/g, '');
-    const terminaison = getTerminaisonP2(sujetBrut, v.terminaisons);
-
-    zone.dataset.sujet      = sujet;
-    zone.dataset.radical    = radicalNet;
-    zone.dataset.terminaison = terminaison;
-
-    document.getElementById('p2-infinitif').innerText   = v.infinitif;
-    document.getElementById('p2-conjugaison').innerText = `${sujet} ${radicalNet}-`;
-
-    const pelotesZone = document.getElementById('p2-pelotes');
-    pelotesZone.innerHTML = '';
-
-    let pelotes = genererPelotesP2(v, sujetBrut);
-    if (CONFIG['present2'][serie].shuffle) pelotes = melangerTableau([...pelotes]);
-
-    const couleurP2 = v.groupe === 2 ? 'orange' : 'rouge';
-    pelotes.forEach(p => {
-        const btn = document.createElement('button');
-        btn.className = `pelote-terminaison ${couleurP2}`;
-        btn.textContent = p.text.replace(/^-/, '');
-        btn.dataset.correct = p.correct ? '1' : '0';
-        btn.onclick = () => verifierP2Pelote(p, btn, zone);
-        pelotesZone.appendChild(btn);
-    });
-
-    parler(sujet + ' ' + radicalNet + terminaison);
-}
-
-function afficherPresent2Form(v) {
-    const zone = document.getElementById('zone-present2-form');
-    zone.style.display = 'block';
-
-    const pool = v.sujetsPossibles || ['je','tu','il','elle','ils','elles'];
-    const sujetBrut  = pool[Math.floor(Math.random() * pool.length)];
-    const radical    = getRadicalP2(v, sujetBrut);
-    const sujet      = adapterSujet(sujetBrut, radical, v.hAspire);
-    const radicalNet = radical.replace(/-/g, '');
-    const terminaison = getTerminaisonP2(sujetBrut, v.terminaisons);
-
-    zone.dataset.sujet        = sujet;
-    zone.dataset.reponse      = radicalNet + terminaison;
-    zone.dataset.terminaison  = terminaison;
-    zone.dataset.reponseAlt   = v.radicalAlt ? v.radicalAlt.replace(/-/g, '') + terminaison : '';
-    zone.dataset.modeTerminaison = (serie === 6) ? '1' : '0';
-
-    document.getElementById('p2-form-infinitif').innerText = v.infinitif;
-
-    const inp = document.getElementById('p2-form-input');
-    inp.value    = '';
-    inp.disabled = false;
-    p2EssaiCount = 0;
-
-    if (serie === 6) {
-        document.getElementById('p2-form-sujet').innerText = sujet + ' ' + radicalNet;
-        inp.placeholder = '…';
-        inp.style.width = '80px'; inp.style.fontSize = '28px'; inp.style.textAlign = 'center'; inp.style.padding = '12px 8px';
-        inp.focus();
-        parler(sujet + ' ' + radicalNet + terminaison);
-    } else if (serie >= 7) {
-        document.getElementById('p2-form-sujet').innerText = sujet;
-        inp.placeholder = 'conjugue…';
-        inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
-        inp.focus();
-        parler(v.infinitif);
-    } else {
-        document.getElementById('p2-form-sujet').innerText = sujet;
-        inp.placeholder = 'conjugue…';
-        inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
-        inp.focus();
-        parler(sujet + ' ' + radicalNet + terminaison);
-    }
-}
-
-// ============================================================
-// VÉRIFICATIONS
-// ============================================================
-
-function verifierGroupe(choix) {
-    const v   = verbesPioches[qIndex];
-    const msg = document.getElementById('msg-zone');
-    if (choix === v.gr) {
-        msg.style.color = '#2ecc71';
-        msg.innerText   = 'Bravo ! 🎉';
-        scoreTotal++; scoreSerie++;
-        document.getElementById('total-score').innerText = scoreTotal;
-        creerConfettis();
-        setTimeout(prochain, 1000);
-    } else {
-        msg.style.color = COULEURS_GR[v.gr];
-        msg.innerText   = `Indice : ${v.part}` + (v.gr === 2 ? ' (-issant)' : ''); setTimeout(fuzzJuju, 0);
-        setTimeout(fuzzJuju, 0);
-    }
-}
 
 function validerParticipe() {
     const v       = verbesPioches[qIndex];
