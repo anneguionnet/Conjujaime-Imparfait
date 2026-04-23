@@ -24,6 +24,9 @@
         .btn-menu-jeu.rose  { background: linear-gradient(135deg, #f06292 0%, #e91e8c 100%); }
         .btn-menu-jeu.rose2 { background: linear-gradient(135deg, #e91e8c 0%, #c2185b 100%); }
         .btn-menu-jeu.rose3 { background: linear-gradient(135deg, #c2185b 0%, #880e4f 100%); }
+        .btn-menu-jeu.orange  { background: linear-gradient(135deg, #ffb347 0%, #ff8c00 100%); }
+        .btn-menu-jeu.orange2 { background: linear-gradient(135deg, #ff8c00 0%, #e65c00 100%); }
+        .btn-menu-jeu.orange3 { background: linear-gradient(135deg, #e65c00 0%, #b34500 100%); }
     </style>
 </head>
 <body>
@@ -110,6 +113,20 @@
         <p class="menu-encouragement">Allez, on mélange tout ! Juju croit en toi ! 🐾</p>
         <button class="btn-menu-jeu rose3" onclick="lancerJeu('ps3')">
             🌸 Tous les verbes
+        </button>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-section-titre">🟠 Le subjonctif présent</div>
+        <button class="btn-menu-jeu orange" onclick="lancerJeu('sp1')">
+            🟠 Verbes réguliers
+        </button>
+        <button class="btn-menu-jeu orange2" onclick="lancerJeu('sp2')">
+            🟠 Verbes irréguliers
+        </button>
+        <p class="menu-encouragement">Mélange tout et conjugue au subjonctif !</p>
+        <button class="btn-menu-jeu orange3" onclick="lancerJeu('sp3')">
+            🟠 Tous les verbes
         </button>
     </div>
 
@@ -290,6 +307,27 @@
             <div class="pelotes-zone" id="ps-pelotes-zone" style="justify-content:center; gap:20px;"></div>
         </div>
 
+        <!-- SUBJONCTIF — mode pelotes -->
+        <div id="zone-sp-pelotes" style="display:none; text-align:center;">
+            <div class="infinitif-display" id="sp-infinitif"></div>
+            <div class="conjugaison-display" id="sp-conjugaison"></div>
+            <div class="msg-zone" id="msg-sp-pelotes"></div>
+            <div class="pelotes-zone" id="sp-pelotes" style="justify-content:center; gap:20px;"></div>
+        </div>
+
+        <!-- SUBJONCTIF — mode form -->
+        <div id="zone-sp-form" style="display:none; text-align:center;">
+            <div class="infinitif-display" id="sp-form-infinitif"></div>
+            <div class="form-ligne">
+                <span class="sujet-inline" id="sp-form-sujet"></span>
+                <input type="text" id="sp-form-input" class="input-reponse"
+                       placeholder="conjugue…"
+                       autocomplete="off" autocorrect="off" spellcheck="false">
+            </div>
+            <button class="btn-valider" id="btn-valider-spform"
+                    onclick="validerSPForm()" style="margin-top:15px;">OK</button>
+        </div>
+
         <div class="msg-zone" id="msg-zone"></div>
 
         <!-- Bulle Retiens ps1 -->
@@ -303,6 +341,22 @@
         <!-- Bulle Retiens ps3 -->
         <div id="bulle-ps3" class="bulle-present1" style="display:none;">
             💬 <i>Conseil de Juju : d'abord, pense à l'infinitif du verbe, ensuite, regarde son sujet, enfin, n'oublie pas les particularités des verbes comme <b>venir</b> et <b>tenir</b>.</i>
+        </div>
+
+        <!-- Bulle Retiens sp1 -->
+        <div id="bulle-sp1" class="bulle-present1" style="display:none;">
+            💬 <i>Conseil de Juju : regarde, le présent du subjonctif et le présent de l'indicatif sont des homophones au singulier et à la 3e personne du pluriel. C'est vrai pour tous les verbes en <b>-ER</b>. Quelques verbes du 3e groupe aussi conservent le même radical.<br>
+            Aussi, <b>nous</b> et <b>vous</b> ont des terminaisons similaires à celles de l'imparfait.</i>
+        </div>
+        <!-- Bulle Retiens sp2 -->
+        <div id="bulle-sp2" class="bulle-present1" style="display:none;">
+            💬 <i>Conseil de Juju : au subjonctif, c'est le radical qui peut poser problème : pense à la 3e personne du pluriel du présent de l'indicatif, et tu trouveras !<br>
+            Exemple : <b>les enfants finissent</b> → il faut que je <b>finisse</b>. <b>Les enfants boivent</b> → il faut que tu <b>boives</b>.</i>
+        </div>
+        <!-- Bulle Retiens sp3 -->
+        <div id="bulle-sp3" class="bulle-present1" style="display:none;">
+            💬 <i>Conseil de Juju : souviens-toi, beaucoup de verbes au subjonctif présent sont des homophones du présent, mais le radical change parfois.<br>
+            Sers-toi du pluriel du présent et retiens les irréguliers comme <b>savoir : que je sache</b>, <b>faire : que je fasse</b>, <b>être : que je sois</b>, <b>avoir : que j'aie</b>, que tu <b>aies</b>, qu'elle <b>ait</b>… C'est parti !</i>
         </div>
 
         <!-- Bulle Retiens conditionnel -->
@@ -386,6 +440,7 @@
 <script src="dataFuturCondi.js"></script>
 <script src="verbesImparfaitPron.js"></script>
 <script src="dataFuturCondiPron.js"></script>
+<script src="subjPresentMini.js"></script>
 <script>
 // ============================================================
 // ENGINE — Voix, confettis, utilitaires
@@ -487,6 +542,7 @@ let dernierOrdrePelotes = [1, 2, 3];
 let clicksJuju  = 0;
 let p2EssaiCount = 0; // compteur d'erreurs pour present2
 let ptEssaiCount = 0; // compteur d'erreurs pour presentTous
+let spEssaiCount = 0; // compteur d'erreurs pour subjonctif
 
 const COULEURS_GR = { 1: '#a8e6cf', 2: '#ff9f7f', 3: '#b22222' };
 const SUJETS = ['je', 'tu', 'il', 'elle', 'on', 'ils', 'elles'];
@@ -624,6 +680,36 @@ const CONFIG = {
         7: { niv:[2,3], mode:'form-entiere',     nb:8, opa:0.1,  catA:1, catI:3, catU:4 },
         8: { niv:[1,2], mode:'form-entiere',     nb:8, opa:0,    catA:1, catI:3, catU:4 },
     },
+    sp1: {
+        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:true  },
+        2: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
+        3: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
+        4: { niv:[1,2],     mode:'form-terminaison', nb:8, opa:0.75 },
+        5: { niv:[1,2],     mode:'form-entiere',     nb:8, opa:0.5  },
+        6: { niv:[2,3],     mode:'form-entiere',     nb:8, opa:0.25 },
+        7: { niv:[3,4],     mode:'form-entiere',     nb:8, opa:0.1  },
+        8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
+    },
+    sp2: {
+        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:true  },
+        2: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
+        3: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
+        4: { niv:[1,2],     mode:'form-terminaison', nb:8, opa:0.75 },
+        5: { niv:[1,2],     mode:'form-entiere',     nb:8, opa:0.5  },
+        6: { niv:[2,3],     mode:'form-entiere',     nb:8, opa:0.25 },
+        7: { niv:[3,4],     mode:'form-entiere',     nb:8, opa:0.1  },
+        8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
+    },
+    sp3: {
+        1: { niv:[1],       mode:'pelotes',          nb:8, opa:1,    shuffle:true  },
+        2: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.75, shuffle:true  },
+        3: { niv:[1,2],     mode:'pelotes',          nb:8, opa:0.5,  shuffle:true  },
+        4: { niv:[1,2],     mode:'form-terminaison', nb:8, opa:0.75 },
+        5: { niv:[1,2],     mode:'form-entiere',     nb:8, opa:0.5  },
+        6: { niv:[2,3],     mode:'form-entiere',     nb:8, opa:0.25 },
+        7: { niv:[3,4],     mode:'form-entiere',     nb:8, opa:0.1  },
+        8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
+    },
     present2: {
         // Séries 1-3 : pelotes, niveaux 1-2, pelotes fixes (pas de shuffle)
         1: { niv:[1,2], mode:'pelotes', nb:8, opa:1,   shuffle:false },
@@ -673,6 +759,9 @@ function lancerJeu(type) {
         ps1: 'Passé simple — verbes en -ER',
         ps2: 'Passé simple — 2e et 3e groupe',
         ps3: 'Passé simple — tous les verbes',
+        sp1: 'Subjonctif présent — Réguliers',
+        sp2: 'Subjonctif présent — Irréguliers',
+        sp3: 'Subjonctif présent — Tous les verbes',
         futur1:    'Le futur simple',
         futur2:    'Le futur des verbes irréguliers',
         present1:  'Le présent - 1er groupe',
@@ -709,6 +798,7 @@ function chargerSerie() {
     ptEssaiCount  = 0;
     impEssaiCount = 0;
     futEssaiCount = 0;
+    spEssaiCount  = 0;
 
     const cfg = getConfig();
 
@@ -787,6 +877,14 @@ function chargerSerie() {
             if (jeuActuel === id) b.style.opacity = cfg.opa;
         }
     });
+
+    ['sp1','sp2','sp3'].forEach(id => {
+        const b = document.getElementById('bulle-' + id);
+        if (b) {
+            b.style.display = (jeuActuel === id && cfg.opa > 0) ? 'block' : 'none';
+            if (jeuActuel === id) b.style.opacity = cfg.opa;
+        }
+    });
     // Bulle Retiens imparfait1
     const bulleImp1 = document.getElementById('bulle-imparfait1');
     if (jeuActuel === 'imparfait1' && cfg.opa > 0) {
@@ -839,9 +937,9 @@ function getLecon() {
                 <span style="color:#b22222;">⬤ 3) Sinon, essaie <i>"Il faut…"</i> (faire, prendre, partir…).</span>`;
         case 'participe':
             return `<strong>Trouve le bon participe présent !</strong><br>
-                1) Verbes en <b>-ER</b> → en <b>-ant</b> (chant<b>ant</b>)<br>
-                2) Verbes en <b>-IR</b> du 2<sup>e</sup> groupe → en <b>-issant</b><br>
-                3) Attention : <i>avoir→ayant, être→étant, savoir→sachant</i>`;
+                <span style="color:#2ecc71;">⬤ 1) Verbes en <b>-ER</b> → en <b>-ant</b> (chant<b>ant</b>)</span><br>
+                <span style="color:#ff9f7f;">⬤ 2) Verbes en <b>-IR</b> du 2<sup>e</sup> groupe → en <b>-issant</b></span><br>
+                <span style="color:#b22222;">⬤ 3) Attention : <i>avoir→<b>ayant</b>, être→<b>étant</b>, savoir→<b>sachant</b></i></span>`;
         case 'present1':
             return `<strong style="color:#2ecc71;">Le présent des verbes du 1<sup>er</sup> groupe en <b>-ER</b> :</strong><br>
                 <span style="color:#2ecc71;"><b>je / il / elle / on</b> → <b>-e</b> &nbsp;|&nbsp;
@@ -892,6 +990,13 @@ function getLecon() {
                   <tr><td>il/elle/on</td><td>-a</td><td>-it</td><td>-ut</td><td>retint</td></tr>
                   <tr><td>ils/elles</td><td>-èrent</td><td>-irent</td><td>-urent</td><td>retinrent</td></tr>
                 </table>`;
+        case 'sp1':
+        case 'sp2':
+        case 'sp3':
+            return `<strong>Au subjonctif présent :</strong><br>
+                Après <i>il faut que</i>, <i>il est nécessaire que</i>, <i>avant que</i>, <i>bien que</i>, <i>pour que</i>…<br>
+                <b>je → -e &nbsp;|&nbsp; tu → -es &nbsp;|&nbsp; il/elle → -e &nbsp;|&nbsp; ils/elles → -ent</b><br>
+                Pour nous/vous : <b>-ions / -iez</b>. À toi de jouer !`;
         case 'futur2':
             return `<strong>Au futur, on ajoute les terminaisons suivantes :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp;
@@ -985,6 +1090,25 @@ function piocher(cfg) {
         return melangerTableau([...pool]);
     }
 
+
+    // Jeux subjonctif
+    if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') {
+        let pool;
+        if (jeuActuel === 'sp1') {
+            pool = verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif));
+        } else if (jeuActuel === 'sp2') {
+            pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
+        } else {
+            pool = [...verbesSubjPresent];
+        }
+        pool = pool.filter(v => cfg.niv.includes(v.niveau));
+        if (pool.length < cfg.nb) {
+            pool = jeuActuel === 'sp1' ? verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif))
+                 : jeuActuel === 'sp2' ? verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif))
+                 : [...verbesSubjPresent];
+        }
+        return melangerTableau([...pool]).slice(0, cfg.nb);
+    }
     // Jeux infinitif / conjugue / participe
     const pioquerGroupe = (gr, n) => {
         let pool = verbesInfinitifParticipe.filter(v =>
@@ -1028,11 +1152,15 @@ function majInterface() {
     document.getElementById('zone-imparfait-pelotes').style.display  = 'none';
     document.getElementById('zone-imparfait-form').style.display     = 'none';
     document.getElementById('zone-ps-pelotes').style.display         = 'none';
+    document.getElementById('zone-sp-pelotes').style.display         = 'none';
+    document.getElementById('zone-sp-form').style.display            = 'none';
+    document.getElementById('msg-sp-pelotes').innerText = '';
     document.getElementById('verbe-txt').innerText = '';
     p2EssaiCount = 0;
     ptEssaiCount = 0;
     impEssaiCount = 0;
     futEssaiCount = 0;
+    spEssaiCount  = 0;
 
     if      (jeuActuel === 'infinitif')   afficherInfinitif(v);
     else if (jeuActuel === 'conjugue')    afficherConjugue(v);
@@ -1044,6 +1172,7 @@ function majInterface() {
     else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
     else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
     else if (jeuActuel === 'ps1' || jeuActuel === 'ps2' || jeuActuel === 'ps3') afficherPS(v);
+    else if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') afficherSP(v);
 }
 
 // ============================================================
@@ -3715,6 +3844,9 @@ document.getElementById('p2-form-input').addEventListener('keypress', e => {
 document.getElementById('pt-form-input').addEventListener('keypress', e => {
     if (e.key === 'Enter') validerPTForm();
 });
+document.getElementById('sp-form-input').addEventListener('keypress', e => {
+    if (e.key === 'Enter') validerSPForm();
+});
 
 // ============================================================
 // IMPARFAIT3 — nous / vous / ils / elles
@@ -3788,6 +3920,420 @@ function afficherImparfait3(v) {
         }
         parler(v.infinitif);
         setTimeout(() => input.focus(), 100);
+    }
+}
+
+// ============================================================
+// SUBJONCTIF PRÉSENT — SP1, SP2, SP3
+// ============================================================
+
+const HOMOPHONES_SP = new Set([
+    "courir","fuir","voir","croire","rire","sourire","mourir",
+    "revoir","prévoir","acquérir","conquérir","requérir",
+    "s'enfuir","s'enquérir"
+]);
+
+const SUJETS_SP = ['je','tu','il','elle','ils','elles'];
+
+const IRREGULIERS_SP = new Set([
+    "finir","choisir","grandir","réussir","remplir","obéir","punir","agir",
+    "bâtir","grossir","maigrir","jaunir","rougir","blanchir","noircir","pâlir",
+    "salir","guérir","nourrir","applaudir","réfléchir","établir","réagir",
+    "avertir","bondir","franchir","fournir","vieillir","unir","réunir","fleurir",
+    "rugir","saisir","trahir","divertir","durcir","élargir","enrichir","envahir",
+    "gémir","aboutir","accomplir","adoucir","affaiblir","agrandir","anéantir",
+    "approfondir","arrondir","atterrir","convertir","définir","démolir","désobéir",
+    "éblouir","étourdir","frémir","mûrir","raccourcir","ralentir","refroidir",
+    "réjouir","rétablir","rétrécir","rôtir","subir","surgir","ternir","verdir",
+    "abolir","alunir","amincir","amortir","aplanir","assombrir","assortir",
+    "assoupir","attendrir","compatir","dépérir","embellir","engloutir","engourdir",
+    "enlaidir","ennoblir","épaissir","épanouir","faiblir","flétrir","gravir",
+    "hennir","investir","jaillir","mugir","pervertir","pourrir","vomir",
+    "apprendre","attendre","s'attendre","comprendre","se comprendre","condescendre",
+    "confondre","se confondre","correspondre","se correspondre","coudre","découdre",
+    "se découdre","défendre","se défendre","démordre","désapprendre","descendre",
+    "détendre","se détendre","détordre","distendre","entendre","s'entendre",
+    "entreprendre","épandre","s'éprendre","étendre","s'étendre","fendre",
+    "se fendre","fondre","se fondre","se méprendre","mordre","se mordre",
+    "se morfondre","moudre","pendre","perdre","se perdre","pondre","pourfendre",
+    "prendre","prétendre","réapprendre","recoudre","redescendre","réentendre",
+    "refendre","refondre","remordre","rendre","se rendre","répandre","se répandre",
+    "reperdre","répondre","se répondre","reprendre","se reprendre","retendre",
+    "retondre","retordre","revendre","sous-entendre","sous-tendre","surprendre",
+    "se surprendre","suspendre","tendre","se tendre","tondre","tordre","vendre",
+    "absoudre","dissoudre","résoudre",
+    "abattre","s'abattre","admettre","battre","se battre","combattre","commettre",
+    "compromettre","se compromettre","contrebattre","débattre","se débattre",
+    "démettre","se démettre","s'ébattre","émettre","s'entremettre","mettre",
+    "se mettre","omettre","permettre","se permettre","promettre","se promettre",
+    "rabattre","se rabattre","réadmettre","rebattre","réémettre","remettre",
+    "se remettre","retransmettre","soumettre","se soumettre","télétransmettre",
+    "transmettre","se transmettre",
+    "advenir","circonvenir","contenir","contrevenir","convenir","devenir",
+    "disconvenir","détenir","maintenir","parvenir","prévenir","provenir",
+    "redevenir","retenir","revenir","se souvenir","s'abstenir","soutenir",
+    "subvenir","survenir","tenir","venir",
+    "ceindre","contraindre","craindre","dépeindre","déteindre","feindre",
+    "geindre","joindre","peindre","plaindre","rejoindre","repeindre",
+    "restreindre","teindre",
+    "contrefaire","défaire","faire","méfaire","refaire","satisfaire",
+    "circonscrire","comparaître","conduire","confire","connaître","consentir",
+    "construire","contredire","cuire","desservir","devoir","dire","disparaître",
+    "décrire","déduire","démentir","détruire","luire","mentir","mouvoir",
+    "méconnaître","naître","nuire","paraître","plaire","déplaire","complaire",
+    "prescrire","pressentir","produire","promouvoir","proscrire","reconnaître",
+    "reconstruire","recuire","redire","relire","reluire","renduire","repartir",
+    "reproduire","ressentir","resservir","ressortir","retranscrire","revivre",
+    "réapparaître","récrire","réduire","réinscrire","réintroduire","réécrire",
+    "réélire","savoir","se rendormir","se repentir","se taire","sentir","servir",
+    "sortir","souscrire","suffire","suivre","survivre","séduire","s'endormir",
+    "traduire","transcrire","transparaître","vivre","pouvoir","vouloir","valoir",
+    "vaincre","s'asseoir","apercevoir","aller","boire","écrire","émouvoir",
+    "falloir","haïr","lire","pleuvoir","être","avoir",
+]);
+
+function getRadicalSP(v, sujetBrut) {
+    if (sujetBrut === 'nous' || sujetBrut === 'vous') return v.radNousVous || v.radical;
+    return v.radical;
+}
+
+function getTerminaisonSP(sujetBrut) {
+    if (sujetBrut === 'tu')                           return 'es';
+    if (sujetBrut === 'ils' || sujetBrut === 'elles') return 'ent';
+    return 'e';
+}
+
+function getTerminaisonEtre(sujetBrut) {
+    if (sujetBrut === 'je' || sujetBrut === 'tu')     return 's';
+    if (sujetBrut === 'il' || sujetBrut === 'elle')   return 't';
+    return 'ent';
+}
+
+function getTerminaisonAvoir(sujetBrut) {
+    if (sujetBrut === 'je')                           return 'e';
+    if (sujetBrut === 'tu')                           return 'es';
+    if (sujetBrut === 'il' || sujetBrut === 'elle')   return 't';
+    return 'ent';
+}
+
+function adapterSujetSP(sujetBrut, radical, hAspire, pronominal) {
+    const startsVowel = /^[aeiouéèêëàâîïôùûüœæ]/i.test(radical);
+    const hMuet = !hAspire && /^h/i.test(radical);
+
+    let pronom = '';
+    if (pronominal) {
+        const elide = startsVowel || hMuet;
+        if (sujetBrut === 'je')                                                           pronom = elide ? "m'" : 'me ';
+        else if (sujetBrut === 'tu')                                                      pronom = elide ? "t'" : 'te ';
+        else                                                                               pronom = elide ? "s'" : 'se ';
+    }
+
+    let sujetAff;
+    if (sujetBrut === 'je' && (startsVowel || hMuet)) sujetAff = "j'";
+    else sujetAff = sujetBrut + ' ';
+
+    return "qu'" + sujetAff + pronom;
+}
+
+function genererPelotesSP(v, sujetBrut) {
+    const estEtre  = v.infinitif === 'être';
+    const estAvoir = v.infinitif === 'avoir';
+    const estHomophone = HOMOPHONES_SP.has(v.infinitif);
+
+    let bonne, pelotes;
+
+    if (estEtre) {
+        bonne = getTerminaisonEtre(sujetBrut);
+        if (sujetBrut === 'je') {
+            pelotes = [
+                { text: '-s',   correct: true,  msg: null },
+                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+            ];
+        } else if (sujetBrut === 'tu') {
+            pelotes = [
+                { text: '-s',   correct: true,  msg: null },
+                { text: '-es',  correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+            ];
+        } else if (sujetBrut === 'il' || sujetBrut === 'elle') {
+            pelotes = [
+                { text: '-t',   correct: true,  msg: null },
+                { text: '-s',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+            ];
+        } else {
+            pelotes = [
+                { text: '-ent', correct: true,  msg: null },
+                { text: '-s',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+            ];
+        }
+    } else if (estAvoir) {
+        bonne = getTerminaisonAvoir(sujetBrut);
+        if (sujetBrut === 'je') {
+            pelotes = [
+                { text: '-e',   correct: true,  msg: null },
+                { text: '-es',  correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+            ];
+        } else if (sujetBrut === 'tu') {
+            pelotes = [
+                { text: '-es',  correct: true,  msg: null },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+            ];
+        } else if (sujetBrut === 'il' || sujetBrut === 'elle') {
+            pelotes = [
+                { text: '-t',   correct: true,  msg: null },
+                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+            ];
+        } else {
+            pelotes = [
+                { text: '-ent', correct: true,  msg: null },
+                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+            ];
+        }
+    } else if (estHomophone) {
+        bonne = getTerminaisonSP(sujetBrut);
+        if (sujetBrut === 'je' || sujetBrut === 'il' || sujetBrut === 'elle') {
+            pelotes = [
+                { text: '-e',   correct: true,  msg: null },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+            ];
+        } else if (sujetBrut === 'tu') {
+            pelotes = [
+                { text: '-es',  correct: true,  msg: null },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+            ];
+        } else {
+            pelotes = [
+                { text: '-ent', correct: true,  msg: null },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+            ];
+        }
+    } else {
+        bonne = getTerminaisonSP(sujetBrut);
+        pelotes = [
+            { text: '-e',   correct: sujetBrut === 'je' || sujetBrut === 'il' || sujetBrut === 'elle',  msg: 'Regarde bien le sujet !' },
+            { text: '-es',  correct: sujetBrut === 'tu',    msg: 'Regarde bien le sujet !' },
+            { text: '-ent', correct: sujetBrut === 'ils' || sujetBrut === 'elles', msg: 'Regarde bien le sujet !' },
+        ];
+        pelotes.forEach(p => { if (p.correct) p.msg = null; });
+    }
+
+    return { pelotes, bonne };
+}
+
+function afficherSP(v) {
+    const cfg = CONFIG[jeuActuel][serie];
+    if (cfg.mode === 'pelotes') afficherSPPelotes(v);
+    else afficherSPForm(v);
+}
+
+function afficherSPPelotes(v) {
+    const zone = document.getElementById('zone-sp-pelotes');
+    zone.style.display = 'block';
+    spEssaiCount = 0;
+
+    const pool = v.sujetsPossibles || SUJETS_SP;
+    const sujetBrut  = pool[Math.floor(Math.random() * pool.length)];
+    const radical    = getRadicalSP(v, sujetBrut);
+    const radicalNet = radical.replace(/-/g, '');
+    const sujetAff   = adapterSujetSP(sujetBrut, radicalNet, v.hAspire, v.pronominal);
+    const terminaison = (v.infinitif === 'être') ? getTerminaisonEtre(sujetBrut)
+                      : (v.infinitif === 'avoir') ? getTerminaisonAvoir(sujetBrut)
+                      : getTerminaisonSP(sujetBrut);
+
+    zone.dataset.sujet      = sujetBrut;
+    zone.dataset.radical    = radicalNet;
+    zone.dataset.terminaison = terminaison;
+
+    document.getElementById('sp-infinitif').innerText   = v.infinitif;
+    document.getElementById('sp-conjugaison').innerText = `${sujetAff}${radicalNet}-`;
+    document.getElementById('msg-sp-pelotes').innerText = '';
+
+    const { pelotes, bonne } = genererPelotesSP(v, sujetBrut);
+    const cfg = CONFIG[jeuActuel][serie];
+    const pelotesMel = cfg.shuffle ? melangerTableau([...pelotes]) : pelotes;
+
+    const pzone = document.getElementById('sp-pelotes');
+    pzone.innerHTML = '';
+
+    pelotesMel.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'pelote-terminaison';
+        btn.style.background = 'linear-gradient(135deg, #ffb347, #ff8c00)';
+        btn.style.color = 'white';
+        btn.textContent = p.text;
+        btn.dataset.correct = p.correct ? '1' : '0';
+        btn.dataset.msg = p.msg || '';
+        btn.onclick = () => verifierSPPelote(p, btn, zone, sujetAff, radicalNet, terminaison);
+        pzone.appendChild(btn);
+    });
+
+    parler(sujetAff + radicalNet + terminaison);
+}
+
+function verifierSPPelote(p, btn, zone, sujetAff, radicalNet, terminaison) {
+    const msg = document.getElementById('msg-sp-pelotes');
+    document.querySelectorAll('#sp-pelotes .pelote-terminaison').forEach(b => b.disabled = true);
+
+    if (p.correct) {
+        btn.classList.add('correct');
+        msg.style.color = '#2ecc71';
+        msg.innerText   = '✓ Bravo !';
+        document.getElementById('sp-conjugaison').innerText = `${sujetAff}${radicalNet}${terminaison}`;
+        scoreTotal++; scoreSerie++;
+        document.getElementById('total-score').innerText = scoreTotal;
+        creerConfettis();
+        parler(sujetAff + radicalNet + terminaison);
+        setTimeout(prochain, 2000);
+    } else {
+        spEssaiCount++;
+        btn.classList.add('wrong');
+        const msgErreur = p.msg || 'Essaie encore !';
+        msg.style.color = '#e74c3c';
+
+        if (spEssaiCount >= 2) {
+            msg.innerText = `✗ La réponse : ${sujetAff}${radicalNet}${terminaison}`;
+            document.getElementById('sp-conjugaison').innerText = `${sujetAff}${radicalNet}${terminaison}`;
+            document.querySelectorAll('#sp-pelotes .pelote-terminaison').forEach(b => {
+                if (b.dataset.correct === '1') b.classList.add('correct');
+            });
+            parler(sujetAff + radicalNet + terminaison);
+            setTimeout(prochain, 3000);
+        } else {
+            msg.innerText = '✗ ' + msgErreur;
+            setTimeout(fuzzJuju, 0);
+            document.querySelectorAll('#sp-pelotes .pelote-terminaison').forEach(b => {
+                if (!b.classList.contains('wrong')) b.disabled = false;
+            });
+        }
+    }
+}
+
+function afficherSPForm(v) {
+    const zone = document.getElementById('zone-sp-form');
+    zone.style.display = 'block';
+    spEssaiCount = 0;
+
+    const pool = v.sujetsPossibles || SUJETS_SP;
+    const sujetBrut  = pool[Math.floor(Math.random() * pool.length)];
+    const radical    = getRadicalSP(v, sujetBrut);
+    const radicalNet = radical.replace(/-/g, '');
+    const sujetAff   = adapterSujetSP(sujetBrut, radicalNet, v.hAspire, v.pronominal);
+
+    const terminaison = (v.infinitif === 'être') ? getTerminaisonEtre(sujetBrut)
+                      : (v.infinitif === 'avoir') ? getTerminaisonAvoir(sujetBrut)
+                      : getTerminaisonSP(sujetBrut);
+
+    const reponse = radicalNet + terminaison;
+
+    let reponseAlt = '';
+    if (v.infinitif === "s'asseoir" && v.radAlt) {
+        const radAlt = (sujetBrut === 'nous' || sujetBrut === 'vous')
+            ? (v.radNousVousAlt || v.radAlt)
+            : v.radAlt;
+        reponseAlt = radAlt.replace(/-/g, '') + terminaison;
+    }
+
+    zone.dataset.sujet        = sujetBrut;
+    zone.dataset.sujetAff     = sujetAff;
+    zone.dataset.reponse      = reponse;
+    zone.dataset.reponseAlt   = reponseAlt;
+    zone.dataset.terminaison  = terminaison;
+    zone.dataset.modeTerminaison = (serie === 4) ? '1' : '0';
+
+    document.getElementById('sp-form-infinitif').innerText = v.infinitif;
+
+    const inp = document.getElementById('sp-form-input');
+    inp.value    = '';
+    inp.disabled = false;
+    document.getElementById('btn-valider-spform').disabled = false;
+    document.getElementById('msg-zone').innerText = '';
+
+    if (serie === 4) {
+        document.getElementById('sp-form-sujet').innerText = sujetAff + radicalNet;
+        inp.placeholder = '…';
+        inp.style.width = '80px'; inp.style.fontSize = '28px';
+        inp.style.textAlign = 'center'; inp.style.padding = '12px 8px';
+        inp.focus();
+        parler(sujetAff + reponse);
+    } else {
+        document.getElementById('sp-form-sujet').innerText = sujetAff;
+        inp.placeholder = 'conjugue…';
+        inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
+        inp.focus();
+        if (serie >= 6) parler(v.infinitif);
+        else parler(sujetAff + reponse);
+    }
+}
+
+function validerSPForm() {
+    const zone     = document.getElementById('zone-sp-form');
+    const inp      = document.getElementById('sp-form-input');
+    const rep      = inp.value.trim().toLowerCase();
+    const bonne    = zone.dataset.reponse.toLowerCase();
+    const bonneAlt = zone.dataset.reponseAlt ? zone.dataset.reponseAlt.toLowerCase() : '';
+    const sujetAff = zone.dataset.sujetAff;
+    const terminaison = zone.dataset.terminaison.toLowerCase();
+    const modeT    = zone.dataset.modeTerminaison === '1';
+    const msg      = document.getElementById('msg-zone');
+    const btnV     = document.getElementById('btn-valider-spform');
+
+    const bonneCompare = modeT ? terminaison : bonne;
+    const altCompare   = modeT ? (bonneAlt ? bonneAlt.slice(-terminaison.length) : '') : bonneAlt;
+    const correct = rep === bonneCompare || (altCompare && rep === altCompare);
+
+    // Pour s'asseoir : la voix répète la forme saisie par l'élève
+    const formeParlee = (bonneAlt && rep === altCompare) ? sujetAff + bonneAlt : sujetAff + bonne;
+
+    if (correct) {
+        inp.disabled  = true;
+        btnV.disabled = true;
+        msg.style.color = '#2ecc71';
+        msg.innerText   = '✓ Bravo !';
+        scoreTotal++; scoreSerie++;
+        document.getElementById('total-score').innerText = scoreTotal;
+        if (serie >= 5) {
+            afficherFormeComplete(
+                document.getElementById('sp-form-sujet'),
+                inp, btnV,
+                sujetAff + bonne + (bonneAlt ? ` (ou ${sujetAff}${bonneAlt})` : '')
+            );
+        }
+        parler(formeParlee);
+        creerConfettis();
+        setTimeout(() => {
+            restaurerFormInput(document.getElementById('sp-form-sujet'), sujetAff, inp, btnV);
+            inp.disabled = false; btnV.disabled = false; prochain();
+        }, 2000);
+    } else {
+        spEssaiCount++;
+        if (spEssaiCount >= 2) {
+            inp.disabled  = true;
+            btnV.disabled = true;
+            msg.style.color = '#e74c3c';
+            const affichage = bonneAlt
+                ? `${sujetAff}${bonne} (ou ${sujetAff}${bonneAlt})`
+                : `${sujetAff}${bonne}`;
+            msg.innerText = `✗ La réponse : ${affichage}`;
+            setTimeout(fuzzJuju, 0);
+            parler(sujetAff + bonne);
+            setTimeout(() => { inp.disabled = false; btnV.disabled = false; prochain(); }, 2500);
+        } else {
+            msg.style.color = '#e74c3c';
+            msg.innerText   = '✗ Essaie encore !';
+            setTimeout(fuzzJuju, 0);
+            inp.value = '';
+            inp.focus();
+        }
     }
 }
 
