@@ -3161,6 +3161,25 @@ function piocher(cfg) {
         return melangerTableau([...pool]);
     }
 
+    // Jeux subjonctif
+    if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') {
+        let pool;
+        if (jeuActuel === 'sp1') {
+            pool = verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif));
+        } else if (jeuActuel === 'sp2') {
+            pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
+        } else {
+            pool = [...verbesSubjPresent];
+        }
+        pool = pool.filter(v => cfg.niv.includes(v.niveau));
+        if (pool.length < cfg.nb) {
+            pool = jeuActuel === 'sp1' ? verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif))
+                 : jeuActuel === 'sp2' ? verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif))
+                 : [...verbesSubjPresent];
+        }
+        return melangerTableau([...pool]).slice(0, cfg.nb);
+    }
+
     // Jeux infinitif / conjugue / participe
     const pioquerGroupe = (gr, n) => {
         let pool = verbesInfinitifParticipe.filter(v =>
@@ -3203,11 +3222,15 @@ function majInterface() {
     document.getElementById('zone-imparfait-pelotes').style.display  = 'none';
     document.getElementById('zone-imparfait-form').style.display     = 'none';
     document.getElementById('zone-ps-pelotes').style.display         = 'none';
+    document.getElementById('zone-sp-pelotes').style.display         = 'none';
+    document.getElementById('zone-sp-form').style.display            = 'none';
+    document.getElementById('msg-sp-pelotes').innerText = '';
     document.getElementById('verbe-txt').innerText = '';
     p2EssaiCount = 0;
     ptEssaiCount = 0;
     impEssaiCount = 0;
     futEssaiCount = 0;
+    spEssaiCount  = 0;
 
     if      (jeuActuel === 'infinitif')   afficherInfinitif(v);
     else if (jeuActuel === 'conjugue')    afficherConjugue(v);
@@ -3219,6 +3242,7 @@ function majInterface() {
     else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
     else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
     else if (jeuActuel === 'ps1' || jeuActuel === 'ps2' || jeuActuel === 'ps3') afficherPS(v);
+    else if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') afficherSP(v);
 }
 
 
