@@ -4043,9 +4043,10 @@ function adapterSujetSP(sujetBrut, radical, hAspire, pronominal) {
         else                           pronom = elide ? "s'" : 'se ';
     }
 
-    // Élision de JE devant voyelle ou h muet
+    // Élision de JE : seulement si pas pronominal ET radical commence par voyelle/h muet
+    // Si pronominal, JE ne s'élide jamais (c'est me/m' qui gère l'élision)
     let sujetAff;
-    if (sujetBrut === 'je' && (startsVowel || hMuet)) sujetAff = "j'";
+    if (!pronominal && sujetBrut === 'je' && (startsVowel || hMuet)) sujetAff = "j'";
     else sujetAff = sujetBrut + ' ';
 
     // qu' seulement devant il/elle/ils/elles
