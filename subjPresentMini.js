@@ -110,7 +110,7 @@ const verbesSubjPresent = [
   { infinitif: "vaincre", niveau: 4, radical: "vainqu" },
   { infinitif: "haïr", niveau: 2, radical: "haïss" },
   { infinitif: "devoir", niveau: 1, radical: "doiv", radNousVous: "dev" },
-  { infinitif: "s'asseoir", niveau: 1, radical: "assoie", radAlt: "asseye", radNousVous: "assoy", radNousVousAlt: "assey", pronominal: true },
+  { infinitif: "s'asseoir", niveau: 1, radical: "assoi", radAlt: "assey", radNousVous: "assoy", radNousVousAlt: "assey", pronominal: true },
   { infinitif: "se taire", niveau: 2, radical: "tais", pronominal: true },
   { infinitif: "falloir", niveau: 1, radical: "faill", sujetsPossibles: ["il"] },
   { infinitif: "pleuvoir", niveau: 1, radical: "pleuv", sujetsPossibles: ["il"] },

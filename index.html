@@ -1030,7 +1030,7 @@ const HOMOPHONES_SP = new Set([
     "s'enfuir","s'enquérir"
 ]);
 
-const SUJETS_SP = ['je','tu','il','elle','ils','elles'];
+const SUJETS_SP = ['je','tu','elle','ils'];
 
 const IRREGULIERS_SP = new Set([
     "finir","choisir","grandir","réussir","remplir","obéir","punir","agir",
@@ -2296,6 +2296,7 @@ function getMsgErreurPS(cat, sujetNorm, termChoisie) {
 
 let psEssaiCount = 0;
 let psVoixTimer = null;
+let spVoixTimer = null;
 
 function afficherPS(v) {
     psEssaiCount = 0;
@@ -4037,16 +4038,21 @@ function adapterSujetSP(sujetBrut, radical, hAspire, pronominal) {
     let pronom = '';
     if (pronominal) {
         const elide = startsVowel || hMuet;
-        if (sujetBrut === 'je')                                                           pronom = elide ? "m'" : 'me ';
-        else if (sujetBrut === 'tu')                                                      pronom = elide ? "t'" : 'te ';
-        else                                                                               pronom = elide ? "s'" : 'se ';
+        if (sujetBrut === 'je')       pronom = elide ? "m'" : 'me ';
+        else if (sujetBrut === 'tu')  pronom = elide ? "t'" : 'te ';
+        else                           pronom = elide ? "s'" : 'se ';
     }
 
+    // Élision de JE devant voyelle ou h muet
     let sujetAff;
     if (sujetBrut === 'je' && (startsVowel || hMuet)) sujetAff = "j'";
     else sujetAff = sujetBrut + ' ';
 
-    return "qu'" + sujetAff + pronom;
+    // qu' seulement devant il/elle/ils/elles
+    const queElide = ['il','elle','ils','elles'].includes(sujetBrut);
+    const que = queElide ? "qu'" : "que ";
+
+    return que + sujetAff + pronom;
 }
 
 function genererPelotesSP(v, sujetBrut) {
@@ -4191,11 +4197,14 @@ function afficherSPPelotes(v) {
         pzone.appendChild(btn);
     });
 
-    parler(sujetAff + radicalNet + terminaison);
+    parler(v.infinitif);
+    if (spVoixTimer) clearTimeout(spVoixTimer);
+    spVoixTimer = setTimeout(() => { if (jeuActuel.startsWith('sp')) parler(sujetAff + radicalNet + terminaison); }, 8000);
 }
 
 function verifierSPPelote(p, btn, zone, sujetAff, radicalNet, terminaison) {
     const msg = document.getElementById('msg-sp-pelotes');
+    if (spVoixTimer) { clearTimeout(spVoixTimer); spVoixTimer = null; }
     document.querySelectorAll('#sp-pelotes .pelote-terminaison').forEach(b => b.disabled = true);
 
     if (p.correct) {
@@ -4278,20 +4287,24 @@ function afficherSPForm(v) {
         inp.style.width = '80px'; inp.style.fontSize = '28px';
         inp.style.textAlign = 'center'; inp.style.padding = '12px 8px';
         inp.focus();
-        parler(sujetAff + reponse);
+        parler(v.infinitif);
+        if (spVoixTimer) clearTimeout(spVoixTimer);
+        spVoixTimer = setTimeout(() => { if (jeuActuel.startsWith('sp')) parler(sujetAff + reponse); }, 8000);
     } else {
         document.getElementById('sp-form-sujet').innerText = sujetAff;
         inp.placeholder = 'conjugue…';
         inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
         inp.focus();
-        if (serie >= 6) parler(v.infinitif);
-        else parler(sujetAff + reponse);
+        parler(v.infinitif);
+        if (spVoixTimer) clearTimeout(spVoixTimer);
+        spVoixTimer = setTimeout(() => { if (jeuActuel.startsWith('sp')) parler(sujetAff + reponse); }, 8000);
     }
 }
 
 function validerSPForm() {
     const zone     = document.getElementById('zone-sp-form');
     const inp      = document.getElementById('sp-form-input');
+    if (spVoixTimer) { clearTimeout(spVoixTimer); spVoixTimer = null; }
     const rep      = inp.value.trim().toLowerCase();
     const bonne    = zone.dataset.reponse.toLowerCase();
     const bonneAlt = zone.dataset.reponseAlt ? zone.dataset.reponseAlt.toLowerCase() : '';
