@@ -1024,6 +1024,60 @@ function getLecon() {
 // PIOCHER LES VERBES
 // ============================================================
 
+const HOMOPHONES_SP = new Set([
+    "courir","fuir","voir","croire","rire","sourire","mourir",
+    "revoir","prévoir","acquérir","conquérir","requérir",
+    "s'enfuir","s'enquérir"
+]);
+
+const SUJETS_SP = ['je','tu','il','elle','ils','elles'];
+
+const IRREGULIERS_SP = new Set([
+    "finir","choisir","grandir","réussir","remplir","obéir","punir","agir",
+    "bâtir","grossir","maigrir","jaunir","rougir","blanchir","noircir","pâlir",
+    "salir","guérir","nourrir","applaudir","réfléchir","établir","réagir",
+    "avertir","bondir","franchir","fournir","vieillir","unir","réunir","fleurir",
+    "rugir","saisir","trahir","divertir","durcir","élargir","enrichir","envahir",
+    "gémir","aboutir","accomplir","adoucir","affaiblir","agrandir","anéantir",
+    "approfondir","arrondir","atterrir","convertir","définir","démolir","désobéir",
+    "éblouir","étourdir","frémir","mûrir","raccourcir","ralentir","refroidir",
+    "réjouir","rétablir","rétrécir","rôtir","subir","surgir","ternir","verdir",
+    "abolir","alunir","amincir","amortir","aplanir","assombrir","assortir",
+    "assoupir","attendrir","compatir","dépérir","embellir","engloutir","engourdir",
+    "enlaidir","ennoblir","épaissir","épanouir","faiblir","flétrir","gravir",
+    "hennir","investir","jaillir","mugir","pervertir","pourrir","vomir",
+    "apprendre","attendre","comprendre","condescendre","confondre","correspondre",
+    "coudre","découdre","défendre","démordre","désapprendre","descendre",
+    "détendre","détordre","distendre","entendre","entreprendre","épandre",
+    "étendre","fendre","fondre","moudre","pendre","perdre","pondre","pourfendre",
+    "prendre","prétendre","réapprendre","recoudre","redescendre","réentendre",
+    "refendre","refondre","remordre","rendre","répandre","reperdre","répondre",
+    "reprendre","retendre","retondre","retordre","revendre","surprendre",
+    "suspendre","tendre","tondre","tordre","vendre",
+    "absoudre","dissoudre","résoudre",
+    "abattre","admettre","battre","combattre","commettre","compromettre",
+    "contrebattre","débattre","démettre","émettre","mettre","omettre",
+    "permettre","promettre","rabattre","réadmettre","rebattre","réémettre",
+    "remettre","retransmettre","soumettre","télétransmettre","transmettre",
+    "advenir","circonvenir","contenir","contrevenir","convenir","devenir",
+    "disconvenir","détenir","maintenir","parvenir","prévenir","provenir",
+    "redevenir","retenir","revenir","soutenir","subvenir","survenir","tenir","venir",
+    "ceindre","contraindre","craindre","dépeindre","déteindre","feindre",
+    "geindre","joindre","peindre","plaindre","rejoindre","repeindre","restreindre","teindre",
+    "contrefaire","défaire","faire","méfaire","refaire","satisfaire",
+    "circonscrire","comparaître","conduire","confire","connaître","consentir",
+    "construire","contredire","cuire","desservir","devoir","dire","disparaître",
+    "décrire","déduire","démentir","détruire","luire","mentir","mouvoir",
+    "méconnaître","naître","nuire","paraître","plaire","déplaire","complaire",
+    "prescrire","pressentir","produire","promouvoir","proscrire","reconnaître",
+    "reconstruire","recuire","redire","relire","reluire","renduire","repartir",
+    "reproduire","ressentir","resservir","ressortir","retranscrire","revivre",
+    "réapparaître","récrire","réduire","réinscrire","réintroduire","réécrire",
+    "réélire","savoir","sentir","servir","sortir","souscrire","suffire","suivre",
+    "survivre","séduire","traduire","transcrire","transparaître","vivre",
+    "pouvoir","vouloir","valoir","vaincre","apercevoir","aller","boire","écrire",
+    "émouvoir","falloir","haïr","lire","pleuvoir","être","avoir",
+]);
 function piocher(cfg) {
     if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') {
         let pool;
@@ -3927,70 +3981,6 @@ function afficherImparfait3(v) {
 // SUBJONCTIF PRÉSENT — SP1, SP2, SP3
 // ============================================================
 
-const HOMOPHONES_SP = new Set([
-    "courir","fuir","voir","croire","rire","sourire","mourir",
-    "revoir","prévoir","acquérir","conquérir","requérir",
-    "s'enfuir","s'enquérir"
-]);
-
-const SUJETS_SP = ['je','tu','il','elle','ils','elles'];
-
-const IRREGULIERS_SP = new Set([
-    "finir","choisir","grandir","réussir","remplir","obéir","punir","agir",
-    "bâtir","grossir","maigrir","jaunir","rougir","blanchir","noircir","pâlir",
-    "salir","guérir","nourrir","applaudir","réfléchir","établir","réagir",
-    "avertir","bondir","franchir","fournir","vieillir","unir","réunir","fleurir",
-    "rugir","saisir","trahir","divertir","durcir","élargir","enrichir","envahir",
-    "gémir","aboutir","accomplir","adoucir","affaiblir","agrandir","anéantir",
-    "approfondir","arrondir","atterrir","convertir","définir","démolir","désobéir",
-    "éblouir","étourdir","frémir","mûrir","raccourcir","ralentir","refroidir",
-    "réjouir","rétablir","rétrécir","rôtir","subir","surgir","ternir","verdir",
-    "abolir","alunir","amincir","amortir","aplanir","assombrir","assortir",
-    "assoupir","attendrir","compatir","dépérir","embellir","engloutir","engourdir",
-    "enlaidir","ennoblir","épaissir","épanouir","faiblir","flétrir","gravir",
-    "hennir","investir","jaillir","mugir","pervertir","pourrir","vomir",
-    "apprendre","attendre","s'attendre","comprendre","se comprendre","condescendre",
-    "confondre","se confondre","correspondre","se correspondre","coudre","découdre",
-    "se découdre","défendre","se défendre","démordre","désapprendre","descendre",
-    "détendre","se détendre","détordre","distendre","entendre","s'entendre",
-    "entreprendre","épandre","s'éprendre","étendre","s'étendre","fendre",
-    "se fendre","fondre","se fondre","se méprendre","mordre","se mordre",
-    "se morfondre","moudre","pendre","perdre","se perdre","pondre","pourfendre",
-    "prendre","prétendre","réapprendre","recoudre","redescendre","réentendre",
-    "refendre","refondre","remordre","rendre","se rendre","répandre","se répandre",
-    "reperdre","répondre","se répondre","reprendre","se reprendre","retendre",
-    "retondre","retordre","revendre","sous-entendre","sous-tendre","surprendre",
-    "se surprendre","suspendre","tendre","se tendre","tondre","tordre","vendre",
-    "absoudre","dissoudre","résoudre",
-    "abattre","s'abattre","admettre","battre","se battre","combattre","commettre",
-    "compromettre","se compromettre","contrebattre","débattre","se débattre",
-    "démettre","se démettre","s'ébattre","émettre","s'entremettre","mettre",
-    "se mettre","omettre","permettre","se permettre","promettre","se promettre",
-    "rabattre","se rabattre","réadmettre","rebattre","réémettre","remettre",
-    "se remettre","retransmettre","soumettre","se soumettre","télétransmettre",
-    "transmettre","se transmettre",
-    "advenir","circonvenir","contenir","contrevenir","convenir","devenir",
-    "disconvenir","détenir","maintenir","parvenir","prévenir","provenir",
-    "redevenir","retenir","revenir","se souvenir","s'abstenir","soutenir",
-    "subvenir","survenir","tenir","venir",
-    "ceindre","contraindre","craindre","dépeindre","déteindre","feindre",
-    "geindre","joindre","peindre","plaindre","rejoindre","repeindre",
-    "restreindre","teindre",
-    "contrefaire","défaire","faire","méfaire","refaire","satisfaire",
-    "circonscrire","comparaître","conduire","confire","connaître","consentir",
-    "construire","contredire","cuire","desservir","devoir","dire","disparaître",
-    "décrire","déduire","démentir","détruire","luire","mentir","mouvoir",
-    "méconnaître","naître","nuire","paraître","plaire","déplaire","complaire",
-    "prescrire","pressentir","produire","promouvoir","proscrire","reconnaître",
-    "reconstruire","recuire","redire","relire","reluire","renduire","repartir",
-    "reproduire","ressentir","resservir","ressortir","retranscrire","revivre",
-    "réapparaître","récrire","réduire","réinscrire","réintroduire","réécrire",
-    "réélire","savoir","se rendormir","se repentir","se taire","sentir","servir",
-    "sortir","souscrire","suffire","suivre","survivre","séduire","s'endormir",
-    "traduire","transcrire","transparaître","vivre","pouvoir","vouloir","valoir",
-    "vaincre","s'asseoir","apercevoir","aller","boire","écrire","émouvoir",
-    "falloir","haïr","lire","pleuvoir","être","avoir",
-]);
 
 function getRadicalSP(v, sujetBrut) {
     if (sujetBrut === 'nous' || sujetBrut === 'vous') return v.radNousVous || v.radical;
