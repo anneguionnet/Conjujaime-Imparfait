@@ -345,7 +345,7 @@
 
         <!-- Bulle Retiens sp1 -->
         <div id="bulle-sp1" class="bulle-present1" style="display:none;">
-            💬 <i>Conseil de Juju : regarde, le présent du subjonctif et le présent de l'indicatif sont des homophones au singulier et à la 3e personne du pluriel. C'est vrai pour tous les verbes en <b>-ER</b>. Quelques verbes du 3e groupe aussi conservent le même radical.<br>
+            💬 <i>Conseil de Juju : regarde, la conjugaison du présent du subjonctif est identique à celle du présent de l'indicatif au singulier et à la 3e personne du pluriel. C'est vrai pour tous les verbes en <b>-ER</b>. Quelques verbes du 3e groupe au subjonctif sont des homophones de l'indicatif présent. Ex : <b>je vois Juju</b> → il faut que <b>je voie</b> Juju.<br>
             Aussi, <b>nous</b> et <b>vous</b> ont des terminaisons similaires à celles de l'imparfait.</i>
         </div>
         <!-- Bulle Retiens sp2 -->
@@ -991,12 +991,23 @@ function getLecon() {
                   <tr><td>ils/elles</td><td>-èrent</td><td>-irent</td><td>-urent</td><td>retinrent</td></tr>
                 </table>`;
         case 'sp1':
-        case 'sp2':
-        case 'sp3':
             return `<strong>Au subjonctif présent :</strong><br>
                 Après <i>il faut que</i>, <i>il est nécessaire que</i>, <i>avant que</i>, <i>bien que</i>, <i>pour que</i>…<br>
                 <b>je → -e &nbsp;|&nbsp; tu → -es &nbsp;|&nbsp; il/elle → -e &nbsp;|&nbsp; ils/elles → -ent</b><br>
                 Pour nous/vous : <b>-ions / -iez</b>. À toi de jouer !`;
+        case 'sp2':
+        case 'sp3':
+            return `<strong>Voici les terminaisons du subjonctif présent :</strong><br>
+                <table class="tableau-lecon">
+                  <tr><th></th><th>Terminaisons</th><th>être</th><th>avoir</th></tr>
+                  <tr><td>que je</td><td>-e</td><td>sois</td><td>aie</td></tr>
+                  <tr><td>que tu</td><td>-es</td><td>sois</td><td>aies</td></tr>
+                  <tr><td>qu'il/elle</td><td>-e</td><td>soit</td><td>ait</td></tr>
+                  <tr><td>que nous</td><td>-ions</td><td>soyons</td><td>ayons</td></tr>
+                  <tr><td>que vous</td><td>-iez</td><td>soyez</td><td>ayez</td></tr>
+                  <tr><td>qu'ils/elles</td><td>-ent</td><td>soient</td><td>aient</td></tr>
+                </table>
+                Pour <b>être</b>, l'accent circonflexe indique la présence d'un S. Pour <b>avoir</b>, tu entends le son [è] comme être, mais le verbe commence toujours par le A. À toi de jouer !`;
         case 'futur2':
             return `<strong>Au futur, on ajoute les terminaisons suivantes :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp;
