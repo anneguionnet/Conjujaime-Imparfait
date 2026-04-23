@@ -138,7 +138,7 @@ const verbesSubjPresent = [
   { infinitif: "replier", niveau: 2, radical: "repli" },
   { infinitif: "restituer", niveau: 4, radical: "restitu" },
   { infinitif: "ruer", niveau: 2, radical: "ru" },
-{ infinitif: "se lamenter", niveau: 2, radical: "lament", pronominal: true }
+{ infinitif: "se lamenter", niveau: 2, radical: "lament", pronominal: true },
 { infinitif: "réconcilier", niveau: 4, radical: "réconcili" },
   { infinitif: "répertorier", niveau: 4, radical: "répertori" },
   { infinitif: "ressembler", niveau: 1, radical: "ressembl" },
