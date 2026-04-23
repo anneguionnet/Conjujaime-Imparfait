@@ -551,3 +551,4 @@ const verbesSubjPresent = [
   { infinitif: "avoir", niveau: 1, radical: "ai" },
 
  
+];
