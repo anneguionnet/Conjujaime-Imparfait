@@ -345,18 +345,21 @@
 
         <!-- Bulle Retiens sp1 -->
         <div id="bulle-sp1" class="bulle-present1" style="display:none;">
-            💬 <i>Conseil de Juju : regarde, la conjugaison du présent du subjonctif est identique à celle du présent de l'indicatif au singulier et à la 3e personne du pluriel. C'est vrai pour tous les verbes en <b>-ER</b>. Quelques verbes du 3e groupe au subjonctif sont des homophones de l'indicatif présent. Ex : <b>je vois Juju</b> → il faut que <b>je voie</b> Juju.<br>
-            Aussi, <b>nous</b> et <b>vous</b> ont des terminaisons similaires à celles de l'imparfait.</i>
+            💬 <i>Conseil de Juju : dans ce jeu, retrouve les verbes du <span style="color:#2ecc71;">1er groupe</span> et quelques verbes du <span style="color:#e8956d;">3e groupe</span> dont le subjonctif est calqué sur l'indicatif. Choisis bien la bonne terminaison !<br>
+            Ex : <span style="color:#2ecc71;">je parle</span> → il faut que <span style="color:#2ecc71;">je parle</span> &nbsp;|&nbsp; <span style="color:#e8956d;">je vois</span> → il faut que <span style="color:#e8956d;">je voie</span>.</i>
         </div>
         <!-- Bulle Retiens sp2 -->
         <div id="bulle-sp2" class="bulle-present1" style="display:none;">
-            💬 <i>Conseil de Juju : au subjonctif, c'est le radical qui peut poser problème : pense à la 3e personne du pluriel du présent de l'indicatif, et tu trouveras !<br>
-            Exemple : <b>les enfants finissent</b> → il faut que je <b>finisse</b>. <b>Les enfants boivent</b> → il faut que tu <b>boives</b>.</i>
+            💬 <i>Conseil de Juju : pour former le subjonctif, pense à la 3e personne du pluriel du présent de l'indicatif, et tu trouveras !<br>
+            Ex : les enfants <span style="color:#e8956d;">finissent</span> → il faut que je <span style="color:#e8956d;">finisse</span>. Les enfants <span style="color:#e8956d;">boivent</span> → il faut que tu <span style="color:#e8956d;">boives</span>.<br>
+            Retiens les irréguliers : <span style="color:#e8956d;">savoir : que je sache — faire : que je fasse — aller : que j'aille — dire : que je dise</span>.<br>
+            Dans <b>être</b>, l'accent circonflexe indique la présence du S dans <i>que je sois</i>.<br>
+            Pour <b>avoir</b>, tu entends le son [è] comme être, mais le verbe commence toujours par A.</i>
         </div>
         <!-- Bulle Retiens sp3 -->
         <div id="bulle-sp3" class="bulle-present1" style="display:none;">
-            💬 <i>Conseil de Juju : souviens-toi, beaucoup de verbes au subjonctif présent sont des homophones du présent, mais le radical change parfois.<br>
-            Sers-toi du pluriel du présent et retiens les irréguliers comme <b>savoir : que je sache</b>, <b>faire : que je fasse</b>, <b>être : que je sois</b>, <b>avoir : que j'aie</b>, que tu <b>aies</b>, qu'elle <b>ait</b>… C'est parti !</i>
+            💬 <i>Conseil de Juju : souviens-toi, beaucoup de verbes au subjonctif présent sont identiques au présent, mais la terminaison est en <span style="color:#2ecc71;">-e, -es, -e</span>, et le radical change parfois.<br>
+            Sers-toi du pluriel du présent et retiens les irréguliers : <span style="color:#e8956d;">savoir : que je sache — faire : que je fasse — être : que je sois — avoir : que j'aie, que tu aies, qu'elle ait</span>… C'est parti !</i>
         </div>
 
         <!-- Bulle Retiens conditionnel -->
@@ -440,7 +443,7 @@
 <script src="dataFuturCondi.js"></script>
 <script src="verbesImparfaitPron.js"></script>
 <script src="dataFuturCondiPron.js"></script>
-<script src="subjPresentMini.js"></script>
+<script src="subjPresent.js"></script>
 <script>
 // ============================================================
 // ENGINE — Voix, confettis, utilitaires
@@ -996,8 +999,6 @@ function getLecon() {
                 Elles ressemblent en tout point à celles du présent de l'indicatif des verbes en <span style="color:#2ecc71;"><b>-ER</b></span>.<br>
                 Pour nous et vous, ce sont les terminaisons de l'imparfait : <b>-ions, -iez</b>.<br><br>
                 En effet, après certains verbes suivis de QUE, comme <i>il faut que</i>, certaines expressions suivies de QUE, comme <i>il est nécessaire que</i>, ou après certaines conjonctions de subordination, comme <i>avant que</i> (et pas <i>après que</i>), <i>bien que</i>, <i>pour que</i>, le verbe se conjugue au subjonctif.<br><br>
-                💬 <i>Conseil de Juju : dans ce jeu, retrouve les verbes du <span style="color:#2ecc71;">1er groupe</span> et quelques verbes du <span style="color:#e8956d;">3e groupe</span> dont le subjonctif est calqué sur l'indicatif. Choisis bien la bonne terminaison !<br>
-                Ex : <span style="color:#2ecc71;">je parle</span> → il faut que <span style="color:#2ecc71;">je parle</span> &nbsp;|&nbsp; <span style="color:#e8956d;">je vois</span> → il faut que <span style="color:#e8956d;">je voie</span>.</i><br><br>
                 À toi de jouer !`;
         case 'sp2':
             return `<strong>Voici les terminaisons du subjonctif présent :</strong><br>
@@ -1005,11 +1006,6 @@ function getLecon() {
                 Pour nous et vous, ce sont les terminaisons de l'imparfait : <b>-ions, -iez</b>.<br><br>
                 Retiens <span style="color:#e8956d;"><b>être</b></span> : que je/tu <b>sois</b>, qu'elle <b>soit</b>, que nous <b>soyons</b>, que vous <b>soyez</b>, qu'ils <b>soient</b>.<br>
                 Apprends encore plus attentivement <span style="color:#e8956d;"><b>avoir</b></span> : que j'<b>aie</b>, que tu <b>aies</b>, qu'il <b>ait</b>, que nous <b>ayons</b>, que vous <b>ayez</b>, qu'elles <b>aient</b>.<br><br>
-                💬 <i>Conseil de Juju : pour former le subjonctif, pense à la 3e personne du pluriel du présent de l'indicatif, et tu trouveras !<br>
-                Ex : les enfants <span style="color:#e8956d;">finissent</span> → il faut que je <span style="color:#e8956d;">finisse</span>. Les enfants <span style="color:#e8956d;">boivent</span> → il faut que tu <span style="color:#e8956d;">boives</span>.<br>
-                Retiens les irréguliers : <span style="color:#e8956d;">savoir : que je sache — faire : que je fasse — aller : que j'aille — dire : que je dise</span>.<br>
-                Dans <b>être</b>, l'accent circonflexe indique la présence du S dans <i>que je sois</i>.<br>
-                Pour <b>avoir</b>, tu entends le son [è] comme être, mais le verbe commence toujours par A.</i><br><br>
                 À toi de jouer !`;
         case 'sp3':
             return `<strong>Voici les terminaisons du subjonctif présent :</strong><br>
@@ -1018,8 +1014,7 @@ function getLecon() {
                 Pour nous et vous, ce sont les terminaisons de l'imparfait : <b>-ions, -iez</b>.<br><br>
                 Retiens <span style="color:#e8956d;"><b>être</b></span> : que je/tu <b>sois</b>, qu'elle <b>soit</b>, que nous <b>soyons</b>, que vous <b>soyez</b>, qu'ils <b>soient</b>.<br>
                 Apprends encore plus attentivement <span style="color:#e8956d;"><b>avoir</b></span> : que j'<b>aie</b>, que tu <b>aies</b>, qu'il <b>ait</b>, que nous <b>ayons</b>, que vous <b>ayez</b>, qu'elles <b>aient</b>.<br><br>
-                💬 <i>Conseil de Juju : souviens-toi, beaucoup de verbes au subjonctif présent sont identiques au présent, mais la terminaison est en <span style="color:#2ecc71;">-e, -es, -e</span>, et le radical change parfois.<br>
-                Sers-toi du pluriel du présent et retiens les irréguliers : <span style="color:#e8956d;">savoir : que je sache — faire : que je fasse — être : que je sois — avoir : que j'aie, que tu aies, qu'elle ait</span>… C'est parti !</i>`;
+                À toi de jouer !`;
         case 'futur2':
             return `<strong>Au futur, on ajoute les terminaisons suivantes :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp;
