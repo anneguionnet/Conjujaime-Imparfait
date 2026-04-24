@@ -1168,21 +1168,31 @@ function piocher(cfg) {
 
     // Jeux subjonctif
     if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') {
-        let pool;
+        const nb = cfg.nb || 8;
         if (jeuActuel === 'sp1') {
-            pool = verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif));
+            const poolGr1  = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const poolHomo = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const gr1Fb    = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif)));
+            const homoFb   = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif)));
+            const homos = (poolHomo.length >= 3 ? poolHomo : homoFb).slice(0, 3);
+            const gr1   = (poolGr1.length  >= nb - 3 ? poolGr1 : gr1Fb).slice(0, nb - 3);
+            return melangerTableau([...homos, ...gr1]);
         } else if (jeuActuel === 'sp2') {
-            pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
+            let pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif) && cfg.niv.includes(v.niveau));
+            if (pool.length < nb) pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
+            return melangerTableau([...pool]).slice(0, nb);
         } else {
-            pool = [...verbesSubjPresent];
+            const poolGr1   = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const poolHomo  = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const poolIrreg = melangerTableau(verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const gr1Fb    = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif)));
+            const homoFb   = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif)));
+            const irregFb  = melangerTableau(verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif)));
+            const gr1   = (poolGr1.length   >= 2 ? poolGr1   : gr1Fb).slice(0, 2);
+            const homos = (poolHomo.length  >= 2 ? poolHomo  : homoFb).slice(0, 2);
+            const irreg = (poolIrreg.length >= 4 ? poolIrreg : irregFb).slice(0, 4);
+            return melangerTableau([...gr1, ...homos, ...irreg]);
         }
-        pool = pool.filter(v => cfg.niv.includes(v.niveau));
-        if (pool.length < cfg.nb) {
-            pool = jeuActuel === 'sp1' ? verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif))
-                 : jeuActuel === 'sp2' ? verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif))
-                 : [...verbesSubjPresent];
-        }
-        return melangerTableau([...pool]).slice(0, cfg.nb);
     }
     // Jeux infinitif / conjugue / participe
     const pioquerGroupe = (gr, n) => {
@@ -3185,21 +3195,31 @@ function piocher(cfg) {
 
     // Jeux subjonctif
     if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') {
-        let pool;
+        const nb = cfg.nb || 8;
         if (jeuActuel === 'sp1') {
-            pool = verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif));
+            const poolGr1  = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const poolHomo = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const gr1Fb    = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif)));
+            const homoFb   = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif)));
+            const homos = (poolHomo.length >= 3 ? poolHomo : homoFb).slice(0, 3);
+            const gr1   = (poolGr1.length  >= nb - 3 ? poolGr1 : gr1Fb).slice(0, nb - 3);
+            return melangerTableau([...homos, ...gr1]);
         } else if (jeuActuel === 'sp2') {
-            pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
+            let pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif) && cfg.niv.includes(v.niveau));
+            if (pool.length < nb) pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
+            return melangerTableau([...pool]).slice(0, nb);
         } else {
-            pool = [...verbesSubjPresent];
+            const poolGr1   = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const poolHomo  = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const poolIrreg = melangerTableau(verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
+            const gr1Fb    = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif)));
+            const homoFb   = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif)));
+            const irregFb  = melangerTableau(verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif)));
+            const gr1   = (poolGr1.length   >= 2 ? poolGr1   : gr1Fb).slice(0, 2);
+            const homos = (poolHomo.length  >= 2 ? poolHomo  : homoFb).slice(0, 2);
+            const irreg = (poolIrreg.length >= 4 ? poolIrreg : irregFb).slice(0, 4);
+            return melangerTableau([...gr1, ...homos, ...irreg]);
         }
-        pool = pool.filter(v => cfg.niv.includes(v.niveau));
-        if (pool.length < cfg.nb) {
-            pool = jeuActuel === 'sp1' ? verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif))
-                 : jeuActuel === 'sp2' ? verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif))
-                 : [...verbesSubjPresent];
-        }
-        return melangerTableau([...pool]).slice(0, cfg.nb);
     }
 
     // Jeux infinitif / conjugue / participe
