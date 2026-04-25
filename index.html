@@ -1168,31 +1168,21 @@ function piocher(cfg) {
 
     // Jeux subjonctif
     if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') {
-        const nb = cfg.nb || 8;
+        let pool;
         if (jeuActuel === 'sp1') {
-            const poolGr1  = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const poolHomo = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const gr1Fb    = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif)));
-            const homoFb   = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif)));
-            const homos = (poolHomo.length >= 3 ? poolHomo : homoFb).slice(0, 3);
-            const gr1   = (poolGr1.length  >= nb - 3 ? poolGr1 : gr1Fb).slice(0, nb - 3);
-            return melangerTableau([...homos, ...gr1]);
+            pool = verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif));
         } else if (jeuActuel === 'sp2') {
-            let pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif) && cfg.niv.includes(v.niveau));
-            if (pool.length < nb) pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
-            return melangerTableau([...pool]).slice(0, nb);
+            pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
         } else {
-            const poolGr1   = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const poolHomo  = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const poolIrreg = melangerTableau(verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const gr1Fb    = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif)));
-            const homoFb   = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif)));
-            const irregFb  = melangerTableau(verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif)));
-            const gr1   = (poolGr1.length   >= 2 ? poolGr1   : gr1Fb).slice(0, 2);
-            const homos = (poolHomo.length  >= 2 ? poolHomo  : homoFb).slice(0, 2);
-            const irreg = (poolIrreg.length >= 4 ? poolIrreg : irregFb).slice(0, 4);
-            return melangerTableau([...gr1, ...homos, ...irreg]);
+            pool = [...verbesSubjPresent];
         }
+        pool = pool.filter(v => cfg.niv.includes(v.niveau));
+        if (pool.length < cfg.nb) {
+            pool = jeuActuel === 'sp1' ? verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif))
+                 : jeuActuel === 'sp2' ? verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif))
+                 : [...verbesSubjPresent];
+        }
+        return melangerTableau([...pool]).slice(0, cfg.nb);
     }
     // Jeux infinitif / conjugue / participe
     const pioquerGroupe = (gr, n) => {
@@ -3195,31 +3185,21 @@ function piocher(cfg) {
 
     // Jeux subjonctif
     if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') {
-        const nb = cfg.nb || 8;
+        let pool;
         if (jeuActuel === 'sp1') {
-            const poolGr1  = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const poolHomo = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const gr1Fb    = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif)));
-            const homoFb   = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif)));
-            const homos = (poolHomo.length >= 3 ? poolHomo : homoFb).slice(0, 3);
-            const gr1   = (poolGr1.length  >= nb - 3 ? poolGr1 : gr1Fb).slice(0, nb - 3);
-            return melangerTableau([...homos, ...gr1]);
+            pool = verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif));
         } else if (jeuActuel === 'sp2') {
-            let pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif) && cfg.niv.includes(v.niveau));
-            if (pool.length < nb) pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
-            return melangerTableau([...pool]).slice(0, nb);
+            pool = verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif));
         } else {
-            const poolGr1   = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const poolHomo  = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const poolIrreg = melangerTableau(verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif) && cfg.niv.includes(v.niveau)));
-            const gr1Fb    = melangerTableau(verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif) && !HOMOPHONES_SP.has(v.infinitif)));
-            const homoFb   = melangerTableau(verbesSubjPresent.filter(v => HOMOPHONES_SP.has(v.infinitif)));
-            const irregFb  = melangerTableau(verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif)));
-            const gr1   = (poolGr1.length   >= 2 ? poolGr1   : gr1Fb).slice(0, 2);
-            const homos = (poolHomo.length  >= 2 ? poolHomo  : homoFb).slice(0, 2);
-            const irreg = (poolIrreg.length >= 4 ? poolIrreg : irregFb).slice(0, 4);
-            return melangerTableau([...gr1, ...homos, ...irreg]);
+            pool = [...verbesSubjPresent];
         }
+        pool = pool.filter(v => cfg.niv.includes(v.niveau));
+        if (pool.length < cfg.nb) {
+            pool = jeuActuel === 'sp1' ? verbesSubjPresent.filter(v => !IRREGULIERS_SP.has(v.infinitif))
+                 : jeuActuel === 'sp2' ? verbesSubjPresent.filter(v => IRREGULIERS_SP.has(v.infinitif))
+                 : [...verbesSubjPresent];
+        }
+        return melangerTableau([...pool]).slice(0, cfg.nb);
     }
 
     // Jeux infinitif / conjugue / participe
@@ -4160,33 +4140,58 @@ function genererPelotesSP(v, sujetBrut) {
         }
     } else if (estHomophone) {
         bonne = getTerminaisonSP(sujetBrut);
-        if (sujetBrut === 'je' || sujetBrut === 'il' || sujetBrut === 'elle') {
+        if (sujetBrut === 'je') {
             pelotes = [
                 { text: '-e',   correct: true,  msg: null },
                 { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
-                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+                { text: '-es',  correct: false, msg: 'Regarde bien le sujet !' },
             ];
         } else if (sujetBrut === 'tu') {
             pelotes = [
                 { text: '-es',  correct: true,  msg: null },
+                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
                 { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
-                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+            ];
+        } else if (sujetBrut === 'il' || sujetBrut === 'elle') {
+            pelotes = [
+                { text: '-e',   correct: true,  msg: null },
+                { text: '-t',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
             ];
         } else {
             pelotes = [
                 { text: '-ent', correct: true,  msg: null },
-                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
-                { text: '-t',   correct: false, msg: 'Cherche le bon sujet au mode subjonctif !' },
+                { text: '-s',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
             ];
         }
     } else {
         bonne = getTerminaisonSP(sujetBrut);
-        pelotes = [
-            { text: '-e',   correct: sujetBrut === 'je' || sujetBrut === 'il' || sujetBrut === 'elle',  msg: 'Regarde bien le sujet !' },
-            { text: '-es',  correct: sujetBrut === 'tu',    msg: 'Regarde bien le sujet !' },
-            { text: '-ent', correct: sujetBrut === 'ils' || sujetBrut === 'elles', msg: 'Regarde bien le sujet !' },
-        ];
-        pelotes.forEach(p => { if (p.correct) p.msg = null; });
+        if (sujetBrut === 'je') {
+            pelotes = [
+                { text: '-e',   correct: true,  msg: null },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+                { text: '-es',  correct: false, msg: 'Regarde bien le sujet !' },
+            ];
+        } else if (sujetBrut === 'tu') {
+            pelotes = [
+                { text: '-es',  correct: true,  msg: null },
+                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+            ];
+        } else if (sujetBrut === 'il' || sujetBrut === 'elle') {
+            pelotes = [
+                { text: '-e',   correct: true,  msg: null },
+                { text: '-t',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+            ];
+        } else {
+            pelotes = [
+                { text: '-ent', correct: true,  msg: null },
+                { text: '-s',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+            ];
+        }
     }
 
     return { pelotes, bonne };
@@ -4409,7 +4414,7 @@ function validerSPForm() {
 </script>
 
 <footer style="text-align:right; padding: 10px 15px; border-top: 1px solid #ccc; font-size: 13px; color: #888;">
-  Juju le chat <a href="https://www.instagram.com/uwcloud" target="_blank" style="color:#888; text-decoration:none;">@LouGuionnet</a>
+  Juju le chat <a href="https://www.instagram.com/Louguionnet" target="_blank" style="color:#888; text-decoration:none;">@Louguionnet</a>
 </footer>
 </body>
 </html>
