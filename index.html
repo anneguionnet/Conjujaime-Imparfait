@@ -4092,20 +4092,20 @@ function genererPelotesSP(v, sujetBrut) {
         if (sujetBrut === 'je') {
             pelotes = [
                 { text: '-s',   correct: true,  msg: null },
-                { text: '-t',   correct: false, msg: 'Tu confonds !' },
-                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-e',   correct: false, msg: 'Tu confonds !' },
+                { text: '-t',   correct: false, msg: 'Regarde bien le sujet !' },
             ];
         } else if (sujetBrut === 'tu') {
             pelotes = [
                 { text: '-s',   correct: true,  msg: null },
-                { text: '-es',  correct: false, msg: 'Regarde bien le sujet !' },
-                { text: '-t',   correct: false, msg: 'Tu confonds !' },
+                { text: '-e',   correct: false, msg: 'Tu confonds !' },
+                { text: '-t',   correct: false, msg: 'Regarde bien le sujet !' },
             ];
         } else if (sujetBrut === 'il' || sujetBrut === 'elle') {
             pelotes = [
                 { text: '-t',   correct: true,  msg: null },
-                { text: '-s',   correct: false, msg: 'Tu confonds !' },
-                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-s',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-e',   correct: false, msg: 'Tu confonds !' },
             ];
         } else {
             pelotes = [
@@ -4119,8 +4119,8 @@ function genererPelotesSP(v, sujetBrut) {
         if (sujetBrut === 'je') {
             pelotes = [
                 { text: '-e',   correct: true,  msg: null },
-                { text: '-es',  correct: false, msg: 'Regarde bien le sujet !' },
                 { text: '-s',   correct: false, msg: 'Tu confonds !' },
+                { text: '-t',   correct: false, msg: 'Regarde bien le sujet !' },
             ];
         } else if (sujetBrut === 'tu') {
             pelotes = [
@@ -4131,14 +4131,14 @@ function genererPelotesSP(v, sujetBrut) {
         } else if (sujetBrut === 'il' || sujetBrut === 'elle') {
             pelotes = [
                 { text: '-t',   correct: true,  msg: null },
-                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
-                { text: '-s',   correct: false, msg: 'Tu confonds !' },
+                { text: '-e',   correct: false, msg: 'Tu confonds !' },
+                { text: '-s',   correct: false, msg: 'Regarde bien le sujet !' },
             ];
         } else {
             pelotes = [
                 { text: '-ent', correct: true,  msg: null },
-                { text: '-t',   correct: false, msg: 'Tu confonds !' },
-                { text: '-e',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-t',   correct: false, msg: 'Regarde bien le sujet !' },
+                { text: '-e',   correct: false, msg: 'Tu confonds !' },
             ];
         }
     } else if (estSP1) {
