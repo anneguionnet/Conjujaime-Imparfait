@@ -7,7 +7,6 @@ const verbesSubjPresent = [
   { infinitif: "apprécier", niveau: 3, radical: "appréci" },
   { infinitif: "associer", niveau: 3, radical: "associ" },
   { infinitif: "attribuer", niveau: 3, radical: "attribu" },
-  { infinitif: "avancer", niveau: 1, radical: "avanc" },
   { infinitif: "atténuer", niveau: 3, radical: "atténu" },
   { infinitif: "avouer", niveau: 2, radical: "avou" },
   { infinitif: "balbutier", niveau: 3, radical: "balbuti" },

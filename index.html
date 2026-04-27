@@ -1098,6 +1098,18 @@ const IRREGULIERS_SP = new Set([
     "survivre","séduire","traduire","transcrire","transparaître","vivre",
     "pouvoir","vouloir","valoir","vaincre","apercevoir","aller","boire","écrire",
     "émouvoir","falloir","haïr","lire","pleuvoir","être","avoir",
+    // pronominaux groupe 1
+    "se bonifier","se dévouer","se méfier","se réfugier","se soucier","se lamenter",
+    "se tatouer","se rassasier","s'apitoyer","s'approprier","s'arrêter","s'extasier","s'écrier",
+    // pronominaux groupe 3
+    "s'abattre","s'abstenir","s'attendre","s'endormir","s'enfuir","s'enquérir",
+    "s'entendre","s'entremettre","s'ébattre","s'éprendre","s'étendre",
+    "se battre","se comprendre","se compromettre","se confondre","se correspondre",
+    "se débattre","se découdre","se défendre","se démettre","se détendre",
+    "se fendre","se fondre","se mettre","se mordre","se morfondre","se méprendre",
+    "se perdre","se permettre","se promettre","se rabattre","se remettre",
+    "se rendormir","se rendre","se repentir","se reprendre","se répondre",
+    "se soumettre","se souvenir","se surprendre","se taire","se tendre","se transmettre",
 ]);
 function piocher(cfg) {
     if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') {
@@ -4155,8 +4167,8 @@ function genererPelotesSP(v, sujetBrut) {
         } else if (sujetBrut === 'il' || sujetBrut === 'elle') {
             pelotes = [
                 { text: '-e',   correct: true,  msg: null },
-                { text: '-t',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
-                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+                { text: '-t',   correct: false, msg: 'Tu confonds !' },
+                { text: '-s',   correct: false, msg: 'Tu confonds !' },
             ];
         } else {
             pelotes = [
@@ -4182,8 +4194,8 @@ function genererPelotesSP(v, sujetBrut) {
         } else if (sujetBrut === 'il' || sujetBrut === 'elle') {
             pelotes = [
                 { text: '-e',   correct: true,  msg: null },
-                { text: '-t',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
-                { text: '-s',   correct: false, msg: "Tu confonds avec le présent de l'indicatif !" },
+                { text: '-t',   correct: false, msg: 'Tu confonds !' },
+                { text: '-s',   correct: false, msg: 'Tu confonds !' },
             ];
         } else {
             pelotes = [
@@ -4414,7 +4426,7 @@ function validerSPForm() {
 </script>
 
 <footer style="text-align:right; padding: 10px 15px; border-top: 1px solid #ccc; font-size: 13px; color: #888;">
-  Juju le chat <a href="https://www.instagram.com/uwcloud" target="_blank" style="color:#888; text-decoration:none;">@LouGuionnet</a>
+  Juju le chat <a href="https://www.instagram.com/Louguionnet" target="_blank" style="color:#888; text-decoration:none;">@Louguionnet</a>
 </footer>
 </body>
 </html>
