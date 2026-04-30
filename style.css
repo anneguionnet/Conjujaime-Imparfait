@@ -98,6 +98,7 @@ body {
     }
     .menu-header {
         margin-bottom: 12px;
+        text-align: left;
     }
     /* Grille 5 colonnes, 2 lignes :
        L1 : [Titre] [Btn1]  [Btn2]  [      ] [Btn3]
