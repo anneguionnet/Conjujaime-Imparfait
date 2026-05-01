@@ -111,7 +111,7 @@
         <button class="btn-menu-jeu rose2" onclick="lancerJeu('ps2')">
             🌸 2e et 3e groupe
         </button>
-        <p class="menu-encouragement">Allez, on mélange tout ! Juju croit en toi ! 🐾</p>
+        <p class="menu-encouragement">Allez, Juju croit en toi ! 🐾</p>
         <button class="btn-menu-jeu rose3" onclick="lancerJeu('ps3')">
             🌸 Tous les verbes
         </button>
@@ -1836,7 +1836,7 @@ function validerP2Form() {
                 sujet + ' ' + bonne
             );
         }
-        if (serie >= 7) parler(sujet + ' ' + bonne);
+        parler(sujet + ' ' + bonne);
         creerConfettis();
         setTimeout(() => {
             restaurerFormInput(document.getElementById('p2-form-sujet'), sujet, inp, btnV);
@@ -2159,7 +2159,7 @@ function validerPTForm() {
                 sujet + ' ' + bonne
             );
         }
-        if (serie >= 7) parler(sujet + ' ' + bonne);
+        parler(sujet + ' ' + bonne);
         creerConfettis();
         setTimeout(() => {
             restaurerFormInput(document.getElementById('pt-form-sujet'), sujet, inp, btnV);
