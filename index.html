@@ -3246,48 +3246,6 @@ function piocher(cfg) {
 // AFFICHER LA QUESTION
 // ============================================================
 
-function majInterface() {
-    const v = verbesPioches[qIndex];
-    document.getElementById('info-serie').innerText = `Série ${serie}/8 · Q${qIndex + 1}/8`;
-    document.getElementById('msg-zone').innerText = '';
-    document.getElementById('msg-p1-pelotes').innerText = '';
-    document.getElementById('msg-p2-pelotes').innerText = '';
-    document.getElementById('msg-pt-pelotes').innerText = '';
-    document.getElementById('pelote-indice-zone').innerHTML = '';
-    document.getElementById('pelotes-zone').innerHTML = '';
-    document.getElementById('input-zone').style.display = 'none';
-    document.getElementById('zone-present-pelotes').style.display = 'none';
-    document.getElementById('zone-present-form').style.display = 'none';
-    document.getElementById('zone-present2-pelotes').style.display = 'none';
-    document.getElementById('zone-present2-form').style.display = 'none';
-    document.getElementById('zone-presenttous-pelotes').style.display = 'none';
-    document.getElementById('zone-presenttous-form').style.display    = 'none';
-    document.getElementById('zone-imparfait-pelotes').style.display  = 'none';
-    document.getElementById('zone-imparfait-form').style.display     = 'none';
-    document.getElementById('zone-ps-pelotes').style.display         = 'none';
-    document.getElementById('zone-sp-pelotes').style.display         = 'none';
-    document.getElementById('zone-sp-form').style.display            = 'none';
-    document.getElementById('msg-sp-pelotes').innerText = '';
-    document.getElementById('verbe-txt').innerText = '';
-    p2EssaiCount = 0;
-    ptEssaiCount = 0;
-    impEssaiCount = 0;
-    futEssaiCount = 0;
-    spEssaiCount  = 0;
-
-    if      (jeuActuel === 'infinitif')   afficherInfinitif(v);
-    else if (jeuActuel === 'conjugue')    afficherConjugue(v);
-    else if (jeuActuel === 'participe')   afficherParticipe(v);
-    else if (jeuActuel === 'present1')    afficherPresent(v);
-    else if (jeuActuel === 'present2')    afficherPresent2(v);
-    else if (jeuActuel === 'presentTous') afficherPresentTous(v);
-    else if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') afficherFutur(v);
-    else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
-    else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
-    else if (jeuActuel === 'ps1' || jeuActuel === 'ps2' || jeuActuel === 'ps3') afficherPS(v);
-    else if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') afficherSP(v);
-}
-
 
 function validerParticipe() {
     const v       = verbesPioches[qIndex];
@@ -3916,7 +3874,7 @@ function validerSPForm() {
 </script>
 
 <footer style="text-align:right; padding: 10px 15px; border-top: 1px solid #ccc; font-size: 13px; color: #888;">
-  Juju le chat — Lou G. <a href="https://www.instagram.com/uwcloud" target="_blank" style="color:#888; text-decoration:none;">@uwcloud</a>
+  Juju le chat — Lou G. <a href="https://www.instagram.com/uwcloud" target="_blank" style="color:#888; text-decoration:none;">@uwcloud</a> · Mis à jour en avril 2026
 </footer>
 </body>
 </html>
