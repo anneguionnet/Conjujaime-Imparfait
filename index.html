@@ -475,31 +475,27 @@ function parler(txt) {
     const txtNet = nettoyerPourVoix(txt);
     if (!txtNet) return;
     window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(txtNet);
+    u.lang = 'fr-FR';
+    u.rate = 0.9;
     const choisirVoix = () => {
         const vs = window.speechSynthesis.getVoices();
-        return vs.find(v => v.lang.startsWith('fr') &&
+        const f = vs.find(v => v.lang.startsWith('fr') &&
                 (v.name.includes('Amelie') || v.name.includes('Amélie') ||
                  v.name.includes('Marie')  || v.name.includes('Maria')  ||
                  v.name.includes('Audrey') || v.name.includes('Thomas')))
                || vs.find(v => v.lang === 'fr-FR')
                || vs.find(v => v.lang.startsWith('fr'));
-    };
-    // Petit délai pour laisser cancel() se terminer (important sur mobile/Safari)
-    setTimeout(() => {
-        if (!sonActif) return;
-        const u = new SpeechSynthesisUtterance(txtNet);
-        u.lang = 'fr-FR';
-        u.rate = 0.9;
-        const f = choisirVoix();
         if (f) u.voice = f;
-        window.speechSynthesis.speak(u);
-        // Workaround Chrome desktop : relancer si la synthèse se bloque
-        setTimeout(() => {
-            if (sonActif && window.speechSynthesis.speaking && window.speechSynthesis.paused) {
-                window.speechSynthesis.resume();
-            }
-        }, 500);
-    }, 80);
+    };
+    choisirVoix();
+    window.speechSynthesis.speak(u);
+    // Workaround Chrome desktop : relancer si la synthèse se bloque après ~500ms
+    setTimeout(() => {
+        if (sonActif && window.speechSynthesis.speaking && window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+        }
+    }, 500);
 }
 
 function toggleSon(btn) {
@@ -792,12 +788,10 @@ function retourMenu() {
     document.getElementById('page-jeu').classList.remove('active');
     document.getElementById('page-menu').classList.add('active');
     window.speechSynthesis.cancel();
-    if (infVoixTimer)  { clearTimeout(infVoixTimer);  infVoixTimer  = null; }
-    if (p1VoixTimer)   { clearTimeout(p1VoixTimer);   p1VoixTimer   = null; }
-    if (p2VoixTimer)   { clearTimeout(p2VoixTimer);   p2VoixTimer   = null; }
-    if (ptVoixTimer)   { clearTimeout(ptVoixTimer);   ptVoixTimer   = null; }
-    if (impVoixTimer)  { clearTimeout(impVoixTimer);  impVoixTimer  = null; }
-    if (futVoixTimer)  { clearTimeout(futVoixTimer);  futVoixTimer  = null; }
+    if (infVoixTimer) { clearTimeout(infVoixTimer); infVoixTimer = null; }
+    if (p1VoixTimer)  { clearTimeout(p1VoixTimer);  p1VoixTimer  = null; }
+    if (p2VoixTimer)  { clearTimeout(p2VoixTimer);  p2VoixTimer  = null; }
+    if (ptVoixTimer)  { clearTimeout(ptVoixTimer);  ptVoixTimer  = null; }
     document.getElementById('ecran-intermediaire').style.display = 'none';
     document.getElementById('cartouche-jeu').style.display = 'block';
 }
@@ -1218,11 +1212,6 @@ function piocher(cfg) {
 // ============================================================
 
 function majInterface() {
-    if (p1VoixTimer)  { clearTimeout(p1VoixTimer);  p1VoixTimer  = null; }
-    if (p2VoixTimer)  { clearTimeout(p2VoixTimer);  p2VoixTimer  = null; }
-    if (ptVoixTimer)  { clearTimeout(ptVoixTimer);  ptVoixTimer  = null; }
-    if (impVoixTimer) { clearTimeout(impVoixTimer); impVoixTimer = null; }
-    if (futVoixTimer) { clearTimeout(futVoixTimer); futVoixTimer = null; }
     const v = verbesPioches[qIndex];
     const nbSeries = 8;
     document.getElementById('info-serie').innerText = `Série ${serie}/${nbSeries} · Q${qIndex + 1}/8`;
@@ -1269,12 +1258,10 @@ function majInterface() {
 // JEUX INFINITIF / CONJUGUÉ / PARTICIPE
 // ============================================================
 
-let infVoixTimer  = null;
-let p1VoixTimer   = null;
-let p2VoixTimer   = null;
-let ptVoixTimer   = null;
-let impVoixTimer  = null;
-let futVoixTimer  = null;
+let infVoixTimer = null;
+let p1VoixTimer  = null;
+let p2VoixTimer  = null;
+let ptVoixTimer  = null;
 
 function afficherInfinitif(v) {
     if (infVoixTimer) { clearTimeout(infVoixTimer); infVoixTimer = null; }
@@ -1563,6 +1550,7 @@ function afficherPresent2Form(v) {
         inp.placeholder = '…';
         inp.style.width = '80px'; inp.style.fontSize = '28px'; inp.style.textAlign = 'center'; inp.style.padding = '12px 8px';
         inp.focus();
+        parler(sujet + ' ' + radicalNet + terminaison);
     } else if (serie >= 7) {
         document.getElementById('p2-form-sujet').innerText = sujet;
         inp.placeholder = 'conjugue…';
@@ -1730,8 +1718,8 @@ function validerForm() {
                 sujet + ' ' + bonne
             );
         }
-        creerConfettis();
         parler(sujet + ' ' + bonne);
+        creerConfettis();
         setTimeout(() => {
             restaurerFormInput(document.getElementById('form-sujet'), sujet, inp, btnV);
             inp.disabled = false; btnV.disabled = false; prochain();
@@ -1777,8 +1765,8 @@ function verifierP2Pelote(p, btn, zone) {
         document.getElementById('p2-conjugaison').innerText = `${sujet} ${radical}${terminaison}`;
         scoreTotal++; scoreSerie++;
         document.getElementById('total-score').innerText = scoreTotal;
-        parler(sujet + ' ' + radical + terminaison);
         creerConfettis();
+        parler(sujet + ' ' + radical + terminaison);
         setTimeout(prochain, 2000);
     } else {
         p2EssaiCount++;
@@ -1832,8 +1820,8 @@ function validerP2Form() {
                 sujet + ' ' + bonne
             );
         }
-        creerConfettis();
         parler(sujet + ' ' + bonne);
+        creerConfettis();
         setTimeout(() => {
             restaurerFormInput(document.getElementById('p2-form-sujet'), sujet, inp, btnV);
             inp.disabled = false; btnV.disabled = false; prochain();
@@ -2151,8 +2139,8 @@ function validerPTForm() {
                 sujet + ' ' + bonne
             );
         }
-        creerConfettis();
         parler(sujet + ' ' + bonne);
+        creerConfettis();
         setTimeout(() => {
             restaurerFormInput(document.getElementById('pt-form-sujet'), sujet, inp, btnV);
             inp.disabled = false; btnV.disabled = false; prochain();
