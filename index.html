@@ -474,7 +474,6 @@ function parler(txt) {
     if (!sonActif) return;
     const txtNet = nettoyerPourVoix(txt);
     if (!txtNet) return;
-    window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(txtNet);
     u.lang = 'fr-FR';
     u.rate = 0.9;
@@ -486,12 +485,21 @@ function parler(txt) {
            || vs.find(v => v.lang === 'fr-FR')
            || vs.find(v => v.lang.startsWith('fr'));
     if (f) u.voice = f;
-    window.speechSynthesis.speak(u);
+    // Cancel seulement si quelque chose joue déjà
+    if (window.speechSynthesis.speaking || window.speechSynthesis.pending) {
+        window.speechSynthesis.cancel();
+        setTimeout(() => {
+            if (!sonActif) return;
+            window.speechSynthesis.speak(u);
+        }, 50);
+    } else {
+        window.speechSynthesis.speak(u);
+    }
     setTimeout(() => {
         if (sonActif && window.speechSynthesis.speaking && window.speechSynthesis.paused) {
             window.speechSynthesis.resume();
         }
-    }, 500);
+    }, 600);
 }
 
 function toggleSon(btn) {
