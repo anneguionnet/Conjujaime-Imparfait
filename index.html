@@ -475,31 +475,23 @@ function parler(txt) {
     const txtNet = nettoyerPourVoix(txt);
     if (!txtNet) return;
     window.speechSynthesis.cancel();
-    const choisirVoix = () => {
-        const vs = window.speechSynthesis.getVoices();
-        return vs.find(v => v.lang.startsWith('fr') &&
-                (v.name.includes('Amelie') || v.name.includes('Amélie') ||
-                 v.name.includes('Marie')  || v.name.includes('Maria')  ||
-                 v.name.includes('Audrey') || v.name.includes('Thomas')))
-               || vs.find(v => v.lang === 'fr-FR')
-               || vs.find(v => v.lang.startsWith('fr'));
-    };
-    // Petit délai pour laisser cancel() se terminer (important sur mobile/Safari)
+    const u = new SpeechSynthesisUtterance(txtNet);
+    u.lang = 'fr-FR';
+    u.rate = 0.9;
+    const vs = window.speechSynthesis.getVoices();
+    const f = vs.find(v => v.lang.startsWith('fr') &&
+            (v.name.includes('Amelie') || v.name.includes('Amélie') ||
+             v.name.includes('Marie')  || v.name.includes('Maria')  ||
+             v.name.includes('Audrey') || v.name.includes('Thomas')))
+           || vs.find(v => v.lang === 'fr-FR')
+           || vs.find(v => v.lang.startsWith('fr'));
+    if (f) u.voice = f;
+    window.speechSynthesis.speak(u);
     setTimeout(() => {
-        if (!sonActif) return;
-        const u = new SpeechSynthesisUtterance(txtNet);
-        u.lang = 'fr-FR';
-        u.rate = 0.9;
-        const f = choisirVoix();
-        if (f) u.voice = f;
-        window.speechSynthesis.speak(u);
-        // Workaround Chrome desktop : relancer si la synthèse se bloque
-        setTimeout(() => {
-            if (sonActif && window.speechSynthesis.speaking && window.speechSynthesis.paused) {
-                window.speechSynthesis.resume();
-            }
-        }, 500);
-    }, 80);
+        if (sonActif && window.speechSynthesis.speaking && window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+        }
+    }, 500);
 }
 
 function toggleSon(btn) {
@@ -1731,6 +1723,7 @@ function validerForm() {
         msg.innerText   = '✓ Bravo !';
         scoreTotal++; scoreSerie++;
         document.getElementById('total-score').innerText = scoreTotal;
+        parler(sujet + ' ' + bonne);
         if (serie >= 6) {
             afficherFormeComplete(
                 document.getElementById('form-sujet'),
@@ -1738,7 +1731,6 @@ function validerForm() {
                 sujet + ' ' + bonne
             );
         }
-        parler(sujet + ' ' + bonne);
         creerConfettis();
         setTimeout(() => {
             restaurerFormInput(document.getElementById('form-sujet'), sujet, inp, btnV);
@@ -1833,6 +1825,7 @@ function validerP2Form() {
         msg.innerText   = '✓ Bravo !';
         scoreTotal++; scoreSerie++;
         document.getElementById('total-score').innerText = scoreTotal;
+        parler(sujet + ' ' + bonne);
         if (serie >= 6) {
             afficherFormeComplete(
                 document.getElementById('p2-form-sujet'),
@@ -1840,7 +1833,6 @@ function validerP2Form() {
                 sujet + ' ' + bonne
             );
         }
-        parler(sujet + ' ' + bonne);
         creerConfettis();
         setTimeout(() => {
             restaurerFormInput(document.getElementById('p2-form-sujet'), sujet, inp, btnV);
@@ -2156,6 +2148,7 @@ function validerPTForm() {
         msg.innerText   = '✓ Bravo !';
         scoreTotal++; scoreSerie++;
         document.getElementById('total-score').innerText = scoreTotal;
+        parler(sujet + ' ' + bonne);
         if (serie >= 6) {
             afficherFormeComplete(
                 document.getElementById('pt-form-sujet'),
@@ -2163,7 +2156,6 @@ function validerPTForm() {
                 sujet + ' ' + bonne
             );
         }
-        parler(sujet + ' ' + bonne);
         creerConfettis();
         setTimeout(() => {
             restaurerFormInput(document.getElementById('pt-form-sujet'), sujet, inp, btnV);
