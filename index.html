@@ -1738,8 +1738,8 @@ function validerForm() {
                 sujet + ' ' + bonne
             );
         }
-        parler(sujet + ' ' + bonne);
         creerConfettis();
+        setTimeout(() => { parler(sujet + ' ' + bonne); }, 150);
         setTimeout(() => {
             restaurerFormInput(document.getElementById('form-sujet'), sujet, inp, btnV);
             inp.disabled = false; btnV.disabled = false; prochain();
@@ -1840,8 +1840,8 @@ function validerP2Form() {
                 sujet + ' ' + bonne
             );
         }
-        parler(sujet + ' ' + bonne);
         creerConfettis();
+        setTimeout(() => { parler(sujet + ' ' + bonne); }, 150);
         setTimeout(() => {
             restaurerFormInput(document.getElementById('p2-form-sujet'), sujet, inp, btnV);
             inp.disabled = false; btnV.disabled = false; prochain();
@@ -2163,8 +2163,8 @@ function validerPTForm() {
                 sujet + ' ' + bonne
             );
         }
-        parler(sujet + ' ' + bonne);
         creerConfettis();
+        setTimeout(() => { parler(sujet + ' ' + bonne); }, 150);
         setTimeout(() => {
             restaurerFormInput(document.getElementById('pt-form-sujet'), sujet, inp, btnV);
             inp.disabled = false; btnV.disabled = false; prochain();
