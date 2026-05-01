@@ -1366,8 +1366,8 @@ function afficherPresentPelotes(v) {
         pelotesZone.appendChild(btn);
     });
 
-    if (p1VoixTimer) clearTimeout(p1VoixTimer);
     parler(v.infinitif);
+    if (p1VoixTimer) clearTimeout(p1VoixTimer);
     p1VoixTimer = setTimeout(() => { if (jeuActuel === 'present1') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
 }
 
@@ -1400,29 +1400,25 @@ function afficherPresentForm(v) {
     inp.disabled = false;
     essai = 0;
 
-    if (p1VoixTimer) clearTimeout(p1VoixTimer);
     if (serie === 6) {
         document.getElementById('form-sujet').innerText = sujet + ' ' + radicalNet;
         inp.placeholder = '…';
         inp.style.width = '80px'; inp.style.fontSize = '28px'; inp.style.textAlign = 'center'; inp.style.padding = '12px 8px';
         inp.focus();
-        parler(v.infinitif);
-        p1VoixTimer = setTimeout(() => { if (jeuActuel === 'present1') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
     } else if (serie >= 7) {
         document.getElementById('form-sujet').innerText = sujet;
         inp.placeholder = 'conjugue…';
         inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
         inp.focus();
-        parler(v.infinitif);
-        p1VoixTimer = setTimeout(() => { if (jeuActuel === 'present1') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
     } else {
         document.getElementById('form-sujet').innerText = sujet;
         inp.placeholder = 'conjugue…';
         inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
         inp.focus();
-        parler(v.infinitif);
-        p1VoixTimer = setTimeout(() => { if (jeuActuel === 'present1') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
     }
+    parler(v.infinitif);
+    if (p1VoixTimer) clearTimeout(p1VoixTimer);
+    p1VoixTimer = setTimeout(() => { if (jeuActuel === 'present1') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
 }
 
 function getRadicalPronominal(v, sujetBrut) {
@@ -1533,8 +1529,8 @@ function afficherPresent2Pelotes(v) {
         pelotesZone.appendChild(btn);
     });
 
-    if (p2VoixTimer) clearTimeout(p2VoixTimer);
     parler(v.infinitif);
+    if (p2VoixTimer) clearTimeout(p2VoixTimer);
     p2VoixTimer = setTimeout(() => { if (jeuActuel === 'present2') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
 }
 
@@ -1562,29 +1558,25 @@ function afficherPresent2Form(v) {
     inp.disabled = false;
     p2EssaiCount = 0;
 
-    if (p2VoixTimer) clearTimeout(p2VoixTimer);
     if (serie === 6) {
         document.getElementById('p2-form-sujet').innerText = sujet + ' ' + radicalNet;
         inp.placeholder = '…';
         inp.style.width = '80px'; inp.style.fontSize = '28px'; inp.style.textAlign = 'center'; inp.style.padding = '12px 8px';
         inp.focus();
-        parler(v.infinitif);
-        p2VoixTimer = setTimeout(() => { if (jeuActuel === 'present2') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
     } else if (serie >= 7) {
         document.getElementById('p2-form-sujet').innerText = sujet;
         inp.placeholder = 'conjugue…';
         inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
         inp.focus();
-        parler(v.infinitif);
-        p2VoixTimer = setTimeout(() => { if (jeuActuel === 'present2') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
     } else {
         document.getElementById('p2-form-sujet').innerText = sujet;
         inp.placeholder = 'conjugue…';
         inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
         inp.focus();
-        parler(v.infinitif);
-        p2VoixTimer = setTimeout(() => { if (jeuActuel === 'present2') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
     }
+    parler(v.infinitif);
+    if (p2VoixTimer) clearTimeout(p2VoixTimer);
+    p2VoixTimer = setTimeout(() => { if (jeuActuel === 'present2') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
 }
 
 // ============================================================
@@ -1739,7 +1731,7 @@ function validerForm() {
             );
         }
         creerConfettis();
-        setTimeout(() => { parler(sujet + ' ' + bonne); }, 150);
+        parler(sujet + ' ' + bonne);
         setTimeout(() => {
             restaurerFormInput(document.getElementById('form-sujet'), sujet, inp, btnV);
             inp.disabled = false; btnV.disabled = false; prochain();
@@ -1841,7 +1833,7 @@ function validerP2Form() {
             );
         }
         creerConfettis();
-        setTimeout(() => { parler(sujet + ' ' + bonne); }, 150);
+        parler(sujet + ' ' + bonne);
         setTimeout(() => {
             restaurerFormInput(document.getElementById('p2-form-sujet'), sujet, inp, btnV);
             inp.disabled = false; btnV.disabled = false; prochain();
@@ -2037,8 +2029,8 @@ function afficherPresentTousPelotes(v) {
         pelotesZone.appendChild(btn);
     });
 
-    if (ptVoixTimer) clearTimeout(ptVoixTimer);
     parler(v.infinitif);
+    if (ptVoixTimer) clearTimeout(ptVoixTimer);
     ptVoixTimer = setTimeout(() => { if (jeuActuel === 'presentTous') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
 }
 
@@ -2065,30 +2057,26 @@ function afficherPresentTousForm(v) {
     inp.disabled = false;
     ptEssaiCount = 0;
 
-    if (ptVoixTimer) clearTimeout(ptVoixTimer);
     if (serie === 6) {
         document.getElementById('pt-form-sujet').innerText = sujet + ' ' + radicalNet;
         inp.placeholder = '…';
         inp.style.width = '80px'; inp.style.fontSize = '28px'; inp.style.textAlign = 'center'; inp.style.padding = '12px 8px';
         inp.focus();
-        parler(v.infinitif);
-        ptVoixTimer = setTimeout(() => { if (jeuActuel === 'presentTous') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
     } else if (serie === 8) {
         document.getElementById('pt-form-sujet').innerText = sujet;
         inp.placeholder = 'conjugue…';
         inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
         inp.focus();
-        parler(v.infinitif);
-        ptVoixTimer = setTimeout(() => { if (jeuActuel === 'presentTous') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
     } else {
         // série 7
         document.getElementById('pt-form-sujet').innerText = sujet;
         inp.placeholder = 'conjugue…';
         inp.style.width = '220px'; inp.style.fontSize = '22px'; inp.style.padding = '12px 15px';
         inp.focus();
-        parler(v.infinitif);
-        ptVoixTimer = setTimeout(() => { if (jeuActuel === 'presentTous') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
     }
+    parler(v.infinitif);
+    if (ptVoixTimer) clearTimeout(ptVoixTimer);
+    ptVoixTimer = setTimeout(() => { if (jeuActuel === 'presentTous') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
 }
 
 function verifierPTPelote(p, btn, zone) {
@@ -2164,7 +2152,7 @@ function validerPTForm() {
             );
         }
         creerConfettis();
-        setTimeout(() => { parler(sujet + ' ' + bonne); }, 150);
+        parler(sujet + ' ' + bonne);
         setTimeout(() => {
             restaurerFormInput(document.getElementById('pt-form-sujet'), sujet, inp, btnV);
             inp.disabled = false; btnV.disabled = false; prochain();
