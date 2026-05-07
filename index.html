@@ -1141,9 +1141,9 @@ function piocher(cfg) {
     }
 
     if (jeuActuel === 'present1') {
-        const pool = verbesPresent.filter(v =>
-            v.groupe === 1 && cfg.niv.includes(v.niveau)
-        );
+        const tous = verbesPresent.filter(v => v.groupe === 1);
+        let pool = tous.filter(v => cfg.niv.includes(v.niveau));
+        if (pool.length < cfg.nb) pool = tous; // fallback
         return melangerTableau([...pool]).slice(0, cfg.nb);
     }
 
@@ -3176,9 +3176,9 @@ function piocher(cfg) {
     }
 
     if (jeuActuel === 'present1') {
-        const pool = verbesPresent.filter(v =>
-            v.groupe === 1 && cfg.niv.includes(v.niveau)
-        );
+        const tous = verbesPresent.filter(v => v.groupe === 1);
+        let pool = tous.filter(v => cfg.niv.includes(v.niveau));
+        if (pool.length < cfg.nb) pool = tous; // fallback
         return melangerTableau([...pool]).slice(0, cfg.nb);
     }
 
