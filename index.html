@@ -1311,7 +1311,9 @@ function afficherParticipe(v) {
     inp.disabled = false;
     inp.focus();
     essai = 0;
-    parler(texte);
+    parler(v.infi);
+    if (infVoixTimer) clearTimeout(infVoixTimer);
+    infVoixTimer = setTimeout(() => { if (jeuActuel === 'participe') parler(v.part); }, 11000);
 }
 
 function afficherPresent(v) {
@@ -1406,7 +1408,7 @@ function afficherPresentForm(v) {
     }
     parler(v.infinitif);
     if (p1VoixTimer) clearTimeout(p1VoixTimer);
-    p1VoixTimer = setTimeout(() => { if (jeuActuel === 'present1') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
+    p1VoixTimer = setTimeout(() => { if (jeuActuel === 'present1') parler(sujet + ' ' + radicalNet + terminaison); }, serie >= 7 ? 11000 : 8000);
 }
 
 function getRadicalPronominal(v, sujetBrut) {
@@ -1565,7 +1567,7 @@ function afficherPresent2Form(v) {
     }
     parler(v.infinitif);
     if (p2VoixTimer) clearTimeout(p2VoixTimer);
-    p2VoixTimer = setTimeout(() => { if (jeuActuel === 'present2') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
+    p2VoixTimer = setTimeout(() => { if (jeuActuel === 'present2') parler(sujet + ' ' + radicalNet + terminaison); }, serie >= 7 ? 11000 : 8000);
 }
 
 // ============================================================
@@ -1592,6 +1594,7 @@ function verifierGroupe(choix) {
 }
 
 function validerParticipe() {
+    if (infVoixTimer) { clearTimeout(infVoixTimer); infVoixTimer = null; }
     const v       = verbesPioches[qIndex];
     const inp     = document.getElementById('input-participe');
     const reponse = inp.value.trim().toLowerCase();
@@ -2020,7 +2023,7 @@ function afficherPresentTousPelotes(v) {
 
     parler(v.infinitif);
     if (ptVoixTimer) clearTimeout(ptVoixTimer);
-    ptVoixTimer = setTimeout(() => { if (jeuActuel === 'presentTous') parler(sujet + ' ' + radicalNet + terminaison); }, 8000);
+    ptVoixTimer = setTimeout(() => { if (jeuActuel === 'presentTous') parler(sujet + ' ' + radicalNet + terminaison); }, serie >= 7 ? 11000 : 8000);
 }
 
 function afficherPresentTousForm(v) {
@@ -2438,7 +2441,7 @@ function afficherPS(v) {
 
     parler(v.inf);
     if (psVoixTimer) clearTimeout(psVoixTimer);
-    psVoixTimer = setTimeout(() => { if (jeuActuel.startsWith('ps')) parler(formeComplete); }, 8000);
+    psVoixTimer = setTimeout(() => { if (jeuActuel.startsWith('ps')) parler(formeComplete); }, 11000);
 }
 
 function validerPSPelote(termChoisie, correct, btn, zone) {
@@ -3142,44 +3145,6 @@ document.getElementById('pt-form-input').addEventListener('keypress', e => {
 // AFFICHER LA QUESTION
 // ============================================================
 
-
-function validerParticipe() {
-    const v       = verbesPioches[qIndex];
-    const inp     = document.getElementById('input-participe');
-    const reponse = inp.value.trim().toLowerCase();
-    const correct = v.part.toLowerCase();
-    const msg     = document.getElementById('msg-zone');
-    const indice  = document.getElementById('pelote-indice-zone');
-
-    essai++;
-
-    if (reponse === correct) {
-        msg.style.color = '#2ecc71';
-        msg.innerText   = 'Bravo ! 🎉';
-        scoreTotal++; scoreSerie++;
-        document.getElementById('total-score').innerText = scoreTotal;
-        parler(v.part);
-        creerConfettis();
-        inp.disabled = true;
-        setTimeout(prochain, 2000);
-    } else if (essai === 1) {
-        msg.innerText = '';
-        const pelote = document.createElement('div');
-        pelote.style.cssText = `width:55px;height:55px;border-radius:50%;background:${COULEURS_GR[v.gr]};margin:8px auto;`;
-        indice.appendChild(pelote);
-        inp.value = '';
-        inp.disabled = false;
-        inp.focus();
-        setTimeout(fuzzJuju, 0);
-    } else {
-        msg.style.color = '#e74c3c';
-        msg.innerText   = `La réponse : ${v.part}`; setTimeout(fuzzJuju, 0);
-        parler(v.infi);
-        inp.disabled = true;
-        setTimeout(prochain, 2500);
-    }
-}
-
 function afficherFormeComplete(sujetEl, inputEl, btnEl, formeComplete) {
     // Cacher le champ et le bouton, afficher la forme complète en violet
     inputEl.style.display = 'none';
@@ -3624,7 +3589,7 @@ function afficherSPForm(v) {
         inp.focus();
         parler(v.infinitif);
         if (spVoixTimer) clearTimeout(spVoixTimer);
-        spVoixTimer = setTimeout(() => { if (jeuActuel.startsWith('sp')) parler(sujetAff + reponse); }, 8000);
+        spVoixTimer = setTimeout(() => { if (jeuActuel.startsWith('sp')) parler(sujetAff + reponse); }, 11000);
     } else {
         document.getElementById('sp-form-sujet').innerText = sujetAff;
         inp.placeholder = 'conjugue…';
