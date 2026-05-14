@@ -1303,7 +1303,7 @@ function afficherPelotesGroupes(shuffle) {
 }
 
 function afficherParticipe(v) {
-    const texte = serie <= 4 ? v.v : v.infi;
+    const texte = serie <= 4 ? v.infi : v.v;
     document.getElementById('verbe-txt').innerText = texte;
     document.getElementById('input-zone').style.display = 'flex';
     const inp = document.getElementById('input-participe');
@@ -1311,7 +1311,7 @@ function afficherParticipe(v) {
     inp.disabled = false;
     inp.focus();
     essai = 0;
-    parler(v.infi);
+    parler(texte);
     if (infVoixTimer) clearTimeout(infVoixTimer);
     infVoixTimer = setTimeout(() => { if (jeuActuel === 'participe') parler(v.part); }, 11000);
 }
