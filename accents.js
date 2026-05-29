@@ -44,6 +44,9 @@ const verbesAccents = [
 {"mot":"elle représente","pos":2,"cible":"é"},
   {"mot":"je vécus","cible":"é"},
   {"mot":"léger","cible":"é"},
+{"mot":"régulièrement","cible":"é","pos":1},
+ {"mot":"je préfère","cible":"é"},
+ {"mot":"un étincellement","cible":"é"},
 
 
   // ========================================================
@@ -66,29 +69,22 @@ const verbesAccents = [
   {"mot":"un mystère","cible":"è"},
 {"mot":"entière","pos":2,"cible":"è"},
   {"mot":"une planète","cible":"è"},
-  {"mot":"la première fois","cible":"è"},
+  {"mot":"la première fois","cible":"è","pos":2},
   {"mot":"après","cible":"è"},
   {"mot":"quatrième","cible":"è"},
-  {"mot":"régulièrement","cible":"è"},
-  {"mot":"je préfère","cible":"è"},
-  {"mot":"deuxième",,"pos":2"cible":"è"},
+  {"mot":"régulièrement","cible":"è","pos":2},
+  {"mot":"je préfère","cible":"è","pos":2},
+ {"mot":"deuxième","pos":2,"cible":"è"},
   {"mot":"troisième","cible":"è"},
   {"mot":"cinquième","cible":"è"},
   {"mot":"sixième","cible":"è"},
   {"mot":"septième","pos":2,"cible":"è"},
   {"mot":"huitième","cible":"è"},
-  {"mot":"neuvième","cible":"è"},
+  {"mot":"neuvième","cible":"è","pos":2},
   {"mot":"dixième","cible":"è"},
   {"mot":"vingtième","cible":"è"},
-  {"mot":"centième","cible":"è"},
-  {"mot":"un amoncèlement","cible":"è"},
-  {"mot":"un dénivèlement","cible":"è"},
-  {"mot":"un ensorcèlement","cible":"è"},
-  {"mot":"un étincèlement","cible":"è"},
-  {"mot":"un grommèlement","cible":"è"},
-  {"mot":"un morcèlement","cible":"è"},
-  {"mot":"un renouvèlement","cible":"è"},
-  {"mot":"un ruissèlement","cible":"è"},
+  {"mot":"centième","cible":"è","pos":2},
+  
 
   // ========================================================
   // 1c. ACCENT CIRCONFLEXE — ê (15 entrées)
@@ -458,6 +454,14 @@ const verbesAccents = [
 {"mot":"j'interfère","pos":1,"cible":"e"},
  {"mot":"un désert","cible":"e","pos":2},
 {"mot":"une bergère","cible":"e"},
+ {"mot":"un étincellement","cible":"e","pos":2},
+{"mot":"un amoncellement","cible":"e"},
+ {"mot":"un dénivellement","cible":"e","pos":2},
+  {"mot":"un ensorcellement","cible":"e","pos":2},
+  {"mot":"un grommellement","cible":"e"},
+  {"mot":"un morcellement","cible":"e"},
+  {"mot":"un renouvellement","cible":"e","pos":2},
+  {"mot":"un ruissellement","cible":"e"},
 
 //========================================================
   // 2f. formes complexes — multiples e qui se prononcent [ɛ] — (26 entrées)
