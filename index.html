@@ -371,7 +371,9 @@
         <!-- Bulle Retiens accents -->
         <div id="bulle-accents1" class="bulle-present1" style="display:none;">
             💬 <i>Conseil de Juju : pour réussir, <b>observe bien les lettres qui suivent le son [ɛ]</b>.<br>
-            Comme en arabe ou en hébreu, il faut <b>lire de la droite vers la gauche</b> pour vérifier sa graphie !</i>
+            Comme en arabe ou en hébreu, il faut <b>lire de la droite vers la gauche</b> pour vérifier sa graphie !<br>
+            L'accent circonflexe sert aussi à distinguer des mots homophones :<br>
+            <b>j'ai dû</b> ≠ <i>du pain</i> &nbsp;|&nbsp; <b>il est sûr</b> ≠ <i>sur la table</i></i>
         </div>
 
         <div class="msg-zone" id="msg-zone"></div>
@@ -765,14 +767,14 @@ const CONFIG = {
     },
 
     accents1: {
-        1: { src:'1a', opa:1    },
-        2: { src:'1b', opa:1    },
-        3: { src:'1c', opa:1    },
-        4: { src:'1d', opa:0.5  },
-        5: { src:'1e', opa:0.5  },
-        6: { src:'1a', opa:0.15 },
-        7: { src:'1b', opa:0.1  },
-        8: { src:'mix1',opa:0   },
+        1: { mix:{'1a':6,'1b':2},           opa:1    },
+        2: { mix:{'1a':5,'1b':3},           opa:1    },
+        3: { mix:{'1a':3,'1b':2,'1c':3},    opa:1    },
+        4: { mix:{'1a':2,'1b':3,'1c':2,'1d':1}, opa:0.7 },
+        5: { mix:{'1a':2,'1b':2,'1c':2,'1d':1,'1e':1}, opa:0.5 },
+        6: { mix:{'1a':2,'1b':2,'1c':1,'1d':2,'1e':1}, opa:0.3 },
+        7: { mix:{'1a':2,'1b':2,'1c':1,'1d':1,'1e':2}, opa:0.1 },
+        8: { mix:{'1a':2,'1b':2,'1c':1,'1d':1,'1e':2}, opa:0   },
     },
     accents2: {
         1: { src:'2a', opa:1    },
@@ -1322,6 +1324,7 @@ function majInterface() {
     document.getElementById('zone-ps-pelotes').style.display         = 'none';
     document.getElementById('zone-sp-pelotes').style.display         = 'none';
     document.getElementById('zone-sp-form').style.display            = 'none';
+    document.getElementById('zone-accents-pelotes').style.display    = 'none';
     document.getElementById('msg-sp-pelotes').innerText = '';
     document.getElementById('verbe-txt').innerText = '';
     p2EssaiCount = 0;
@@ -1341,6 +1344,7 @@ function majInterface() {
     else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
     else if (jeuActuel === 'ps1' || jeuActuel === 'ps2' || jeuActuel === 'ps3') afficherPS(v);
     else if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') afficherSP(v);
+    else if (jeuActuel.startsWith('accents')) lancerQuestionAccents();
 }
 
 // ============================================================
@@ -3764,7 +3768,7 @@ let accPool      = [];
 
 function getPoolAccents(src) {
     if (typeof verbesAccents === 'undefined') return [];
-    const sections = {
+    const filtres = {
         '1a': e => e.mot && e.cible === 'é' && !e.alt,
         '1b': e => e.mot && e.cible === 'è' && !e.alt,
         '1c': e => e.mot && e.cible === 'ê',
@@ -3777,8 +3781,18 @@ function getPoolAccents(src) {
         'mix1': e => e.mot && ['é','è','ê','â','e'].includes(e.cible) && !e.alt,
         'mix2': e => e.mot && ['é','è','ê','e'].includes(e.cible),
     };
-    const fn = sections[src];
+    const fn = filtres[src];
     return fn ? verbesAccents.filter(fn) : [];
+}
+
+function getPoolAccentsMix(mix) {
+    // mix = { '1a': 6, '1b': 2 } → 6 mots de 1a + 2 mots de 1b mélangés
+    let pool = [];
+    for (const [src, nb] of Object.entries(mix)) {
+        const candidats = melangerTableau([...getPoolAccents(src)]);
+        pool = pool.concat(candidats.slice(0, nb));
+    }
+    return melangerTableau(pool);
 }
 
 function getPelotesAccents(cible) {
@@ -3910,7 +3924,7 @@ function validerAccent(choix) {
         document.getElementById('total-score').innerText = scoreTotal;
         creerConfettis();
         parler(q.mot);
-        setTimeout(() => lancerQuestionAccents(), 2000);
+        setTimeout(() => { qIndex++; document.getElementById('info-serie').innerText = 'Série ' + serie + '/8 · Q' + (qIndex + 1) + '/8'; if (qIndex >= 8) finDeSerie(); else lancerQuestionAccents(); }, 2000);
     } else {
         accEssai++;
         if (accEssai >= 2) {
@@ -3928,7 +3942,7 @@ function validerAccent(choix) {
             }
             setTimeout(fuzzJuju, 0);
             parler(q.mot);
-            setTimeout(() => lancerQuestionAccents(), 2500);
+            setTimeout(() => { qIndex++; document.getElementById('info-serie').innerText = 'Série ' + serie + '/8 · Q' + (qIndex + 1) + '/8'; if (qIndex >= 8) finDeSerie(); else lancerQuestionAccents(); }, 2500);
         } else {
             document.getElementById('msg-accents').style.color = '#e74c3c';
             document.getElementById('msg-accents').innerText   = '\u2717 Essaie encore !';
@@ -3945,9 +3959,13 @@ function chargerSerieAccents() {
     const cfg = CONFIG[jeuActuel] ? CONFIG[jeuActuel][serie] : null;
     if (!cfg) return;
 
-    document.getElementById('accents-lecon').innerHTML = getLeconAccents(cfg.src, cfg.opa);
+    const leconZone = document.getElementById('lecon-zone');
+    leconZone.innerHTML = getLeconAccents(cfg.mix ? 'mix1' : cfg.src, cfg.opa);
+    leconZone.style.opacity = cfg.opa || 0;
+    leconZone.style.display = (!cfg.opa || cfg.opa === 0) ? 'none' : 'block';
+    document.getElementById('accents-lecon').innerHTML = '';
 
-    accPool = melangerTableau([...getPoolAccents(cfg.src)]).slice(0, 8);
+    accPool = cfg.mix ? getPoolAccentsMix(cfg.mix) : melangerTableau([...getPoolAccents(cfg.src)]).slice(0, 8);
 
     cacherToutesZones();
     document.getElementById('zone-accents-pelotes').style.display = 'block';
