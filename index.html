@@ -361,7 +361,6 @@
              ACCENTS — jeu pelotes (jeux 1 et 2)
              ======================================================== -->
         <div id="zone-accents-pelotes" style="display:none; text-align:center;">
-            <div id="accents-lecon" class="lecon-accents"></div>
             <div class="mot-accent-display" id="accents-mot"></div>
             <div class="msg-accents" id="msg-accents"></div>
             <div class="info-etym" id="accents-info"></div>
@@ -3963,7 +3962,7 @@ function chargerSerieAccents() {
     leconZone.innerHTML = getLeconAccents(cfg.mix ? 'mix1' : cfg.src, cfg.opa);
     leconZone.style.opacity = cfg.opa || 0;
     leconZone.style.display = (!cfg.opa || cfg.opa === 0) ? 'none' : 'block';
-    document.getElementById('accents-lecon').innerHTML = '';
+    document.getElementById('accents-lecon') && (document.getElementById('accents-lecon').innerHTML = '');
 
     accPool = cfg.mix ? getPoolAccentsMix(cfg.mix) : melangerTableau([...getPoolAccents(cfg.src)]).slice(0, 8);
 
