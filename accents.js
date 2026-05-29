@@ -65,7 +65,7 @@ const verbesAccents = [
   {"mot":"l'insuccès","cible":"è"},
   {"mot":"un modèle","cible":"è"},
   {"mot":"un mystère","cible":"è"},
-  {"mot":"entière","cible":"è"},
+{"mot":"entière","pos":2,"cible":"è"},
   {"mot":"une planète","cible":"è"},
   {"mot":"la première fois","cible":"è"},
   {"mot":"après","cible":"è"},

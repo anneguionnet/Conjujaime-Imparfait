@@ -27,9 +27,9 @@
         .btn-menu-jeu.orange  { background: linear-gradient(135deg, #ffb347 0%, #ff8c00 100%); }
         .btn-menu-jeu.orange2 { background: linear-gradient(135deg, #ff8c00 0%, #e65c00 100%); }
         .btn-menu-jeu.orange3 { background: linear-gradient(135deg, #e65c00 0%, #b34500 100%); }
-        .btn-menu-jeu.jaune   { background: linear-gradient(135deg, #ffe066 0%, #ffd700 100%); color:#5a4000; }
-        .btn-menu-jeu.jaune2  { background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%); color:#5a4000; }
-        .btn-menu-jeu.jaune3  { background: linear-gradient(135deg, #ffb300 0%, #e67e00 100%); color:#fff; }
+        .btn-menu-jeu.jaune-acc { background: linear-gradient(135deg, #ffe066 0%, #ffd700 100%); color:#5a4000; }
+        .btn-menu-jeu.jaune-acc2 { background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%); color:#5a4000; }
+        .btn-menu-jeu.jaune-acc3 { background: linear-gradient(135deg, #ffb300 0%, #e67e00 100%); color:#fff; }
         /* Affichage mot avec blanc accent */
         .mot-accent-display { font-size: 2.2em; font-weight: bold; text-align: center; margin: 18px 0 10px; letter-spacing: 2px; }
         .mot-partie { color: #724a91; }
@@ -146,14 +146,14 @@
     <!-- ACCENTS -->
     <div class="menu-section">
         <div class="menu-section-titre">🔤 Les accents</div>
-        <button class="btn-menu-jeu jaune" onclick="lancerJeu('accents1')">
+        <button class="btn-menu-jeu jaune-acc" onclick="lancerJeu('accents1')">
             📖 Les mots accentués
         </button>
-        <button class="btn-menu-jeu jaune2" onclick="lancerJeu('accents2')">
+        <button class="btn-menu-jeu jaune-acc2" onclick="lancerJeu('accents2')">
             ✏️ Les verbes accentués
         </button>
         <p class="menu-encouragement">Les accents n'ont plus de secret pour toi !</p>
-        <button class="btn-menu-jeu jaune3" onclick="lancerJeu('accents3')">
+        <button class="btn-menu-jeu jaune-acc3" onclick="lancerJeu('accents3')">
             ⌨️ Écris l'accent
         </button>
     </div>
@@ -1071,6 +1071,10 @@ function getLecon() {
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp;
                 nous → -ons &nbsp;|&nbsp; vous → -ez &nbsp;|&nbsp; ils/elles → -ont</b><br>
                 💬 <i>Tu as reconnu ? Ce sont les mêmes que le verbe <b>avoir</b> au présent. On conserve l'infinitif pour les verbes du 1<sup>er</sup> groupe. Pour les verbes en <b>-RE</b>, on enlève le <b>-e</b> final : dire → je dirai</i>`;
+        case 'accents1':
+        case 'accents2':
+        case 'accents3':
+            return ''; // La leçon accents est gérée par chargerSerieAccents()
         case 'ps1':
             return `<strong>Au passé simple, les verbes en <b>-ER</b> prennent les terminaisons suivantes :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp; ils/elles → -èrent</b>`;
@@ -3958,10 +3962,7 @@ function chargerSerieAccents() {
     const cfg = CONFIG[jeuActuel] ? CONFIG[jeuActuel][serie] : null;
     if (!cfg) return;
 
-    const leconZone = document.getElementById('lecon-zone');
-    leconZone.innerHTML = getLeconAccents(cfg.mix ? 'mix1' : cfg.src, cfg.opa);
-    leconZone.style.opacity = cfg.opa || 0;
-    leconZone.style.display = (!cfg.opa || cfg.opa === 0) ? 'none' : 'block';
+
     document.getElementById('accents-lecon') && (document.getElementById('accents-lecon').innerHTML = '');
 
     accPool = cfg.mix ? getPoolAccentsMix(cfg.mix) : melangerTableau([...getPoolAccents(cfg.src)]).slice(0, 8);
