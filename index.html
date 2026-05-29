@@ -3808,13 +3808,34 @@ function getPelotesAccents(cible) {
 // Construire l'affichage du mot en deux parties
 // Le pronom sujet est ignoré pour le comptage des e
 function construireAffichageMot(mot, cible, pos) {
-    const pronoms = ['elles ', 'elle ', 'ils ', 'il ', 'nous ', 'vous ', 'tu ', 'je ', 'on ', "j'"];
+    // Retirer dans l'ordre : sujet + pronom réfléchi éventuel + article féminin
+    const sujets   = ['elles ', 'elle ', 'ils ', 'il ', 'nous ', 'vous ', 'tu ', 'je ', 'on ', "j'"];
+    const reflexes = ["m'", "t'", 's\'', 'me ', 'te ', 'se ', 'nous ', 'vous '];
+    const articles = ["l'", "d'", 'une ', 'les ', 'le ', 'la '];
     let prefixe = '';
     let verbe = mot;
-    for (const p of pronoms) {
-        if (mot.toLowerCase().startsWith(p.toLowerCase())) {
-            prefixe = mot.slice(0, p.length);
-            verbe   = mot.slice(p.length);
+
+    // 1. Retirer le sujet
+    for (const p of sujets) {
+        if (verbe.toLowerCase().startsWith(p.toLowerCase())) {
+            prefixe += verbe.slice(0, p.length);
+            verbe    = verbe.slice(p.length);
+            break;
+        }
+    }
+    // 2. Retirer le pronom réfléchi éventuel (je me, je t', etc.)
+    for (const p of reflexes) {
+        if (verbe.toLowerCase().startsWith(p.toLowerCase())) {
+            prefixe += verbe.slice(0, p.length);
+            verbe    = verbe.slice(p.length);
+            break;
+        }
+    }
+    // 3. Retirer l'article (l'intérieur, une étincelle, etc.)
+    for (const p of articles) {
+        if (verbe.toLowerCase().startsWith(p.toLowerCase())) {
+            prefixe += verbe.slice(0, p.length);
+            verbe    = verbe.slice(p.length);
             break;
         }
     }
@@ -3976,6 +3997,13 @@ function chargerSerieAccents() {
     qIndex     = 0;
     accEssai   = 0;
     dejaVus.clear();
+
+    // Leçon dans le bandeau jaune
+    const lz = document.getElementById('lecon-zone');
+    const leconHtml = getLeconAccents(cfg.mix ? 'mix1' : cfg.src, cfg.opa);
+    lz.innerHTML    = leconHtml;
+    lz.style.opacity = cfg.opa || 0;
+    lz.style.display = (!cfg.opa || cfg.opa === 0) ? 'none' : 'block';
 
 
     document.getElementById('accents-lecon') && (document.getElementById('accents-lecon').innerHTML = '');
