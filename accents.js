@@ -346,7 +346,6 @@ const verbesAccents = [
   {"mot":"je gèle","cible":"è"},
   {"mot":"je lève","cible":"è"},
   {"mot":"je pèse","cible":"è"},
-  {"mot":"j'espère","cible":"è"},
   {"mot":"je libère","cible":"è"},
   {"mot":"je tolère","cible":"è"},
   {"mot":"je modère","cible":"è"},
@@ -356,7 +355,6 @@ const verbesAccents = [
   {"mot":"j'exagère","cible":"è"},
   {"mot":"je prolifère","cible":"è"},
   {"mot":"je diffère","cible":"è"},
-  {"mot":"j'interfère","cible":"è"},
   {"mot":"j'opère","cible":"è"},
   {"mot":"j'altère","cible":"è"},
   {"mot":"je cède","cible":"è"},
@@ -366,7 +364,7 @@ const verbesAccents = [
   {"mot":"je concède","cible":"è"},
   {"mot":"je complète","cible":"è"},
   {"mot":"j'interprète","cible":"è"},
-  {"mot":"je secrète","cible":"è"},
+{"mot":"je secrète","pos":2,"cible":"è"},
   {"mot":"je protège","cible":"è"},
   {"mot":"j'abrège","cible":"è"},
   {"mot":"j'assiège","cible":"è"},
@@ -394,6 +392,8 @@ const verbesAccents = [
   {"mot":"je procèderai","cible":"è","alt":true,"altCible":"é"},
   {"mot":"je succèderai","cible":"è","alt":true,"altCible":"é"},
   {"mot":"je complèterai","cible":"è","alt":true,"altCible":"é"},
+{"mot":"j'espère","pos":2,"cible":"è"},
+{"mot":"j'interfère","pos":2,"cible":"è"},
 
 
   // ========================================================
@@ -455,6 +455,8 @@ const verbesAccents = [
   {"mot":"je jette","cible":"e","pos":2},
   {"mot":"je rejette","cible":"e","pos":2},
   {"mot":"je projette","cible":"e","pos":2},
+{"mot":"j'espère","pos":1,"cible":"e"},
+{"mot":"j'interfère","pos":1,"cible":"e"},
 
 //========================================================
   // 2f. formes complexes — multiples e qui se prononcent [ɛ] — (26 entrées)
