@@ -3839,14 +3839,19 @@ function construireAffichageMot(mot, cible, pos) {
             break;
         }
     }
-    // Trouver la pos-ième occurrence de tout e (accentué ou non)
-    const regex = /[eéèêâàîïôùûü]/g;
-    let count = 0;
+    // Si pos absent → chercher directement la lettre ciblée
     let targetIdx = -1;
-    let m;
-    while ((m = regex.exec(verbe)) !== null) {
-        count++;
-        if (count === (pos || 1)) { targetIdx = m.index; break; }
+    if (!pos) {
+        targetIdx = verbe.indexOf(cible);
+    } else {
+        // Trouver la pos-ième occurrence de tout e (accentué ou non)
+        const regex = /[eéèêâàîïôùûü]/g;
+        let count = 0;
+        let m;
+        while ((m = regex.exec(verbe)) !== null) {
+            count++;
+            if (count === pos) { targetIdx = m.index; break; }
+        }
     }
     // Fallback : chercher directement la lettre accentuée
     if (targetIdx === -1) targetIdx = verbe.search(/[éèêâ]/);

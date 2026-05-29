@@ -54,7 +54,7 @@ const verbesAccents = [
   // ========================================================
   {"mot":"une carrière","cible":"è"},
   {"mot":"la boulangère","cible":"è"},
-  {"mot":"la pâtissière","cible":"è"},
+{"mot":"la pâtissière","cible":"è"},
   {"mot":"la bouchère","cible":"è"},
   {"mot":"la caissière","cible":"è"},
   {"mot":"une ambulancière","cible":"è"},
@@ -122,6 +122,7 @@ const verbesAccents = [
   {"mot":"un bâton","cible":"â","info":"de la famille de bastonnade"},
   {"mot":"un câble","cible":"â","info":"vient du latin capulum"},
   {"mot":"le théâtre","cible":"â","info":"vient du latin theatrum"},
+ {"mot":"la pâtissière","cible":"â","info":"de la famille du mot italien pasta"},
 
   // ========================================================
   // 1e. SON [ɛ] — ÉCRIT -e — avant R final ou double consonne (32 entrées)
@@ -389,6 +390,7 @@ const verbesAccents = [
   {"mot":"je complèterai","cible":"è","alt":true,"altCible":"é"},
 {"mot":"j'espère","pos":2,"cible":"è"},
 {"mot":"j'interfère","pos":2,"cible":"è"},
+{"mot":"la pâtissière","cible":"è"},
 
 
   // ========================================================
