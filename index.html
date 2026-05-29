@@ -3927,7 +3927,7 @@ function validerAccent(choix) {
         document.getElementById('total-score').innerText = scoreTotal;
         creerConfettis();
         parler(q.mot);
-        setTimeout(() => { qIndex++; document.getElementById('info-serie').innerText = 'Série ' + serie + '/8 · Q' + (qIndex + 1) + '/8'; if (qIndex >= 8) finDeSerie(); else lancerQuestionAccents(); }, 2000);
+        setTimeout(() => { accProchain(); }, 2000);
     } else {
         accEssai++;
         if (accEssai >= 2) {
@@ -3940,12 +3940,16 @@ function validerAccent(choix) {
             document.getElementById('msg-accents').innerText   = '\u2717 La réponse : ' + q.cible;
             if (q.info) {
                 document.getElementById('accents-info').innerText = '\ud83d\udca1 ' + q.info;
-            } else if (q.cible === 'é' || q.cible === 'è') {
-                document.getElementById('accents-info').innerText = 'Observe bien la syllabe qui suit le son [\u025b] !';
+            } else if (q.cible === 'è') {
+                document.getElementById('accents-info').innerText = 'La syllabe qui suit est muette \u2192 accent grave è !';
+            } else if (q.cible === 'é') {
+                document.getElementById('accents-info').innerText = 'La syllabe qui suit est sonore \u2192 accent aigu é !';
+            } else if (q.cible === 'e') {
+                document.getElementById('accents-info').innerText = 'Devant une double consonne, le e se prononce [\u025b] sans accent !';
             }
             setTimeout(fuzzJuju, 0);
             parler(q.mot);
-            setTimeout(() => { qIndex++; document.getElementById('info-serie').innerText = 'Série ' + serie + '/8 · Q' + (qIndex + 1) + '/8'; if (qIndex >= 8) finDeSerie(); else lancerQuestionAccents(); }, 2500);
+            setTimeout(() => { accProchain(); }, 2500);
         } else {
             document.getElementById('msg-accents').style.color = '#e74c3c';
             document.getElementById('msg-accents').innerText   = '\u2717 Essaie encore !';
@@ -3958,9 +3962,20 @@ function validerAccent(choix) {
 // ACCENTS — Charger la série
 // ============================================================
 
+function accProchain() {
+    qIndex++;
+    document.getElementById('info-serie').innerText = 'Série ' + serie + '/8 · Q' + (qIndex + 1) + '/8';
+    if (qIndex >= 8) finDeSerie();
+    else lancerQuestionAccents();
+}
+
 function chargerSerieAccents() {
     const cfg = CONFIG[jeuActuel] ? CONFIG[jeuActuel][serie] : null;
     if (!cfg) return;
+    scoreSerie = 0;
+    qIndex     = 0;
+    accEssai   = 0;
+    dejaVus.clear();
 
 
     document.getElementById('accents-lecon') && (document.getElementById('accents-lecon').innerHTML = '');
@@ -3981,7 +3996,7 @@ function chargerSerieAccents() {
 </script>
 
 <footer style="text-align:center; padding: 10px 15px; border-top: 1px solid #ccc; font-size: 13px; color: #888;">
-  Juju le chat — Lou G. <a href="https://www.instagram.com/uwcloud" target="_blank" style="color:#888; text-decoration:none;">@uwcloud</a> · <em>Avril 2026</em> — <a href="http://www.conjujaime.com/contact.html" target="_blank" style="color:#888; text-decoration:none;">Anne G.</a> 🐾
+  Juju le chat — Lou G. <a href="https://www.instagram.com/uwcloud" target="_blank" style="color:#888; text-decoration:none;">@uwcloud</a> · <em>Mai 2026</em> — <a href="http://www.conjujaime.com/contact.html" target="_blank" style="color:#888; text-decoration:none;">Anne G.</a> 🐾
 </footer>
 </body>
 </html>
