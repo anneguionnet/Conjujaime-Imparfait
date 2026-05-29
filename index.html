@@ -27,6 +27,18 @@
         .btn-menu-jeu.orange  { background: linear-gradient(135deg, #ffb347 0%, #ff8c00 100%); }
         .btn-menu-jeu.orange2 { background: linear-gradient(135deg, #ff8c00 0%, #e65c00 100%); }
         .btn-menu-jeu.orange3 { background: linear-gradient(135deg, #e65c00 0%, #b34500 100%); }
+        .btn-menu-jeu.jaune   { background: linear-gradient(135deg, #ffe066 0%, #ffd700 100%); color:#5a4000; }
+        .btn-menu-jeu.jaune2  { background: linear-gradient(135deg, #ffd700 0%, #ffb300 100%); color:#5a4000; }
+        .btn-menu-jeu.jaune3  { background: linear-gradient(135deg, #ffb300 0%, #e67e00 100%); color:#fff; }
+        /* Affichage mot avec blanc accent */
+        .mot-accent-display { font-size: 2.2em; font-weight: bold; text-align: center; margin: 18px 0 10px; letter-spacing: 2px; }
+        .mot-partie { color: #724a91; }
+        .mot-blanc  { display: inline-block; width: 1.1ch; border-bottom: 3px solid #e74c3c; color: transparent; margin: 0 1px; }
+        .lecon-accents { font-size: 14px; line-height: 1.6; color: #444; padding: 10px 14px; background: #f9f4ff; border-radius: 10px; margin-bottom: 10px; transition: opacity 1s; }
+        .lecon-accents ul { margin: 6px 0 6px 18px; padding: 0; }
+        .lecon-accents li { margin-bottom: 4px; }
+        .msg-accents { font-size: 15px; min-height: 22px; margin: 8px 0; text-align: center; font-style: italic; color: #c0392b; }
+        .info-etym { font-size: 13px; color: #724a91; text-align: center; margin-top: 6px; font-style: italic; }
     </style>
 </head>
 <body>
@@ -128,6 +140,21 @@
         <p class="menu-encouragement">Mélange tout et conjugue au subjonctif !</p>
         <button class="btn-menu-jeu orange3" onclick="lancerJeu('sp3')">
             🟠 Tous les verbes
+        </button>
+    </div>
+
+    <!-- ACCENTS -->
+    <div class="menu-section">
+        <div class="menu-section-titre">🔤 Les accents</div>
+        <button class="btn-menu-jeu jaune" onclick="lancerJeu('accents1')">
+            📖 Les mots accentués
+        </button>
+        <button class="btn-menu-jeu jaune2" onclick="lancerJeu('accents2')">
+            ✏️ Les verbes accentués
+        </button>
+        <p class="menu-encouragement">Les accents n'ont plus de secret pour toi !</p>
+        <button class="btn-menu-jeu jaune3" onclick="lancerJeu('accents3')">
+            ⌨️ Écris l'accent
         </button>
     </div>
 
@@ -329,6 +356,24 @@
                     onclick="validerSPForm()" style="margin-top:15px;">OK</button>
         </div>
 
+
+        <!-- ========================================================
+             ACCENTS — jeu pelotes (jeux 1 et 2)
+             ======================================================== -->
+        <div id="zone-accents-pelotes" style="display:none; text-align:center;">
+            <div id="accents-lecon" class="lecon-accents"></div>
+            <div class="mot-accent-display" id="accents-mot"></div>
+            <div class="msg-accents" id="msg-accents"></div>
+            <div class="info-etym" id="accents-info"></div>
+            <div class="pelotes-zone" id="accents-pelotes" style="justify-content:center; gap:20px;"></div>
+        </div>
+
+        <!-- Bulle Retiens accents -->
+        <div id="bulle-accents1" class="bulle-present1" style="display:none;">
+            💬 <i>Conseil de Juju : pour réussir, <b>observe bien les lettres qui suivent le son [ɛ]</b>.<br>
+            Comme en arabe ou en hébreu, il faut <b>lire de la droite vers la gauche</b> pour vérifier sa graphie !</i>
+        </div>
+
         <div class="msg-zone" id="msg-zone"></div>
 
         <!-- Bulle Retiens ps1 -->
@@ -442,6 +487,7 @@
 </div>
 
 <script src="data.js"></script>
+<script src="accents.js"></script>
 <script src="passesimple.js"></script>
 <script src="verbesImparfait_gd.js"></script>
 <script src="dataFuturCondi.js"></script>
@@ -717,6 +763,27 @@ const CONFIG = {
         7: { niv:[3,4],     mode:'form-entiere',     nb:8, opa:0.1  },
         8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
+
+    accents1: {
+        1: { src:'1a', opa:1    },
+        2: { src:'1b', opa:1    },
+        3: { src:'1c', opa:1    },
+        4: { src:'1d', opa:0.5  },
+        5: { src:'1e', opa:0.5  },
+        6: { src:'1a', opa:0.15 },
+        7: { src:'1b', opa:0.1  },
+        8: { src:'mix1',opa:0   },
+    },
+    accents2: {
+        1: { src:'2a', opa:1    },
+        2: { src:'2b', opa:1    },
+        3: { src:'2c', opa:0.5  },
+        4: { src:'2e', opa:0.5  },
+        5: { src:'mix2',opa:0.3 },
+        6: { src:'mix2',opa:0.1 },
+        7: { src:'2b', opa:0.05 },
+        8: { src:'mix2',opa:0   },
+    },
     present2: {
         // Séries 1-3 : pelotes, niveaux 1-2, pelotes fixes (pas de shuffle)
         1: { niv:[1,2], mode:'pelotes', nb:8, opa:1,   shuffle:false },
@@ -731,6 +798,22 @@ const CONFIG = {
         8: { niv:[3,4], mode:'form',    nb:8, opa:0   },
     },
 };
+
+
+function cacherToutesZones() {
+    const zones = [
+        'zone-present-pelotes','zone-present-form',
+        'zone-present2-pelotes','zone-present2-form',
+        'zone-presenttous-pelotes','zone-presenttous-form',
+        'zone-imparfait-pelotes','zone-imparfait-form',
+        'zone-ps-pelotes','zone-sp-pelotes','zone-sp-form',
+        'zone-accents-pelotes'
+    ];
+    zones.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    });
+}
 
 // ============================================================
 // PRÉSENT 2e/3e GROUPE — filtre sur verbesPresent (data.js)
@@ -778,6 +861,9 @@ function lancerJeu(type) {
         imparfait1:  "L'imparfait régulier",
         imparfait2:  "L'imparfait altéré",
         imparfait3:  "L'imparfait au pluriel",
+        accents1: 'Les mots accentués',
+        accents2: 'Les verbes accentués',
+        accents3: 'Écris l\'accent',
     };
     document.getElementById('titre-jeu').innerText = titres[type] || '';
     chargerSerie();
@@ -793,6 +879,7 @@ function retourMenu() {
     if (p1VoixTimer)  { clearTimeout(p1VoixTimer);  p1VoixTimer  = null; }
     if (p2VoixTimer)  { clearTimeout(p2VoixTimer);  p2VoixTimer  = null; }
     if (ptVoixTimer)  { clearTimeout(ptVoixTimer);  ptVoixTimer  = null; }
+    if (accVoixTimer) { clearTimeout(accVoixTimer); accVoixTimer = null; }
     document.getElementById('ecran-intermediaire').style.display = 'none';
     document.getElementById('cartouche-jeu').style.display = 'block';
 }
@@ -802,6 +889,7 @@ function retourMenu() {
 // ============================================================
 
 function chargerSerie() {
+    if (jeuActuel.startsWith('accents')) { chargerSerieAccents(); return; }
     scoreSerie    = 0;
     qIndex        = 0;
     essai         = 0;
@@ -3662,6 +3750,214 @@ function validerSPForm() {
             inp.focus();
         }
     }
+}
+
+
+// ============================================================
+// ACCENTS — Variables et utilitaires
+// ============================================================
+
+let accVoixTimer = null;
+let accEssai     = 0;
+let accQuestion  = null;
+let accPool      = [];
+
+function getPoolAccents(src) {
+    if (typeof verbesAccents === 'undefined') return [];
+    const sections = {
+        '1a': e => e.mot && e.cible === 'é' && !e.alt,
+        '1b': e => e.mot && e.cible === 'è' && !e.alt,
+        '1c': e => e.mot && e.cible === 'ê',
+        '1d': e => e.mot && e.cible === 'â',
+        '1e': e => e.mot && e.cible === 'e',
+        '2a': e => e.mot && e.cible === 'é' && !e.alt,
+        '2b': e => e.mot && e.cible === 'è' && !e.alt,
+        '2c': e => e.mot && e.cible === 'ê',
+        '2e': e => e.mot && e.cible === 'e',
+        'mix1': e => e.mot && ['é','è','ê','â','e'].includes(e.cible) && !e.alt,
+        'mix2': e => e.mot && ['é','è','ê','e'].includes(e.cible),
+    };
+    const fn = sections[src];
+    return fn ? verbesAccents.filter(fn) : [];
+}
+
+function getPelotesAccents(cible) {
+    if (cible === 'â') return ['â', 'à', 'a'];
+    if (cible === 'ê') return ['ê', 'è', 'é'];
+    if (cible === 'e') return ['e', 'é', 'è'];
+    return ['é', 'è', 'ê'];
+}
+
+// Construire l'affichage du mot en deux parties
+// Le pronom sujet est ignoré pour le comptage des e
+function construireAffichageMot(mot, cible, pos) {
+    const pronoms = ['elles ', 'elle ', 'ils ', 'il ', 'nous ', 'vous ', 'tu ', 'je ', 'on ', "j'"];
+    let prefixe = '';
+    let verbe = mot;
+    for (const p of pronoms) {
+        if (mot.toLowerCase().startsWith(p.toLowerCase())) {
+            prefixe = mot.slice(0, p.length);
+            verbe   = mot.slice(p.length);
+            break;
+        }
+    }
+    // Trouver la pos-ième occurrence de tout e (accentué ou non)
+    const regex = /[eéèêâàîïôùûü]/g;
+    let count = 0;
+    let targetIdx = -1;
+    let m;
+    while ((m = regex.exec(verbe)) !== null) {
+        count++;
+        if (count === (pos || 1)) { targetIdx = m.index; break; }
+    }
+    // Fallback : chercher directement la lettre accentuée
+    if (targetIdx === -1) targetIdx = verbe.search(/[éèêâ]/);
+    if (targetIdx === -1) return { avant: prefixe + verbe, apres: '' };
+    return {
+        avant: prefixe + verbe.slice(0, targetIdx),
+        apres: verbe.slice(targetIdx + 1)
+    };
+}
+
+function afficherMotAccents(q) {
+    const { avant, apres } = construireAffichageMot(q.mot, q.cible, q.pos);
+    document.getElementById('accents-mot').innerHTML =
+        '<span class="mot-partie">' + avant + '</span>' +
+        '<span class="mot-blanc">_</span>' +
+        '<span class="mot-partie">' + apres + '</span>';
+}
+
+function getLeconAccents(src, opa) {
+    if (!opa || opa === 0) return '';
+    if (src && src.startsWith('1')) {
+        return '<div class="lecon-accents" style="opacity:' + opa + '">' +
+            '<strong>Retrouve le bon accent</strong><br>' +
+            'En français, quand on entend le son [e] ou [ɛ], on observe la syllabe qui suit.<br>' +
+            '<ul>' +
+            '<li>Si elle est <b>muette</b> \u2192 on écrit <b>è</b> (accent grave)</li>' +
+            '<li>Si elle est <b>sonore</b> \u2192 on écrit <b>é</b> (accent aigu)</li>' +
+            '</ul>' +
+            'Quand un <b>-s-</b> ou une syllabe entière a disparu, on trouve l\'<b>accent circonflexe</b> : ' +
+            '<i>forêt \u2190 forestier / tête \u2190 testa / fête \u2190 festif</i><br>' +
+            '<small>\ud83d\udca1 Comme en arabe ou en hébreu, <b>lis de droite à gauche</b> pour vérifier ta graphie !</small>' +
+            '</div>';
+    }
+    return '';
+}
+
+// ============================================================
+// ACCENTS — Lancer une question
+// ============================================================
+
+function lancerQuestionAccents() {
+    accEssai = 0;
+    document.getElementById('msg-accents').innerText   = '';
+    document.getElementById('accents-info').innerText  = '';
+
+    if (accPool.length === 0) { prochain(); return; }
+
+    let candidats = accPool.filter(e => !dejaVus.has(JSON.stringify(e)));
+    if (candidats.length === 0) { dejaVus.clear(); candidats = accPool; }
+    accQuestion = candidats[Math.floor(Math.random() * candidats.length)];
+    dejaVus.add(JSON.stringify(accQuestion));
+
+    afficherMotAccents(accQuestion);
+
+    // Pelotes mélangées
+    const pelotes = melangerTableau([...getPelotesAccents(accQuestion.cible)]);
+    const zone = document.getElementById('accents-pelotes');
+    zone.innerHTML = '';
+    pelotes.forEach(p => {
+        const btn = document.createElement('button');
+        btn.className = 'pelote';
+        btn.style.cssText = 'background:#724a91;color:#fff;font-size:1.5em;padding:18px 28px;border-radius:50px;border:none;cursor:pointer;font-family:inherit;margin:5px;';
+        btn.innerText = p;
+        btn.onclick = () => validerAccent(p, btn);
+        zone.appendChild(btn);
+    });
+
+    // Voix
+    parler(accQuestion.mot);
+    if (accVoixTimer) clearTimeout(accVoixTimer);
+    accVoixTimer = setTimeout(() => {
+        if (jeuActuel.startsWith('accents')) parler(accQuestion.mot);
+    }, 8000);
+}
+
+// ============================================================
+// ACCENTS — Valider une réponse
+// ============================================================
+
+function validerAccent(choix) {
+    if (accVoixTimer) { clearTimeout(accVoixTimer); accVoixTimer = null; }
+    const q = accQuestion;
+    const bonnes = [q.cible];
+    if (q.alt && q.altCible) bonnes.push(q.altCible);
+    const correct = bonnes.includes(choix);
+
+    const { avant, apres } = construireAffichageMot(q.mot, q.cible, q.pos);
+
+    if (correct) {
+        document.querySelectorAll('#accents-pelotes .pelote').forEach(b => b.disabled = true);
+        document.getElementById('accents-mot').innerHTML =
+            '<span class="mot-partie">' + avant + '</span>' +
+            '<span style="color:#2ecc71;font-weight:bold;">' + choix + '</span>' +
+            '<span class="mot-partie">' + apres + '</span>';
+        document.getElementById('msg-accents').style.color = '#2ecc71';
+        document.getElementById('msg-accents').innerText   = '\u2713 Bravo !';
+        if (q.info) document.getElementById('accents-info').innerText = '\ud83d\udca1 ' + q.info;
+        scoreTotal++; scoreSerie++;
+        document.getElementById('total-score').innerText = scoreTotal;
+        creerConfettis();
+        parler(q.mot);
+        setTimeout(() => lancerQuestionAccents(), 2000);
+    } else {
+        accEssai++;
+        if (accEssai >= 2) {
+            document.querySelectorAll('#accents-pelotes .pelote').forEach(b => b.disabled = true);
+            document.getElementById('accents-mot').innerHTML =
+                '<span class="mot-partie">' + avant + '</span>' +
+                '<span style="color:#e74c3c;font-weight:bold;">' + q.cible + '</span>' +
+                '<span class="mot-partie">' + apres + '</span>';
+            document.getElementById('msg-accents').style.color = '#e74c3c';
+            document.getElementById('msg-accents').innerText   = '\u2717 La réponse : ' + q.cible;
+            if (q.info) {
+                document.getElementById('accents-info').innerText = '\ud83d\udca1 ' + q.info;
+            } else if (q.cible === 'é' || q.cible === 'è') {
+                document.getElementById('accents-info').innerText = 'Observe bien la syllabe qui suit le son [\u025b] !';
+            }
+            setTimeout(fuzzJuju, 0);
+            parler(q.mot);
+            setTimeout(() => lancerQuestionAccents(), 2500);
+        } else {
+            document.getElementById('msg-accents').style.color = '#e74c3c';
+            document.getElementById('msg-accents').innerText   = '\u2717 Essaie encore !';
+            setTimeout(fuzzJuju, 0);
+        }
+    }
+}
+
+// ============================================================
+// ACCENTS — Charger la série
+// ============================================================
+
+function chargerSerieAccents() {
+    const cfg = CONFIG[jeuActuel] ? CONFIG[jeuActuel][serie] : null;
+    if (!cfg) return;
+
+    document.getElementById('accents-lecon').innerHTML = getLeconAccents(cfg.src, cfg.opa);
+
+    accPool = melangerTableau([...getPoolAccents(cfg.src)]).slice(0, 8);
+
+    cacherToutesZones();
+    document.getElementById('zone-accents-pelotes').style.display = 'block';
+
+    const bulle = document.getElementById('bulle-accents1');
+    if (cfg.opa > 0) { bulle.style.display = 'block'; bulle.style.opacity = cfg.opa; }
+    else             { bulle.style.display = 'none'; }
+
+    document.getElementById('info-serie').innerText = 'Série ' + serie + '/8 \u00b7 Q1/8';
+    lancerQuestionAccents();
 }
 
 </script>
