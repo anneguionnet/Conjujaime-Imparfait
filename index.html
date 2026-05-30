@@ -3872,7 +3872,9 @@ function afficherMotAccents(q) {
 
 function getLeconAccents(src, opa) {
     if (!opa || opa === 0) return '';
-    if (src && src.startsWith('1')) {
+    
+    // On accepte maintenant tout ce qui commence par '1' OU par '2'
+    if (src && (src.startsWith('1') || src.startsWith('2'))) {
         return '<div class="lecon-accents" style="opacity:' + opa + '">' +
             '<strong>Retrouve le bon accent</strong><br>' +
             'En français, quand on entend le son [e] ou [ɛ], on observe la syllabe qui suit.<br>' +
