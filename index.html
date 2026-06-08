@@ -3956,31 +3956,47 @@ function validerAccent(choix) {
         setTimeout(() => { accProchain(); }, 2000);
     } else {
         accEssai++;
-        if (accEssai >= 2) {
-            document.querySelectorAll('#accents-pelotes .pelote').forEach(b => b.disabled = true);
-            document.getElementById('accents-mot').innerHTML =
-                '<span class="mot-partie">' + avant + '</span>' +
-                '<span style="color:#e74c3c;font-weight:bold;">' + q.cible + '</span>' +
-                '<span class="mot-partie">' + apres + '</span>';
-            document.getElementById('msg-accents').style.color = '#e74c3c';
-            document.getElementById('msg-accents').innerText   = '\u2717 La réponse : ' + q.cible;
-            if (q.info) {
-                document.getElementById('accents-info').innerText = '\ud83d\udca1 ' + q.info;
-            } else if (q.cible === 'è') {
-                document.getElementById('accents-info').innerText = 'La syllabe qui suit est muette \u2192 accent grave è !';
-            } else if (q.cible === 'é') {
-                document.getElementById('accents-info').innerText = 'La syllabe qui suit est sonore \u2192 accent aigu é !';
-            } else if (q.cible === 'e') {
-                document.getElementById('accents-info').innerText = 'Devant une double consonne, le e se prononce [\u025b] sans accent !';
-            }
-            setTimeout(fuzzJuju, 0);
-            parler(q.mot);
-            setTimeout(() => { accProchain(); }, 2500);
-        } else {
-            document.getElementById('msg-accents').style.color = '#e74c3c';
-            document.getElementById('msg-accents').innerText   = '\u2717 Essaie encore !';
-            setTimeout(fuzzJuju, 0);
-        }
+       // Remplace ton bloc if (accEssai >= 2) ... else ... par celui-ci :
+
+if (accEssai >= 2) {
+    // --- DEUXIÈME ÉCHEC : On donne la réponse ---
+    document.querySelectorAll('#accents-pelotes .pelote').forEach(b => b.disabled = true);
+    document.getElementById('accents-mot').innerHTML =
+        '<span class="mot-partie">' + avant + '</span>' +
+        '<span style="color:#e74c3c;font-weight:bold;">' + q.cible + '</span>' +
+        '<span class="mot-partie">' + apres + '</span>';
+    
+    document.getElementById('msg-accents').style.color = '#e74c3c';
+    document.getElementById('msg-accents').innerText = '\u2717 La réponse était : ' + q.cible;
+    
+    // On conserve ici l'explication finale
+    afficherExplication(q); 
+    
+    setTimeout(fuzzJuju, 0);
+    parler(q.mot);
+    setTimeout(() => { accProchain(); }, 2500);
+
+} else {
+    // --- PREMIER ÉCHEC : On donne l'indice tout de suite ---
+    document.getElementById('msg-accents').style.color = '#e74c3c';
+    document.getElementById('msg-accents').innerText = '\u2717 Essaie encore !';
+    
+    // Appel de la fonction d'explication dès le premier essai
+    afficherExplication(q);
+    
+    setTimeout(fuzzJuju, 0);
+}
+
+// Petite fonction utilitaire pour centraliser tes messages (à ajouter dans ton fichier)
+function afficherExplication(q) {
+    if (q.info) {
+        document.getElementById('accents-info').innerText = '\ud83d\udca1 ' + q.info;
+    } else if (q.cible === 'è') {
+        document.getElementById('accents-info').innerText = 'La syllabe qui suit est muette \u2192 accent grave è !';
+    } else if (q.cible === 'é') {
+        document.getElementById('accents-info').innerText = 'La syllabe qui suit est sonore \u2192 accent aigu é !';
+    } else if (q.cible === 'e') {
+        document.getElementById('accents-info').innerText = 'Devant une double consonne, le e se prononce [\u025b] sans accent !';
     }
 }
 
