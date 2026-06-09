@@ -3881,9 +3881,7 @@ function getLeconAccents(src, opa, jeu) {
         const regleDouble = isJeu2
             ? '<li>Si elle contient une <b>double consonne</b> \u2192 le <b>e</b> se prononce [\u025b] sans accent</li>'
             : '';
-        const arabe = isJeu2
-            ? '<br><small>\ud83d\udca1 Comme en arabe ou en hébreu, <b>lis de droite à gauche</b> pour vérifier ta graphie !</small>'
-            : '';
+        const arabe = '';
         return '<div class="lecon-accents" style="opacity:' + opa + '">' +
             '<strong>Retrouve le bon accent</strong><br>' +
             'En français, quand on entend le son [e] ou [ɛ], on observe la syllabe qui suit.<br>' +
@@ -3982,7 +3980,7 @@ function validerAccent(choix) {
             } else if (q.cible === 'ê' || q.cible === 'â' || q.cible === 'û') {
                 document.getElementById('accents-info').innerText = 'Pense \u00e0 l\'\u00e9tymologie du mot. Revois la le\u00e7on.';
             } else if (q.cible === 'e') {
-                document.getElementById('accents-info').innerText = 'Devant une double consonne, pas d\'accent. Revois la le\u00e7on.';
+                document.getElementById('accents-info').innerText = 'Regarde, une double consonne !';
             }
         } else {
             // 2e erreur → passer au suivant sans afficher la réponse
