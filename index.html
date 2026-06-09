@@ -3897,7 +3897,7 @@ function lancerQuestionAccents() {
     document.getElementById('msg-accents').innerText   = '';
     document.getElementById('accents-info').innerText  = '';
 
-    if (accPool.length === 0) { prochain(); return; }
+    if (accPool.length === 0) { accProchain(); return; }
 
     let candidats = accPool.filter(e => !dejaVus.has(JSON.stringify(e)));
     if (candidats.length === 0) { dejaVus.clear(); candidats = accPool; }
