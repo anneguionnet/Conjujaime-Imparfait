@@ -67,7 +67,6 @@ const verbesAccents1 = [
 {"mot":"entière","pos":2,"cible":"è"},
   {"mot":"une planète","cible":"è"},
   {"mot":"la première","cible":"è","pos":2},
-  {"mot":"après","cible":"è"},
   {"mot":"quatrième","cible":"è"},
   {"mot":"régulièrement","cible":"è","pos":2},
   {"mot":"je préfère","cible":"è","pos":2},
