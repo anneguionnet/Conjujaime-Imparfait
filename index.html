@@ -3958,32 +3958,27 @@ function validerAccent(choix) {
         accEssai++;
         setTimeout(fuzzJuju, 0);
         if (accEssai === 1) {
-            // 1ère erreur → message pédagogique + 2e chance
-            document.getElementById('msg-accents').style.color = '#e74c3c';
-            document.getElementById('msg-accents').innerText = '\u2717 Essaie encore !';
+            // 1ère erreur → message simple en rouge + 2e chance
+            document.getElementById('msg-accents').innerText = '';
+            document.getElementById('accents-info').style.color = '#e74c3c';
             if (q.info) {
                 document.getElementById('accents-info').innerText = '\ud83d\udca1 ' + q.info;
             } else if (q.cible === 'è') {
-                document.getElementById('accents-info').innerText = 'Observe bien : la syllabe qui suit est muette \u2192 accent grave è !';
+                document.getElementById('accents-info').innerText = 'La syllabe qui suit est muette. Revois la le\u00e7on.';
             } else if (q.cible === 'é') {
-                document.getElementById('accents-info').innerText = 'Observe bien : la syllabe qui suit est sonore \u2192 accent aigu é !';
+                document.getElementById('accents-info').innerText = 'La syllabe qui suit est sonore. Revois la le\u00e7on.';
             } else if (q.cible === 'ê' || q.cible === 'â') {
-                document.getElementById('accents-info').innerText = 'Indice : pense à l\'étymologie du mot !';
+                document.getElementById('accents-info').innerText = 'Pense \u00e0 l\'\u00e9tymologie du mot. Revois la le\u00e7on.';
             } else if (q.cible === 'e') {
-                document.getElementById('accents-info').innerText = 'Devant une double consonne, le e se prononce [\u025b] sans accent !';
+                document.getElementById('accents-info').innerText = 'Devant une double consonne, pas d\'accent. Revois la le\u00e7on.';
             }
         } else {
-            // 2e erreur → afficher la réponse
+            // 2e erreur → passer au suivant sans afficher la réponse
             document.querySelectorAll('#accents-pelotes .pelote').forEach(b => b.disabled = true);
-            document.getElementById('accents-mot').innerHTML =
-                '<span class="mot-partie">' + avant + '</span>' +
-                '<span style="color:#e74c3c;font-weight:bold;">' + q.cible + '</span>' +
-                '<span class="mot-partie">' + apres + '</span>';
-            document.getElementById('msg-accents').style.color = '#e74c3c';
-            document.getElementById('msg-accents').innerText = '\u2717 La réponse : ' + q.cible;
-            if (q.info) document.getElementById('accents-info').innerText = '\ud83d\udca1 ' + q.info;
+            document.getElementById('accents-info').innerText = '';
+            document.getElementById('msg-accents').innerText = '';
             parler(q.mot);
-            setTimeout(() => { accProchain(); }, 2500);
+            setTimeout(() => { accProchain(); }, 1500);
         }
     }
 }
