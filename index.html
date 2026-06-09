@@ -3872,17 +3872,25 @@ function afficherMotAccents(q) {
 
 function getLeconAccents(src, opa) {
     if (!opa || opa === 0) return '';
+    const isJeu2 = src && (src.startsWith('2') || src === 'mix2');
     if (src && (src.startsWith('1') || src.startsWith('2') || src.startsWith('mix'))) {
+        const regleDouble = isJeu2
+            ? '<li>Si elle contient une <b>double consonne</b> \u2192 le <b>e</b> se prononce [\u025b] sans accent</li>'
+            : '';
+        const arabe = isJeu2
+            ? '<br><small>\ud83d\udca1 Comme en arabe ou en hébreu, <b>lis de droite à gauche</b> pour vérifier ta graphie !</small>'
+            : '';
         return '<div class="lecon-accents" style="opacity:' + opa + '">' +
             '<strong>Retrouve le bon accent</strong><br>' +
             'En français, quand on entend le son [e] ou [ɛ], on observe la syllabe qui suit.<br>' +
             '<ul>' +
             '<li>Si elle est <b>muette</b> \u2192 on écrit <b>è</b> (accent grave)</li>' +
             '<li>Si elle est <b>sonore</b> \u2192 on écrit <b>é</b> (accent aigu)</li>' +
+            regleDouble +
             '</ul>' +
             'Quand un <b>-s-</b> ou une syllabe entière a disparu, on trouve l\'<b>accent circonflexe</b> : ' +
-            '<i>forêt \u2190 forestier / tête \u2190 testa / fête \u2190 festif</i><br>' +
-            '<small>\ud83d\udca1 Comme en arabe ou en hébreu, <b>lis de droite à gauche</b> pour vérifier ta graphie !</small>' +
+            '<i>forêt \u2190 forestier / tête \u2190 testa / fête \u2190 festif</i>' +
+            arabe +
             '</div>';
     }
     return '';
