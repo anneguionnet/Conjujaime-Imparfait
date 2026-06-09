@@ -488,7 +488,8 @@
 </div>
 
 <script src="data.js"></script>
-<script src="accents.js"></script>
+<script src="accents1.js"></script>
+<script src="accents2.js"></script>
 <script src="passesimple.js"></script>
 <script src="verbesImparfait_gd.js"></script>
 <script src="dataFuturCondi.js"></script>
@@ -766,24 +767,24 @@ const CONFIG = {
     },
 
     accents1: {
-        1: { mix:{'1a':6,'1b':2},           opa:1    },
+        1: { mix:{'1a':5,'1b':2,'1e':1},    opa:1    },
         2: { mix:{'1a':5,'1b':3},           opa:1    },
-        3: { mix:{'1a':3,'1b':2,'1c':3},    opa:1    },
-        4: { mix:{'1a':2,'1b':3,'1c':2,'1d':1}, opa:0.7 },
+        3: { mix:{'1a':2,'1b':2,'1c':2,'1e':2},    opa:1    },
+        4: { mix:{'1a':2,'1b':2,'1c':2,'1d':1,'1e':1}, opa:0.7 },
         5: { mix:{'1a':2,'1b':2,'1c':2,'1d':1,'1e':1}, opa:0.5 },
         6: { mix:{'1a':2,'1b':2,'1c':1,'1d':2,'1e':1}, opa:0.3 },
         7: { mix:{'1a':2,'1b':2,'1c':1,'1d':1,'1e':2}, opa:0.1 },
         8: { mix:{'1a':2,'1b':2,'1c':1,'1d':1,'1e':2}, opa:0   },
     },
     accents2: {
-        1: { src:'2a', opa:1    },
-        2: { src:'2b', opa:1    },
-        3: { src:'2c', opa:0.5  },
-        4: { src:'2e', opa:0.5  },
-        5: { src:'mix2',opa:0.3 },
-        6: { src:'mix2',opa:0.1 },
-        7: { src:'2b', opa:0.05 },
-        8: { src:'mix2',opa:0   },
+        1: { mix:{'2a':6,'2b':2},                    opa:1    },
+        2: { mix:{'2a':4,'2b':4},                    opa:1    },
+        3: { mix:{'2a':3,'2b':3,'2c':2},             opa:1    },
+        4: { mix:{'2a':2,'2b':3,'2c':2,'2e':1},      opa:0.7  },
+        5: { mix:{'2a':2,'2b':2,'2c':1,'2e':2,'2g':1}, opa:0.5 },
+        6: { mix:{'2a':2,'2b':2,'2c':1,'2e':1,'2g':2}, opa:0.3 },
+        7: { mix:{'2a':1,'2b':2,'2c':1,'2e':2,'2g':2}, opa:0.1 },
+        8: { mix:{'2a':1,'2b':2,'2c':1,'2e':2,'2g':2}, opa:0   },
     },
     present2: {
         // Séries 1-3 : pelotes, niveaux 1-2, pelotes fixes (pas de shuffle)
@@ -3770,22 +3771,24 @@ let accQuestion  = null;
 let accPool      = [];
 
 function getPoolAccents(src) {
-    if (typeof verbesAccents === 'undefined') return [];
+    const bdd1 = typeof verbesAccents1 !== 'undefined' ? verbesAccents1 : [];
+    const bdd2 = typeof verbesAccents2 !== 'undefined' ? verbesAccents2 : [];
     const filtres = {
-        '1a': e => e.mot && e.cible === 'é' && !e.alt,
-        '1b': e => e.mot && e.cible === 'è' && !e.alt,
-        '1c': e => e.mot && e.cible === 'ê',
-        '1d': e => e.mot && e.cible === 'â',
-        '1e': e => e.mot && e.cible === 'e',
-        '2a': e => e.mot && e.cible === 'é' && !e.alt,
-        '2b': e => e.mot && e.cible === 'è' && !e.alt,
-        '2c': e => e.mot && e.cible === 'ê',
-        '2e': e => e.mot && e.cible === 'e',
-        'mix1': e => e.mot && ['é','è','ê','â','e'].includes(e.cible) && !e.alt,
-        'mix2': e => e.mot && ['é','è','ê','e'].includes(e.cible),
+        '1a': () => bdd1.filter(e => e.cible === 'é' && !e.alt),
+        '1b': () => bdd1.filter(e => e.cible === 'è' && !e.alt),
+        '1c': () => bdd1.filter(e => e.cible === 'ê'),
+        '1d': () => bdd1.filter(e => e.cible === 'â'),
+        '1e': () => bdd1.filter(e => e.cible === 'û'),
+        '2a': () => bdd2.filter(e => e.cible === 'é' && !e.alt),
+        '2b': () => bdd2.filter(e => e.cible === 'è' && !e.alt),
+        '2c': () => bdd2.filter(e => e.cible === 'ê'),
+        '2e': () => bdd2.filter(e => e.cible === 'e'),
+        '2g': () => bdd2.filter(e => e.cible === 'û'),
+        'mix1': () => bdd1.filter(e => ['é','è','ê','â','û','e'].includes(e.cible) && !e.alt),
+        'mix2': () => bdd2.filter(e => ['é','è','ê','e','û'].includes(e.cible)),
     };
     const fn = filtres[src];
-    return fn ? verbesAccents.filter(fn) : [];
+    return fn ? fn() : [];
 }
 
 function getPoolAccentsMix(mix) {
@@ -3801,6 +3804,7 @@ function getPoolAccentsMix(mix) {
 function getPelotesAccents(cible) {
     if (cible === 'â') return ['â', 'à', 'a'];
     if (cible === 'ê') return ['ê', 'è', 'é'];
+    if (cible === 'û') return ['û', 'u', 'ù'];
     if (cible === 'e') return ['e', 'é', 'è'];
     return ['é', 'è', 'ê'];
 }
@@ -3870,9 +3874,9 @@ function afficherMotAccents(q) {
         '<span class="mot-partie">' + apres + '</span>';
 }
 
-function getLeconAccents(src, opa) {
+function getLeconAccents(src, opa, jeu) {
     if (!opa || opa === 0) return '';
-    const isJeu2 = src && (src.startsWith('2') || src === 'mix2');
+    const isJeu2 = jeu === 'accents2' || jeu === 'accents3';
     if (src && (src.startsWith('1') || src.startsWith('2') || src.startsWith('mix'))) {
         const regleDouble = isJeu2
             ? '<li>Si elle contient une <b>double consonne</b> \u2192 le <b>e</b> se prononce [\u025b] sans accent</li>'
@@ -3975,7 +3979,7 @@ function validerAccent(choix) {
                 document.getElementById('accents-info').innerText = 'La syllabe qui suit est muette. Revois la le\u00e7on.';
             } else if (q.cible === 'é') {
                 document.getElementById('accents-info').innerText = 'La syllabe qui suit est sonore. Revois la le\u00e7on.';
-            } else if (q.cible === 'ê' || q.cible === 'â') {
+            } else if (q.cible === 'ê' || q.cible === 'â' || q.cible === 'û') {
                 document.getElementById('accents-info').innerText = 'Pense \u00e0 l\'\u00e9tymologie du mot. Revois la le\u00e7on.';
             } else if (q.cible === 'e') {
                 document.getElementById('accents-info').innerText = 'Devant une double consonne, pas d\'accent. Revois la le\u00e7on.';
@@ -4012,7 +4016,7 @@ function chargerSerieAccents() {
 
     // Leçon dans le bandeau jaune
     const lz = document.getElementById('lecon-zone');
-    const leconHtml = getLeconAccents(cfg.mix ? 'mix1' : cfg.src, cfg.opa);
+    const leconHtml = getLeconAccents(cfg.mix ? 'mix1' : cfg.src, cfg.opa, jeuActuel);
     lz.innerHTML    = leconHtml;
     lz.style.opacity = cfg.opa || 0;
     lz.style.display = (!cfg.opa || cfg.opa === 0) ? 'none' : 'block';
