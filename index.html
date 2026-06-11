@@ -370,20 +370,20 @@
         <!-- ========================================================
              ACCENTS — jeu dictée (jeu 3)
              ======================================================== -->
-        <div id="zone-accents-dictee" style="display:none; text-align:center;">
-            <div style="font-size:1.8em; font-weight:bold; color:#724a91; margin-bottom:10px;">✍️ Dictée</div>
-            <div id="dictee-sujet" style="font-size:1.4em; color:#724a91; font-weight:bold; margin-bottom:6px;"></div>
-            <div id="dictee-trait" style="font-size:3em; color:#e74c3c; font-weight:bold; letter-spacing:2px; margin:10px 0;">— — — — — — — —</div>
+        <div id="zone-accents-dictee" style="display:none;">
+            <div style="text-align:right; margin-bottom:5px;">
+                <span style="color:#724a91; font-size:16px; font-weight:bold;">Écoute !</span><br>
+                <small style="color:#724a91; font-style:italic;">Mets le son.</small>
+            </div>
+            <div id="dictee-sujet" style="font-size:1.2em; color:#724a91; font-weight:bold; text-align:center; margin-bottom:6px;"></div>
             <div class="msg-accents" id="msg-dictee"></div>
             <div class="info-etym" id="dictee-info"></div>
-            <input type="text" id="dictee-input"
-                style="font-size:1.4em; padding:10px 16px; border:2px solid #724a91; border-radius:12px; width:80%; max-width:300px; text-align:center; margin:10px 0; font-family:inherit;"
-                placeholder="tape ta réponse..."
-                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-            <br>
-            <button id="dictee-valider"
-                style="background:#724a91;color:#fff;font-size:1.1em;padding:12px 28px;border-radius:50px;border:none;cursor:pointer;font-family:inherit;margin-top:8px;"
-                onclick="validerDictee()">Valider ✓</button>
+            <div class="input-zone" style="display:flex;">
+                <input type="text" id="dictee-input" class="input-reponse"
+                    placeholder="tape ta réponse..."
+                    autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
+                <button class="btn-valider" onclick="validerDictee()">OK</button>
+            </div>
         </div>
 
         <!-- Bulle Retiens accents -->
