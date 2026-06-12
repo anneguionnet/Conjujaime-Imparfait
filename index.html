@@ -4143,7 +4143,19 @@ function validerDictee() {
     const { sujet, verbe } = extraireSujetEtMot(q.mot);
     const reponse = document.getElementById('dictee-input').value.trim().toLowerCase();
     const correct = verbe.toLowerCase();
-    const altCorr = q.altRad ? q.altRad.toLowerCase() : null;
+    // Calculer la forme alternative : remplacer la lettre ciblée par altCible
+    let altCorr = null;
+    if (q.altRad) {
+        altCorr = q.altRad.toLowerCase();
+    } else if (q.alt && q.altCible) {
+        // Remplacer la pos-ième occurrence de tout e dans le verbe
+        let count = 0;
+        const targetPos = q.pos || 1;
+        altCorr = verbe.replace(/[eéèêâàîïôùûü]/g, (match) => {
+            count++;
+            return count === targetPos ? q.altCible : match;
+        });
+    }
 
     const ok = reponse === correct || (altCorr && reponse === altCorr);
 
