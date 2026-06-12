@@ -371,14 +371,13 @@
              ACCENTS — jeu dictée (jeu 3)
              ======================================================== -->
         <div id="zone-accents-dictee" style="display:none;">
-            <div style="text-align:right; margin-bottom:5px;">
-                <span style="color:#724a91; font-size:16px; font-weight:bold;">Écoute !</span><br>
-                <small style="color:#724a91; font-style:italic;">Mets le son.</small>
+            <div style="text-align:right; margin-bottom:8px;">
+                <small style="color:#724a91; font-style:italic; font-size:13px;">Écoute et mets le son !</small>
             </div>
-            <div id="dictee-sujet" style="font-size:1.2em; color:#724a91; font-weight:bold; text-align:center; margin-bottom:6px;"></div>
             <div class="msg-accents" id="msg-dictee"></div>
             <div class="info-etym" id="dictee-info"></div>
-            <div class="input-zone" style="display:flex;">
+            <div class="input-zone" style="display:flex; align-items:center; gap:6px;">
+                <span id="dictee-sujet" style="font-size:1.1em; color:#724a91; font-weight:bold; white-space:nowrap;"></span>
                 <input type="text" id="dictee-input" class="input-reponse"
                     placeholder="tape ta réponse..."
                     autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
@@ -895,7 +894,7 @@ function lancerJeu(type) {
         imparfait3:  "L'imparfait au pluriel",
         accents1: 'Les mots accentués',
         accents2: 'Les verbes accentués',
-        accents3: 'Écris l\'accent',
+        accents3: 'Les accents',
     };
     document.getElementById('titre-jeu').innerText = titres[type] || '';
     chargerSerie();
