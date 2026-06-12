@@ -1,5 +1,5 @@
 // ============================================================
-// BDD ACCENTS — é, è, ê, â, et son [ɛ] écrit -e (η)
+// BDD ACCENTS — é, è, ê, et son [ɛ] écrit -e (η)
 // ============================================================
 const verbesAccents2 = [
 
@@ -196,7 +196,6 @@ const verbesAccents2 = [
   {"mot":"j'assiège","cible":"è"},
   {"mot":"elle considère","cible":"è"},
   {"mot":"elle digère","cible":"è"},
- 
 {"mot":"tu craquèles","cible":"è","altRad":"craquelles"},
   {"mot":"je ficèle","cible":"è","altRad":"ficelle"},
   {"mot":"tu harcèles","cible":"è"},
@@ -242,24 +241,6 @@ const verbesAccents2 = [
   {"mot":"une guêpe","cible":"ê","info":"de la famille de wasp en anglais"},
   {"mot":"une crêpe","cible":"ê","info":"vient du latin crispus"},
  {"mot":"benêt","cible":"ê","info":"de la famille de Benoît, bénédictin"},
-
-
-  // ========================================================
-  // 2d. ACCENT CIRCONFLEXE — â étymologique (13 entrées)
-  // ========================================================
-  {"mot":"la hâte","cible":"â","info":"vient du francique haifst"},
-  {"mot":"l'âge","cible":"â","info":"vient du latin aevum"},
-  {"mot":"mâcher","cible":"â","info":"de la famille de mastiquer"},
-  {"mot":"un âne","cible":"â","info":"vient du latin asinus"},
-  {"mot":"une âme","cible":"â","info":"vient du latin anima"},
-  {"mot":"un château","cible":"â","info":"de la famille de castle en anglais"},
-  {"mot":"la grâce","cible":"â","info":"vient du latin gratia"},
-  {"mot":"pâle","cible":"â","info":"vient du latin pallidus"},
-  {"mot":"une tâche","cible":"â","info":"vient du latin taxa"},
-  {"mot":"infâme","cible":"â","info":"vient du latin infamis"},
-  {"mot":"un bâton","cible":"â","info":"de la famille de bastonnade"},
-  {"mot":"un câble","cible":"â","info":"vient du latin capulum"},
-  {"mot":"le théâtre","cible":"â","info":"vient du latin theatrum"},
 
   // ========================================================
   // 2e. SON [ɛ] — ÉCRIT -e — avant R final ou double consonne (25 entrées)
@@ -376,16 +357,5 @@ const verbesAccents2 = [
 {"mot":"ils épèlent","pos":2,"cible":"è","altRad":"épellent"},
 {"mot":"j'accélérerai","cible":"é"},
 {"mot":"j'accélérerai","cible":"é","pos":2},
-
-
-  // ========================================================
-  // 2g. ACCENT CIRCONFLEXE — û (homophones)
-  // ========================================================
-  {"mot":"dû","cible":"û","info":"dû (participe de devoir) ≠ du (article)"},
-  {"mot":"sûr","cible":"û","info":"sûr (certain) ≠ sur (préposition)"},
-  {"mot":"mûr","cible":"û","info":"mûr (de la famille de mature)"},
-  {"mot":"jeûne","cible":"û","info":"jeûne (abstinence) ≠ jeune (âge)"},
-  {"mot":"crû","cible":"û","info":"crû (participe de croître) ≠ cru (participe de croire)"},
-
 
 ];
