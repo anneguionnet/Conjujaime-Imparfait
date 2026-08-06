@@ -133,9 +133,9 @@
     </div>
 
     <div class="menu-section">
-        <div class="menu-section-titre">🍷 Le participe passé</div>
+        <div class="menu-section-titre">🐓 Le participe passé</div>
         <button class="btn-menu-jeu bordeaux" onclick="lancerJeu('participepasse1')">
-            🍷 En -é, -i, -u
+            🐓 En -é, -i, -u
         </button>
     </div>
 
@@ -2783,6 +2783,11 @@ function exemplePP(v) {
     return (v.ex || []).join(' &nbsp;|&nbsp; ');
 }
 
+function phraseParleePP(v) {
+    const first = (v.ex && v.ex[0]) || '';
+    return first.split(' - ')[0].trim();
+}
+
 function afficherPP1(v) {
     ppEssaiCount = 0;
     if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
@@ -2802,10 +2807,11 @@ function afficherPP1(v) {
         document.getElementById('pp1-pelotes-radical').innerText   = v.rad + '-';
 
         const autres = ['e','i','u'].filter(c => c !== v.cible);
+        const affichage = { e: 'é', i: 'i', u: 'u' };
         const pelotes = melangerTableau([
-            { text: '-' + v.cible, correct: true  },
-            { text: '-' + autres[0], correct: false },
-            { text: '-' + autres[1], correct: false },
+            { text: '-' + affichage[v.cible], code: v.cible, correct: true  },
+            { text: '-' + affichage[autres[0]], code: autres[0], correct: false },
+            { text: '-' + affichage[autres[1]], code: autres[1], correct: false },
         ]);
         const couleurs = { e:'#a13a52', i:'#7d2438', u:'#5c1a2a' };
         const pzone = document.getElementById('pp1-pelotes-zone');
@@ -2813,7 +2819,7 @@ function afficherPP1(v) {
         pelotes.forEach(p => {
             const btn = document.createElement('button');
             btn.className = 'pelote-terminaison';
-            const term = p.text.replace('-','');
+            const term = p.code;
             btn.style.background = couleurs[term] || '#7d2438';
             btn.innerText = p.text;
             btn.onclick = () => validerPP1Pelote(term, p.correct, btn, zone, v);
@@ -2868,7 +2874,7 @@ function validerPP1Pelote(termChoisie, correct, btn, zone, v) {
         document.getElementById('total-score').innerText = scoreTotal;
         document.getElementById('pp1-pelotes-radical').innerHTML =
             `<span style="color:#7d2438; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
-        parler(zone.dataset.motComplet);
+        parler(phraseParleePP(v));
         setTimeout(prochain, 2600);
     } else {
         btn.style.outline = '3px solid #e74c3c';
@@ -2883,7 +2889,7 @@ function validerPP1Pelote(termChoisie, correct, btn, zone, v) {
             msg.innerHTML   = `❌ C'était <b>-${zone.dataset.bonne}</b> : <b>${zone.dataset.motComplet}</b><br><i>${exemplePP(v)}</i>`;
             document.getElementById('pp1-pelotes-radical').innerHTML =
                 `<span style="color:#7d2438; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
-            parler(zone.dataset.motComplet);
+            parler(phraseParleePP(v));
             setTimeout(prochain, 2600);
         }
     }
@@ -2909,7 +2915,7 @@ function validerPPForm() {
         document.getElementById('btn-valider-impform').style.display = 'none';
         document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#7d2438; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
         input.style.display = 'none';
-        parler(motComplet);
+        parler(phraseParleePP(v));
         setTimeout(() => {
             input.value = '';
             input.disabled = false;
@@ -2933,7 +2939,7 @@ function validerPPForm() {
             setTimeout(fuzzJuju, 0);
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
-            parler(motComplet);
+            parler(phraseParleePP(v));
             setTimeout(prochain, 2600);
         }
     }
