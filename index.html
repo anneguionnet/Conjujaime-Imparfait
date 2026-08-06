@@ -2839,7 +2839,7 @@ function afficherPP1(v) {
         input.value = '';
         input.disabled = false;
         document.getElementById('btn-valider-impform').style.display = 'inline-block';
-        setTimeout(() => input.focus(), 100);
+        input.focus();
 
         if (mode === 'form-terminaison') {
             document.getElementById('imp-form-sujet').innerText = v.rad + '-';
@@ -2874,7 +2874,7 @@ function validerPP1Pelote(termChoisie, correct, btn, zone, v) {
         scoreSerie++; scoreTotal++;
         document.getElementById('total-score').innerText = scoreTotal;
         document.getElementById('pp1-pelotes-radical').innerHTML =
-            `<span style="color:#7d2438; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+            `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
         parler(phraseParleePP(v));
         setTimeout(prochain, 2600);
     } else {
@@ -2889,7 +2889,7 @@ function validerPP1Pelote(termChoisie, correct, btn, zone, v) {
             msg.style.color = '#e74c3c';
             msg.innerHTML   = `❌ C'était <b>-${zone.dataset.bonne}</b> : <b>${zone.dataset.motComplet}</b><br><i>${exemplePP(v)}</i>`;
             document.getElementById('pp1-pelotes-radical').innerHTML =
-                `<span style="color:#7d2438; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+                `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
             parler(phraseParleePP(v));
             setTimeout(prochain, 2600);
         }
@@ -2899,8 +2899,8 @@ function validerPP1Pelote(termChoisie, correct, btn, zone, v) {
 function validerPPForm() {
     const zone    = document.getElementById('zone-imparfait-form');
     const input   = document.getElementById('imp-form-input');
-    const reponse = input.value.trim().toLowerCase();
-    const bonne   = (zone.dataset.reponse || '').toLowerCase();
+    const reponse = input.value.trim().toLowerCase().normalize('NFC');
+    const bonne   = (zone.dataset.reponse || '').toLowerCase().normalize('NFC');
     const msg     = document.getElementById('msg-zone');
     const motComplet = zone.dataset.motComplet;
     const v = verbesPioches[qIndex];
@@ -2914,7 +2914,7 @@ function validerPPForm() {
         document.getElementById('total-score').innerText = scoreTotal;
         input.disabled = true;
         document.getElementById('btn-valider-impform').style.display = 'none';
-        document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#7d2438; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
+        document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
         input.style.display = 'none';
         parler(phraseParleePP(v));
         setTimeout(() => {
