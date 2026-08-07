@@ -138,7 +138,7 @@
             🐓 En -é, -i, -u
         </button>
         <button class="btn-menu-jeu bordeaux2" onclick="lancerJeu('participepasse2')">
-            🐓 En -is, -it, -int, -ait, -us
+            🐓 Autres terminaisons
         </button>
     </div>
 
@@ -2859,7 +2859,7 @@ function afficherPP2(v) {
 
         document.getElementById('pp2-pelotes-infinitif').innerText = v.inf;
         document.getElementById('pp2-pelotes-radical').innerText   = v.rad + '-';
-        document.getElementById('pp2-pelotes-indice').innerHTML    = '💡 ' + exemplePP(v);
+        document.getElementById('pp2-pelotes-indice').innerHTML    = '💡 ?';
 
         const toutes  = ['is','it','int','ait','us'];
         const autres  = melangerTableau(toutes.filter(c => c !== v.cible)).slice(0, 2);
@@ -2887,7 +2887,7 @@ function afficherPP2(v) {
         zone.dataset.motComplet = motComplet;
 
         document.getElementById('imp-form-infinitif').innerText = v.inf;
-        document.getElementById('imp-form-indice').innerHTML    = '💡 ' + exemplePP(v);
+        document.getElementById('imp-form-indice').innerHTML    = '💡 ?';
         const input = document.getElementById('imp-form-input');
         input.value = '';
         input.disabled = false;
@@ -2926,6 +2926,7 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
         document.getElementById('total-score').innerText = scoreTotal;
         document.getElementById('pp2-pelotes-radical').innerHTML =
             `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+        document.getElementById('pp2-pelotes-indice').innerHTML = '💡 ' + exemplePP(v);
         parler(zone.dataset.motComplet);
         setTimeout(prochain, 2200);
     } else {
@@ -2941,6 +2942,7 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
             msg.innerHTML   = `❌ C'était <b>-${zone.dataset.bonne}</b> : <b>${zone.dataset.motComplet}</b>`;
             document.getElementById('pp2-pelotes-radical').innerHTML =
                 `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+            document.getElementById('pp2-pelotes-indice').innerHTML = '💡 ' + exemplePP(v);
             parler(zone.dataset.motComplet);
             setTimeout(prochain, 2200);
         }
@@ -3018,6 +3020,7 @@ function afficherPP1(v) {
         zone.dataset.motComplet = motComplet;
 
         document.getElementById('imp-form-infinitif').innerText = v.inf;
+        document.getElementById('imp-form-indice').innerHTML = '';
         const input = document.getElementById('imp-form-input');
         input.value = '';
         input.disabled = false;
@@ -3098,6 +3101,7 @@ function validerPPForm() {
         input.disabled = true;
         document.getElementById('btn-valider-impform').style.display = 'none';
         document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
+        document.getElementById('imp-form-indice').innerHTML = '💡 ' + exemplePP(v);
         input.style.display = 'none';
         parler(phraseParleePP(v));
         setTimeout(() => {
@@ -3120,6 +3124,7 @@ function validerPPForm() {
             zone.style.display = 'none';
             msg.style.color    = '#e74c3c';
             msg.innerHTML      = `❌ C'était : <b>${motComplet}</b><br><i>${exemplePP(v)}</i>`;
+            document.getElementById('imp-form-indice').innerHTML = '💡 ' + exemplePP(v);
             setTimeout(fuzzJuju, 0);
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
