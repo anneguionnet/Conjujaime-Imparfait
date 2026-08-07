@@ -465,7 +465,7 @@
 
         <!-- Bulle Retiens participepasse2 -->
         <div id="bulle-participepasse2" class="bulle-present1" style="display:none;">
-            💬 <i>Retiens : en mettant le participe passé au féminin à partir de noms comme la lettre, la parole, la demande, la carotte, la fille, la maison, la décision, découvre la terminaison muette.</i>
+            💡 <i>Retiens : en mettant le participe passé au féminin à partir de noms comme la lettre, la parole, la demande, la carotte, la fille, la maison, la décision, découvre la terminaison muette.</i>
         </div>
 
         <!-- Bulle Retiens participepasse1 -->
@@ -2845,6 +2845,7 @@ function getMsgErreurPSForm(reponse, bonne, isTermMode, cat, sujetAff, radical, 
 
 function afficherPP2(v) {
     ppEssaiCount = 0;
+    if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
     const cfg  = getConfig();
     const mode = (cfg.mix && ppModesQuestions[qIndex]) ? ppModesQuestions[qIndex] : cfg.mode;
     const motComplet = v.rad + v.cible;
@@ -2859,7 +2860,7 @@ function afficherPP2(v) {
 
         document.getElementById('pp2-pelotes-infinitif').innerText = v.inf;
         document.getElementById('pp2-pelotes-radical').innerText   = v.rad + '-';
-        document.getElementById('pp2-pelotes-indice').innerHTML    = '💡 ?';
+        document.getElementById('pp2-pelotes-indice').innerHTML    = 'Trouve la bonne terminaison.';
 
         const toutes  = ['is','it','int','ait','us'];
         const autres  = melangerTableau(toutes.filter(c => c !== v.cible)).slice(0, 2);
@@ -2887,7 +2888,7 @@ function afficherPP2(v) {
         zone.dataset.motComplet = motComplet;
 
         document.getElementById('imp-form-infinitif').innerText = v.inf;
-        document.getElementById('imp-form-indice').innerHTML    = '💡 ?';
+        document.getElementById('imp-form-indice').innerHTML    = 'Trouve la bonne terminaison.';
         const input = document.getElementById('imp-form-input');
         input.value = '';
         input.disabled = false;
@@ -2912,9 +2913,11 @@ function afficherPP2(v) {
     }
 
     parler(v.inf);
+    ppVoixTimer = setTimeout(() => { parler(phraseParleePP(v)); }, 8000);
 }
 
 function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
+    if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
     const msg = document.getElementById('msg-zone');
     document.querySelectorAll('#pp2-pelotes-zone .pelote-terminaison').forEach(b => b.disabled = true);
 
@@ -2926,7 +2929,7 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
         document.getElementById('total-score').innerText = scoreTotal;
         document.getElementById('pp2-pelotes-radical').innerHTML =
             `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
-        parler(phraseParleePP(v));
+        parler(zone.dataset.motComplet + '. ' + phraseParleePP(v));
         setTimeout(prochain, 2200);
     } else {
         btn.style.outline = '3px solid #e74c3c';
@@ -2941,7 +2944,7 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
             msg.innerHTML   = `❌ C'était <b>-${zone.dataset.bonne}</b> : <b>${zone.dataset.motComplet}</b><br><i>${exemplePP(v)}</i>`;
             document.getElementById('pp2-pelotes-radical').innerHTML =
                 `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
-            parler(phraseParleePP(v));
+            parler(zone.dataset.motComplet + '. ' + phraseParleePP(v));
             setTimeout(prochain, 2200);
         }
     }
@@ -3081,6 +3084,7 @@ function validerPP1Pelote(termChoisie, correct, btn, zone, v) {
 }
 
 function validerPPForm() {
+    if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
     const zone    = document.getElementById('zone-imparfait-form');
     const input   = document.getElementById('imp-form-input');
     const reponse = input.value.trim().toLowerCase().normalize('NFC');
@@ -3100,7 +3104,7 @@ function validerPPForm() {
         document.getElementById('btn-valider-impform').style.display = 'none';
         document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
         input.style.display = 'none';
-        parler(phraseParleePP(v));
+        parler(jeuActuel === 'participepasse2' ? (motComplet + '. ' + phraseParleePP(v)) : phraseParleePP(v));
         setTimeout(() => {
             input.value = '';
             input.disabled = false;
@@ -3124,7 +3128,7 @@ function validerPPForm() {
             setTimeout(fuzzJuju, 0);
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
-            parler(phraseParleePP(v));
+            parler(jeuActuel === 'participepasse2' ? (motComplet + '. ' + phraseParleePP(v)) : phraseParleePP(v));
             setTimeout(prochain, 2600);
         }
     }
