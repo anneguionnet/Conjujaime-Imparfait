@@ -1,274 +1,272 @@
 // ================================================================
 // BDD PARTICIPE PASSE - JEU 1 (e / i / u)
 // rad + cible reconstituent le participe passe (rad+cible)
-// ex = exemple avec temps compose tournant (je/tu/il/elle/nous/vous uniquement,
-//      ils/elles retires : la synthese vocale ne fait pas la liaison en -z-)
+// ex = exemple avec temps compose tournant (je/tu/il/elle/nous/vous uniquement)
 // niveau : facile / difficile
 // ================================================================
 const verbesPP_jeu1 = [
-  {"inf":"aller","rad":"all","cible":"e","ex":["tu es allé - Passé composé"],"niveau":"facile"},
-  {"inf":"aboyer","rad":"aboy","cible":"e","ex":["elle aura aboyé - Futur antérieur"],"niveau":"facile"},
-  {"inf":"accéder","rad":"accéd","cible":"e","ex":["que vous ayez accédé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"acheter","rad":"achet","cible":"e","ex":["tu avais acheté - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"acquiescer","rad":"acquiesc","cible":"e","ex":["elle aurait acquiescé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"acquitter","rad":"acquitt","cible":"e","ex":["vous avez acquitté - Passé composé"],"niveau":"difficile"},
-  {"inf":"adhérer","rad":"adhér","cible":"e","ex":["tu auras adhéré - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"appuyer","rad":"appuy","cible":"e","ex":["qu'elle ait appuyé - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"arriver","rad":"arriv","cible":"e","ex":["vous étiez arrivés - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"avouer","rad":"avou","cible":"e","ex":["tu aurais avoué - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"balayer","rad":"balay","cible":"e","ex":["elle a balayé - Passé composé"],"niveau":"facile"},
-  {"inf":"bayer","rad":"bay","cible":"e","ex":["vous aurez bayé - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"broyer","rad":"broy","cible":"e","ex":["que tu aies broyé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"bégayer","rad":"bégay","cible":"e","ex":["elle avait bégayé - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"bêler","rad":"bêl","cible":"e","ex":["vous auriez bêlé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"cesser","rad":"cess","cible":"e","ex":["tu as cessé - Passé composé"],"niveau":"facile"},
-  {"inf":"chanceler","rad":"chancel","cible":"e","ex":["elle aura chancelé - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"chatoyer","rad":"chatoy","cible":"e","ex":["que vous ayez chatoyé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"choyer","rad":"choy","cible":"e","ex":["tu avais choyé - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"clignoter","rad":"clignot","cible":"e","ex":["elle aurait clignoté - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"convoyer","rad":"convoy","cible":"e","ex":["vous avez convoyé - Passé composé"],"niveau":"difficile"},
-  {"inf":"coopérer","rad":"coopér","cible":"e","ex":["tu auras coopéré - Futur antérieur"],"niveau":"facile"},
-  {"inf":"coïncider","rad":"coïncid","cible":"e","ex":["qu'elle ait coïncidé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"crocheter","rad":"crochet","cible":"e","ex":["vous aviez crocheté - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"côtoyer","rad":"côtoy","cible":"e","ex":["tu aurais côtoyé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"demander","rad":"demand","cible":"e","ex":["elle a demandé - Passé composé"],"niveau":"facile"},
-  {"inf":"desserrer","rad":"desserr","cible":"e","ex":["vous aurez desserré - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"donner","rad":"donn","cible":"e","ex":["que tu aies donné - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"déblayer","rad":"déblay","cible":"e","ex":["elle avait déblayé - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"décacheter","rad":"décachet","cible":"e","ex":["vous auriez décacheté - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"déceler","rad":"décel","cible":"e","ex":["tu as décelé - Passé composé"],"niveau":"difficile"},
-  {"inf":"décider","rad":"décid","cible":"e","ex":["elle aura décidé - Futur antérieur"],"niveau":"facile"},
-  {"inf":"déficeler","rad":"déficel","cible":"e","ex":["que vous ayez déficelé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"défrayer","rad":"défray","cible":"e","ex":["tu avais défrayé - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"dégeler","rad":"dégel","cible":"e","ex":["elle aurait dégelé - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"déjeuner","rad":"déjeun","cible":"e","ex":["vous avez déjeuné - Passé composé"],"niveau":"facile"},
-  {"inf":"délayer","rad":"délay","cible":"e","ex":["tu auras délayé - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"déléguer","rad":"délégu","cible":"e","ex":["qu'elle ait délégué - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"démanteler","rad":"démantel","cible":"e","ex":["vous aviez démantelé - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"dénouer","rad":"dénou","cible":"e","ex":["tu aurais dénoué - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"déployer","rad":"déploy","cible":"e","ex":["elle a déployé - Passé composé"],"niveau":"difficile"},
-  {"inf":"déverser","rad":"dévers","cible":"e","ex":["vous aurez déversé - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"dévoyer","rad":"dévoy","cible":"e","ex":["que tu aies dévoyé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"dîner","rad":"dîn","cible":"e","ex":["elle avait dîné - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"effrayer","rad":"effray","cible":"e","ex":["vous auriez effrayé - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"empaqueter","rad":"empaquet","cible":"e","ex":["tu as empaqueté - Passé composé"],"niveau":"difficile"},
-  {"inf":"employer","rad":"employ","cible":"e","ex":["elle aura employé - Futur antérieur"],"niveau":"facile"},
-  {"inf":"ennuyer","rad":"ennuy","cible":"e","ex":["que vous ayez ennuyé - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"enrayer","rad":"enray","cible":"e","ex":["tu avais enrayé - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"entrer","rad":"entr","cible":"e","ex":["elle serait entrée - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"envoyer","rad":"envoy","cible":"e","ex":["vous avez envoyé - Passé composé"],"niveau":"facile"},
-  {"inf":"essayer","rad":"essay","cible":"e","ex":["tu auras essayé - Futur antérieur"],"niveau":"facile"},
-  {"inf":"essuyer","rad":"essuy","cible":"e","ex":["qu'elle ait essuyé - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"exhaler","rad":"exhal","cible":"e","ex":["vous aviez exhalé - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"écouter","rad":"écout","cible":"e","ex":["tu aurais écouté - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"égayer","rad":"égay","cible":"e","ex":["elle a égayé - Passé composé"],"niveau":"difficile"},
-  {"inf":"élever","rad":"élev","cible":"e","ex":["vous aurez élevé - Futur antérieur"],"niveau":"facile"},
-  {"inf":"épousseter","rad":"épousset","cible":"e","ex":["que tu aies épousseté - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"étayer","rad":"étay","cible":"e","ex":["elle avait étayé - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"étiqueter","rad":"étiquet","cible":"e","ex":["vous auriez étiqueté - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"festoyer","rad":"festoy","cible":"e","ex":["tu as festoyé - Passé composé"],"niveau":"difficile"},
-  {"inf":"feuilleter","rad":"feuillet","cible":"e","ex":["elle aura feuilleté - Futur antérieur"],"niveau":"facile"},
-  {"inf":"ficeler","rad":"ficel","cible":"e","ex":["que vous ayez ficelé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"flamboyer","rad":"flamboy","cible":"e","ex":["tu avais flamboyé - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"foudroyer","rad":"foudroy","cible":"e","ex":["elle aurait foudroyé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"fourvoyer","rad":"fourvoy","cible":"e","ex":["vous avez fourvoyé - Passé composé"],"niveau":"difficile"},
-  {"inf":"haleter","rad":"halet","cible":"e","ex":["tu auras haleté - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"harceler","rad":"harcel","cible":"e","ex":["qu'elle ait harcelé - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"influencer","rad":"influenc","cible":"e","ex":["vous aviez influencé - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"intéresser","rad":"intéress","cible":"e","ex":["tu aurais intéressé - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"larmoyer","rad":"larmoy","cible":"e","ex":["elle a larmoyé - Passé composé"],"niveau":"difficile"},
-  {"inf":"louer","rad":"lou","cible":"e","ex":["vous aurez loué - Futur antérieur"],"niveau":"facile"},
-  {"inf":"louvoyer","rad":"louvoy","cible":"e","ex":["que tu aies louvoyé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"léguer","rad":"légu","cible":"e","ex":["elle avait légué - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"maugréer","rad":"maugré","cible":"e","ex":["vous auriez maugréé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"monnayer","rad":"monnay","cible":"e","ex":["tu as monnayé - Passé composé"],"niveau":"difficile"},
-  {"inf":"nettoyer","rad":"nettoy","cible":"e","ex":["elle aura nettoyé - Futur antérieur"],"niveau":"facile"},
-  {"inf":"nier","rad":"ni","cible":"e","ex":["que vous ayez nié - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"nouer","rad":"nou","cible":"e","ex":["tu avais noué - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"noyer","rad":"noy","cible":"e","ex":["elle aurait noyé - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"octroyer","rad":"octroy","cible":"e","ex":["vous avez octroyé - Passé composé"],"niveau":"difficile"},
-  {"inf":"pagayer","rad":"pagay","cible":"e","ex":["tu auras pagayé - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"parsemer","rad":"parsem","cible":"e","ex":["qu'elle ait parsemé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"payer","rad":"pay","cible":"e","ex":["vous aviez payé - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"ployer","rad":"ploy","cible":"e","ex":["tu aurais ployé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"prodiguer","rad":"prodigu","cible":"e","ex":["elle a prodigué - Passé composé"],"niveau":"difficile"},
-  {"inf":"profiter","rad":"profit","cible":"e","ex":["vous aurez profité - Futur antérieur"],"niveau":"facile"},
-  {"inf":"projeter","rad":"projet","cible":"e","ex":["que tu aies projeté - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"rayer","rad":"ray","cible":"e","ex":["elle avait rayé - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"receler","rad":"recel","cible":"e","ex":["vous auriez recelé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"recréer","rad":"recré","cible":"e","ex":["tu as recréé - Passé composé"],"niveau":"difficile"},
-  {"inf":"rectifier","rad":"rectifi","cible":"e","ex":["elle aura rectifié - Futur antérieur"],"niveau":"facile"},
-  {"inf":"relayer","rad":"relay","cible":"e","ex":["que vous ayez relayé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"reléguer","rad":"relégu","cible":"e","ex":["tu avais relégué - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"remblayer","rad":"remblay","cible":"e","ex":["elle aurait remblayé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"rentrer","rad":"rentr","cible":"e","ex":["vous avez rentré la voiture - Passé composé", "tu seras rentré - Futur antérieur"],"niveau":"facile"},
-  {"inf":"renvoyer","rad":"renvoy","cible":"e","ex":["qu'elle ait renvoyé - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"reprocher","rad":"reproch","cible":"e","ex":["vous aviez reproché - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"ressemeler","rad":"ressemel","cible":"e","ex":["tu aurais ressemelé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"s'arrêter","rad":"arrêt","cible":"e","ex":["elle s'est arrêtée - Passé composé"],"niveau":"facile"},
-  {"inf":"se dévouer","rad":"dévou","cible":"e","ex":["vous vous serez dévoués - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"se frayer","rad":"fray","cible":"e","ex":["que tu te sois frayé un chemin - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"secouer","rad":"secou","cible":"e","ex":["elle avait secoué - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"soudoyer","rad":"soudoy","cible":"e","ex":["vous auriez soudoyé - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"souffler","rad":"souffl","cible":"e","ex":["tu as soufflé - Passé composé"],"niveau":"facile"},
-  {"inf":"soupeser","rad":"soupes","cible":"e","ex":["elle aura soupesé - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"succéder","rad":"succéd","cible":"e","ex":["que vous ayez succédé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"suppléer","rad":"supplé","cible":"e","ex":["tu avais suppléé - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"surgeler","rad":"surgel","cible":"e","ex":["elle aurait surgelé - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"surpayer","rad":"surpay","cible":"e","ex":["vous avez surpayé - Passé composé"],"niveau":"difficile"},
-  {"inf":"s’apitoyer","rad":"apitoy","cible":"e","ex":["tu te seras apitoyé - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"tapisser","rad":"tapiss","cible":"e","ex":["qu'elle ait tapissé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"tatouer","rad":"tatou","cible":"e","ex":["vous aviez tatoué - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"tomber","rad":"tomb","cible":"e","ex":["tu serais tombé - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"tournoyer","rad":"tournoy","cible":"e","ex":["elle a tournoyé - Passé composé"],"niveau":"difficile"},
-  {"inf":"tutoyer","rad":"tutoy","cible":"e","ex":["vous aurez tutoyé - Futur antérieur"],"niveau":"facile"},
-  {"inf":"verdoyer","rad":"verdoy","cible":"e","ex":["que tu aies verdoyé - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"vouer","rad":"vou","cible":"e","ex":["elle avait voué - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"vouvoyer","rad":"vouvoy","cible":"e","ex":["vous auriez vouvoyé - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"zézayer","rad":"zézay","cible":"e","ex":["tu as zézayé - Passé composé"],"niveau":"difficile"},
-  {"inf":"agir","rad":"ag","cible":"i","ex":["elle aura agi - Futur antérieur"],"niveau":"facile"},
-  {"inf":"applaudir","rad":"applaud","cible":"i","ex":["que vous ayez applaudi - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"arrondir","rad":"arrond","cible":"i","ex":["tu avais arrondi - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"avertir","rad":"avert","cible":"i","ex":["elle aurait averti - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"blanchir","rad":"blanch","cible":"i","ex":["vous avez blanchi - Passé composé"],"niveau":"facile"},
-  {"inf":"blondir","rad":"blond","cible":"i","ex":["tu auras blondi - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"blêmir","rad":"blêm","cible":"i","ex":["qu'elle ait blêmi - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"bondir","rad":"bond","cible":"i","ex":["vous aviez bondi - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"bouillir","rad":"bouill","cible":"i","ex":["tu aurais bouilli - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"brunir","rad":"brun","cible":"i","ex":["elle a bruni - Passé composé"],"niveau":"facile"},
-  {"inf":"bâtir","rad":"bât","cible":"i","ex":["vous aurez bâti - Futur antérieur"],"niveau":"facile"},
-  {"inf":"bénir","rad":"bén","cible":"i","ex":["que tu aies béni - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"choisir","rad":"chois","cible":"i","ex":["elle avait choisi - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"divertir","rad":"divert","cible":"i","ex":["vous auriez diverti - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"durcir","rad":"durc","cible":"i","ex":["tu as durci - Passé composé"],"niveau":"facile"},
-  {"inf":"définir","rad":"défin","cible":"i","ex":["elle aura défini - Futur antérieur"],"niveau":"facile"},
-  {"inf":"embellir","rad":"embell","cible":"i","ex":["que vous ayez embelli - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"emplir","rad":"empl","cible":"i","ex":["tu avais empli - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"engloutir","rad":"englout","cible":"i","ex":["elle aurait englouti - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"enrichir","rad":"enrich","cible":"i","ex":["vous avez enrichi - Passé composé"],"niveau":"facile"},
-  {"inf":"envahir","rad":"envah","cible":"i","ex":["tu auras envahi - Futur antérieur"],"niveau":"facile"},
-  {"inf":"réunir","rad":"réun","cible":"i","ex":["qu'elle ait réuni - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"éblouir","rad":"éblou","cible":"i","ex":["vous aviez ébloui - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"éclaircir","rad":"éclairc","cible":"i","ex":["tu aurais éclairci - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"élargir","rad":"élarg","cible":"i","ex":["elle a élargi - Passé composé"],"niveau":"facile"},
-  {"inf":"épaissir","rad":"épaiss","cible":"i","ex":["vous aurez épaissi - Futur antérieur"],"niveau":"facile"},
-  {"inf":"établir","rad":"établ","cible":"i","ex":["que tu aies établi - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"attendre","rad":"attend","cible":"u","ex":["elle avait attendu - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"battre","rad":"batt","cible":"u","ex":["vous auriez battu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"combattre","rad":"combatt","cible":"u","ex":["tu as combattu - Passé composé"],"niveau":"facile"},
-  {"inf":"condescendre","rad":"condescend","cible":"u","ex":["elle aura condescendu - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"confondre","rad":"confond","cible":"u","ex":["que vous ayez confondu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"consentir","rad":"consent","cible":"i","ex":["tu avais consenti - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"correspondre","rad":"correspond","cible":"u","ex":["elle aurait correspondu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"coudre","rad":"cous","cible":"u","ex":["vous avez cousu - Passé composé"],"niveau":"facile"},
-  {"inf":"descendre","rad":"descend","cible":"u","ex":["tu auras descendu la poubelle - Futur antérieur", "qu'elle soit descendue - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"desservir","rad":"desserv","cible":"i","ex":["vous aviez desservi - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"dormir","rad":"dorm","cible":"i","ex":["tu aurais dormi - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"découdre","rad":"décous","cible":"u","ex":["elle a décousu - Passé composé"],"niveau":"difficile"},
-  {"inf":"défendre","rad":"défend","cible":"u","ex":["vous aurez défendu - Futur antérieur"],"niveau":"facile"},
-  {"inf":"démentir","rad":"dément","cible":"i","ex":["que tu aies démenti - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"démordre","rad":"démord","cible":"u","ex":["elle avait démordu - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"départir","rad":"départ","cible":"i","ex":["vous auriez départi - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"dépendre","rad":"dépend","cible":"u","ex":["tu as dépendu - Passé composé"],"niveau":"facile"},
-  {"inf":"détendre","rad":"détend","cible":"u","ex":["elle aura détendu - Futur antérieur"],"niveau":"facile"},
-  {"inf":"distendre","rad":"distend","cible":"u","ex":["que vous ayez distendu - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"enfouir","rad":"enfou","cible":"i","ex":["tu avais enfoui - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"engourdir","rad":"engourd","cible":"i","ex":["elle aurait engourdi - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"entendre","rad":"entend","cible":"u","ex":["vous avez entendu - Passé composé"],"niveau":"facile"},
-  {"inf":"fendre","rad":"fend","cible":"u","ex":["tu auras fendu - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"fondre","rad":"fond","cible":"u","ex":["qu'elle ait fondu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"fuir","rad":"fu","cible":"i","ex":["vous aviez fui - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"mentir","rad":"ment","cible":"i","ex":["tu aurais menti - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"mordre","rad":"mord","cible":"u","ex":["elle a mordu - Passé composé"],"niveau":"facile"},
-  {"inf":"naître","rad":"n","cible":"e","ex":["vous serez nés - Futur antérieur"],"niveau":"facile"},
-  {"inf":"partir","rad":"part","cible":"i","ex":["que tu aies parti - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"pendre","rad":"pend","cible":"u","ex":["elle avait pendu - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"perdre","rad":"perd","cible":"u","ex":["vous auriez perdu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"pondre","rad":"pond","cible":"u","ex":["tu as pondu - Passé composé"],"niveau":"facile"},
-  {"inf":"pourfendre","rad":"pourfend","cible":"u","ex":["elle aura pourfendu - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"pressentir","rad":"pressent","cible":"i","ex":["que vous ayez pressenti - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"prétendre","rad":"prétend","cible":"u","ex":["tu avais prétendu - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"prévoir","rad":"prév","cible":"u","ex":["elle aurait prévu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"recoudre","rad":"recous","cible":"u","ex":["vous avez recousu - Passé composé"],"niveau":"difficile"},
-  {"inf":"se rendormir","rad":"rendorm","cible":"i","ex":["tu te seras rendormi - Futur antérieur"],"niveau":"facile"},
-  {"inf":"rendre","rad":"rend","cible":"u","ex":["qu'elle ait rendu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"repartir","rad":"repart","cible":"i","ex":["vous aviez reparti - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"ressentir","rad":"ressent","cible":"i","ex":["tu aurais ressenti - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"resservir","rad":"resserv","cible":"i","ex":["elle a resservi - Passé composé"],"niveau":"difficile"},
-  {"inf":"ressortir","rad":"ressort","cible":"i","ex":["vous aurez ressorti - Futur antérieur"],"niveau":"facile"},
-  {"inf":"revendre","rad":"revend","cible":"u","ex":["que tu aies revendu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"revoir","rad":"rev","cible":"u","ex":["elle avait revu - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"rire","rad":"r","cible":"i","ex":["vous auriez ri - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"répandre","rad":"répand","cible":"u","ex":["tu as répandu - Passé composé"],"niveau":"facile"},
-  {"inf":"répondre","rad":"répond","cible":"u","ex":["elle aura répondu - Futur antérieur"],"niveau":"facile"},
-  {"inf":"se blottir","rad":"blott","cible":"i","ex":["que vous vous soyez blottis - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"se morfondre","rad":"morfond","cible":"u","ex":["tu t'étais morfondu - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"se rendre","rad":"rend","cible":"u","ex":["elle se serait rendue - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"se repentir","rad":"repent","cible":"i","ex":["vous vous êtes repentis - Passé composé"],"niveau":"difficile"},
-  {"inf":"sentir","rad":"sent","cible":"i","ex":["tu auras senti - Futur antérieur"],"niveau":"facile"},
-  {"inf":"servir","rad":"serv","cible":"i","ex":["qu'elle ait servi - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"sortir","rad":"sort","cible":"i","ex":["vous aviez sorti le chien - Plus-que-parfait", "tu serais sorti - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"sourire","rad":"sour","cible":"i","ex":["elle a souri - Passé composé"],"niveau":"facile"},
-  {"inf":"suffire","rad":"suff","cible":"i","ex":["vous aurez suffi - Futur antérieur"],"niveau":"facile"},
-  {"inf":"suivre","rad":"suiv","cible":"i","ex":["que tu aies suivi - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"suspendre","rad":"suspend","cible":"u","ex":["elle avait suspendu - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"s’endormir","rad":"endorm","cible":"i","ex":["vous vous seriez endormis - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"s’enfuir","rad":"enfu","cible":"i","ex":["tu t'es enfui - Passé composé"],"niveau":"facile"},
-  {"inf":"s’enhardir","rad":"enhard","cible":"i","ex":["elle se sera enhardie - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"tendre","rad":"tend","cible":"u","ex":["que vous ayez tendu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"tordre","rad":"tord","cible":"u","ex":["tu avais tordu - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"vendre","rad":"vend","cible":"u","ex":["elle aurait vendu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"voir","rad":"v","cible":"u","ex":["vous avez vu - Passé composé"],"niveau":"facile"},
-  {"inf":"accourir","rad":"accour","cible":"u","ex":["tu auras accouru - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"apercevoir","rad":"aperç","cible":"u","ex":["qu'elle ait aperçu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"apparaître","rad":"appar","cible":"u","ex":["vous aviez apparu - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"boire","rad":"b","cible":"u","ex":["tu aurais bu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"comparaître","rad":"compar","cible":"u","ex":["elle a comparu - Passé composé"],"niveau":"difficile"},
-  {"inf":"complaire","rad":"compl","cible":"u","ex":["vous aurez complu - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"conclure","rad":"concl","cible":"u","ex":["que tu aies conclu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"concourir","rad":"concour","cible":"u","ex":["elle avait concouru - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"connaître","rad":"conn","cible":"u","ex":["vous auriez connu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"courir","rad":"cour","cible":"u","ex":["tu as couru - Passé composé"],"niveau":"facile"},
-  {"inf":"croire","rad":"cr","cible":"u","ex":["elle aura cru - Futur antérieur"],"niveau":"facile"},
-  {"inf":"devoir","rad":"d","cible":"u","ex":["que vous ayez dû - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"discourir","rad":"discour","cible":"u","ex":["tu avais discouru - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"disparaître","rad":"dispar","cible":"u","ex":["elle aurait disparu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"déplaire","rad":"dépl","cible":"u","ex":["vous avez déplu - Passé composé"],"niveau":"facile"},
-  {"inf":"élire","rad":"él","cible":"u","ex":["tu auras élu - Futur antérieur"],"niveau":"facile"},
-  {"inf":"réélire","rad":"réél","cible":"u","ex":["qu'elle ait réélu - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"émouvoir","rad":"ém","cible":"u","ex":["vous aviez ému - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"promouvoir","rad":"prom","cible":"u","ex":["tu aurais promu - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"encourir","rad":"encour","cible":"u","ex":["elle a encouru - Passé composé"],"niveau":"difficile"},
-  {"inf":"lire","rad":"l","cible":"u","ex":["vous aurez lu - Futur antérieur"],"niveau":"facile"},
-  {"inf":"moudre","rad":"moul","cible":"u","ex":["que tu aies moulu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"méconnaître","rad":"méconn","cible":"u","ex":["elle avait méconnu - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"paraître","rad":"par","cible":"u","ex":["vous auriez paru - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"parcourir","rad":"parcour","cible":"u","ex":["tu as parcouru - Passé composé"],"niveau":"facile"},
-  {"inf":"plaire","rad":"pl","cible":"u","ex":["je lui aurai plu - Futur antérieur"],"niveau":"facile"},
-  {"inf":"pourvoir","rad":"pourv","cible":"u","ex":["nous aurions pourvu - Conditionnel passé"],"niveau":"difficile"},
-  {"inf":"pouvoir","rad":"p","cible":"u","ex":["j'ai pu - Passé composé"],"niveau":"facile"},
-{"inf":"boire","rad":"b","cible":"u","ex":["j'ai bu - Passé composé"],"niveau":"facile"},
-  {"inf":"prévaloir","rad":"préval","cible":"u","ex":["il aura prévalu - Futur antérieur"],"niveau":"difficile"},
-  {"inf":"reconnaître","rad":"reconn","cible":"u","ex":["que nous ayons reconnu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"recourir","rad":"recour","cible":"u","ex":["j'avais recouru - Plus-que-parfait"],"niveau":"difficile"},
-  {"inf":"relire","rad":"rel","cible":"u","ex":["il aurait relu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"revivre","rad":"revéc","cible":"u","ex":["nous avons revécu - Passé composé"],"niveau":"facile"},
-  {"inf":"réapparaître","rad":"réappar","cible":"u","ex":["j'aurai réapparu - Futur antérieur"],"niveau":"facile"},
-  {"inf":"résoudre","rad":"résol","cible":"u","ex":["qu'il ait résolu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"savoir","rad":"s","cible":"u","ex":["nous avions su - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"se taire","rad":"t","cible":"u","ex":["je me serais tu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"secourir","rad":"secour","cible":"u","ex":["il a secouru - Passé composé"],"niveau":"facile"},
-  {"inf":"survivre","rad":"survéc","cible":"u","ex":["nous aurons survécu - Futur antérieur"],"niveau":"facile"},
-  {"inf":"transparaître","rad":"transpar","cible":"u","ex":["que j'aie transparu - Subjonctif passé"],"niveau":"difficile"},
-  {"inf":"valoir","rad":"val","cible":"u","ex":["il avait valu - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"vivre","rad":"véc","cible":"u","ex":["nous aurions vécu - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"vouloir","rad":"voul","cible":"u","ex":["j'ai voulu - Passé composé"],"niveau":"facile"},
-  {"inf":"être","rad":"ét","cible":"e","ex":["il aura été - Futur antérieur"],"niveau":"facile"},
-  {"inf":"avoir","rad":"e","cible":"u","ex":["que nous ayons eu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"monter","rad":"mont","cible":"e","ex":["j'avais monté les valises - Plus-que-parfait", "il serait monté - Conditionnel passé"],"niveau":"facile"},
-  {"inf":"retourner","rad":"retourn","cible":"e","ex":["nous avons retourné la carte - Passé composé", "je serai retourné - Futur antérieur"],"niveau":"facile"},
-  {"inf":"pleuvoir","rad":"pl","cible":"u","ex":["qu'il ait plu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"se plaire","rad":"pl","cible":"u","ex":["elle s'est plu à Paris - Passé composé"],"niveau":"facile"},
-  {"inf":"exclure","rad":"excl","cible":"u","ex":["nous avions exclu - Plus-que-parfait"],"niveau":"facile"},
-  {"inf":"mouvoir","rad":"m","cible":"u","ex":["il a mû - Passé composé"],"niveau":"difficile"},
+  {"inf":"aller","rad":"all","cible":"e","ex":["tu es allé - Passé composé"],"niveau":"facile"}
+  {"inf":"aboyer","rad":"aboy","cible":"e","ex":["elle aura aboyé - Futur antérieur"],"niveau":"facile"}
+  {"inf":"accéder","rad":"accéd","cible":"e","ex":["que vous ayez accédé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"acheter","rad":"achet","cible":"e","ex":["tu avais acheté - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"acquiescer","rad":"acquiesc","cible":"e","ex":["elle aurait acquiescé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"acquitter","rad":"acquitt","cible":"e","ex":["vous avez acquitté - Passé composé"],"niveau":"difficile"}
+  {"inf":"adhérer","rad":"adhér","cible":"e","ex":["tu auras adhéré - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"appuyer","rad":"appuy","cible":"e","ex":["qu'elle ait appuyé - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"arriver","rad":"arriv","cible":"e","ex":["vous étiez arrivés - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"avouer","rad":"avou","cible":"e","ex":["tu aurais avoué - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"balayer","rad":"balay","cible":"e","ex":["elle a balayé - Passé composé"],"niveau":"facile"}
+  {"inf":"bayer","rad":"bay","cible":"e","ex":["vous aurez bayé - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"broyer","rad":"broy","cible":"e","ex":["que tu aies broyé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"bégayer","rad":"bégay","cible":"e","ex":["elle avait bégayé - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"bêler","rad":"bêl","cible":"e","ex":["vous auriez bêlé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"cesser","rad":"cess","cible":"e","ex":["tu as cessé - Passé composé"],"niveau":"facile"}
+  {"inf":"chanceler","rad":"chancel","cible":"e","ex":["elle aura chancelé - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"chatoyer","rad":"chatoy","cible":"e","ex":["que vous ayez chatoyé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"choyer","rad":"choy","cible":"e","ex":["tu avais choyé - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"clignoter","rad":"clignot","cible":"e","ex":["elle aurait clignoté - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"convoyer","rad":"convoy","cible":"e","ex":["vous avez convoyé - Passé composé"],"niveau":"difficile"}
+  {"inf":"coopérer","rad":"coopér","cible":"e","ex":["tu auras coopéré - Futur antérieur"],"niveau":"facile"}
+  {"inf":"coïncider","rad":"coïncid","cible":"e","ex":["qu'elle ait coïncidé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"crocheter","rad":"crochet","cible":"e","ex":["vous aviez crocheté - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"côtoyer","rad":"côtoy","cible":"e","ex":["tu aurais côtoyé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"demander","rad":"demand","cible":"e","ex":["elle a demandé - Passé composé"],"niveau":"facile"}
+  {"inf":"desserrer","rad":"desserr","cible":"e","ex":["vous aurez desserré - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"donner","rad":"donn","cible":"e","ex":["que tu aies donné - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"déblayer","rad":"déblay","cible":"e","ex":["elle avait déblayé - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"décacheter","rad":"décachet","cible":"e","ex":["vous auriez décacheté - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"déceler","rad":"décel","cible":"e","ex":["tu as décelé - Passé composé"],"niveau":"difficile"}
+  {"inf":"décider","rad":"décid","cible":"e","ex":["elle aura décidé - Futur antérieur"],"niveau":"facile"}
+  {"inf":"déficeler","rad":"déficel","cible":"e","ex":["que vous ayez déficelé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"défrayer","rad":"défray","cible":"e","ex":["tu avais défrayé - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"dégeler","rad":"dégel","cible":"e","ex":["elle aurait dégelé - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"déjeuner","rad":"déjeun","cible":"e","ex":["vous avez déjeuné - Passé composé"],"niveau":"facile"}
+  {"inf":"délayer","rad":"délay","cible":"e","ex":["tu auras délayé - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"déléguer","rad":"délégu","cible":"e","ex":["qu'elle ait délégué - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"démanteler","rad":"démantel","cible":"e","ex":["vous aviez démantelé - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"dénouer","rad":"dénou","cible":"e","ex":["tu aurais dénoué - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"déployer","rad":"déploy","cible":"e","ex":["elle a déployé - Passé composé"],"niveau":"difficile"}
+  {"inf":"déverser","rad":"dévers","cible":"e","ex":["vous aurez déversé - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"dévoyer","rad":"dévoy","cible":"e","ex":["que tu aies dévoyé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"dîner","rad":"dîn","cible":"e","ex":["elle avait dîné - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"effrayer","rad":"effray","cible":"e","ex":["vous auriez effrayé - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"empaqueter","rad":"empaquet","cible":"e","ex":["tu as empaqueté - Passé composé"],"niveau":"difficile"}
+  {"inf":"employer","rad":"employ","cible":"e","ex":["elle aura employé - Futur antérieur"],"niveau":"facile"}
+  {"inf":"ennuyer","rad":"ennuy","cible":"e","ex":["que vous ayez ennuyé - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"enrayer","rad":"enray","cible":"e","ex":["tu avais enrayé - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"entrer","rad":"entr","cible":"e","ex":["elle serait entrée - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"envoyer","rad":"envoy","cible":"e","ex":["vous avez envoyé - Passé composé"],"niveau":"facile"}
+  {"inf":"essayer","rad":"essay","cible":"e","ex":["tu auras essayé - Futur antérieur"],"niveau":"facile"}
+  {"inf":"essuyer","rad":"essuy","cible":"e","ex":["qu'elle ait essuyé - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"exhaler","rad":"exhal","cible":"e","ex":["vous aviez exhalé - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"écouter","rad":"écout","cible":"e","ex":["tu aurais écouté - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"égayer","rad":"égay","cible":"e","ex":["elle a égayé - Passé composé"],"niveau":"difficile"}
+  {"inf":"élever","rad":"élev","cible":"e","ex":["vous aurez élevé - Futur antérieur"],"niveau":"facile"}
+  {"inf":"épousseter","rad":"épousset","cible":"e","ex":["que tu aies épousseté - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"étayer","rad":"étay","cible":"e","ex":["elle avait étayé - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"étiqueter","rad":"étiquet","cible":"e","ex":["vous auriez étiqueté - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"festoyer","rad":"festoy","cible":"e","ex":["tu as festoyé - Passé composé"],"niveau":"difficile"}
+  {"inf":"feuilleter","rad":"feuillet","cible":"e","ex":["elle aura feuilleté - Futur antérieur"],"niveau":"facile"}
+  {"inf":"ficeler","rad":"ficel","cible":"e","ex":["que vous ayez ficelé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"flamboyer","rad":"flamboy","cible":"e","ex":["tu avais flamboyé - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"foudroyer","rad":"foudroy","cible":"e","ex":["elle aurait foudroyé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"fourvoyer","rad":"fourvoy","cible":"e","ex":["vous avez fourvoyé - Passé composé"],"niveau":"difficile"}
+  {"inf":"haleter","rad":"halet","cible":"e","ex":["tu auras haleté - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"harceler","rad":"harcel","cible":"e","ex":["qu'elle ait harcelé - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"influencer","rad":"influenc","cible":"e","ex":["vous aviez influencé - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"intéresser","rad":"intéress","cible":"e","ex":["tu aurais intéressé - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"larmoyer","rad":"larmoy","cible":"e","ex":["elle a larmoyé - Passé composé"],"niveau":"difficile"}
+  {"inf":"louer","rad":"lou","cible":"e","ex":["vous aurez loué - Futur antérieur"],"niveau":"facile"}
+  {"inf":"louvoyer","rad":"louvoy","cible":"e","ex":["que tu aies louvoyé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"léguer","rad":"légu","cible":"e","ex":["elle avait légué - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"maugréer","rad":"maugré","cible":"e","ex":["vous auriez maugréé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"monnayer","rad":"monnay","cible":"e","ex":["tu as monnayé - Passé composé"],"niveau":"difficile"}
+  {"inf":"nettoyer","rad":"nettoy","cible":"e","ex":["elle aura nettoyé - Futur antérieur"],"niveau":"facile"}
+  {"inf":"nier","rad":"ni","cible":"e","ex":["que vous ayez nié - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"nouer","rad":"nou","cible":"e","ex":["tu avais noué - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"noyer","rad":"noy","cible":"e","ex":["elle aurait noyé - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"octroyer","rad":"octroy","cible":"e","ex":["vous avez octroyé - Passé composé"],"niveau":"difficile"}
+  {"inf":"pagayer","rad":"pagay","cible":"e","ex":["tu auras pagayé - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"parsemer","rad":"parsem","cible":"e","ex":["qu'elle ait parsemé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"payer","rad":"pay","cible":"e","ex":["vous aviez payé - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"ployer","rad":"ploy","cible":"e","ex":["tu aurais ployé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"prodiguer","rad":"prodigu","cible":"e","ex":["elle a prodigué - Passé composé"],"niveau":"difficile"}
+  {"inf":"profiter","rad":"profit","cible":"e","ex":["vous aurez profité - Futur antérieur"],"niveau":"facile"}
+  {"inf":"projeter","rad":"projet","cible":"e","ex":["que tu aies projeté - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"rayer","rad":"ray","cible":"e","ex":["elle avait rayé - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"receler","rad":"recel","cible":"e","ex":["vous auriez recelé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"recréer","rad":"recré","cible":"e","ex":["tu as recréé - Passé composé"],"niveau":"difficile"}
+  {"inf":"rectifier","rad":"rectifi","cible":"e","ex":["elle aura rectifié - Futur antérieur"],"niveau":"facile"}
+  {"inf":"relayer","rad":"relay","cible":"e","ex":["que vous ayez relayé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"reléguer","rad":"relégu","cible":"e","ex":["tu avais relégué - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"remblayer","rad":"remblay","cible":"e","ex":["elle aurait remblayé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"rentrer","rad":"rentr","cible":"e","ex":["vous avez rentré la voiture - Passé composé", "tu seras rentré - Futur antérieur"],"niveau":"facile"}
+  {"inf":"renvoyer","rad":"renvoy","cible":"e","ex":["qu'elle ait renvoyé - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"reprocher","rad":"reproch","cible":"e","ex":["vous aviez reproché - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"ressemeler","rad":"ressemel","cible":"e","ex":["tu aurais ressemelé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"s'arrêter","rad":"arrêt","cible":"e","ex":["elle s'est arrêtée - Passé composé"],"niveau":"facile"}
+  {"inf":"se dévouer","rad":"dévou","cible":"e","ex":["vous vous serez dévoués - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"se frayer","rad":"fray","cible":"e","ex":["que tu te sois frayé un chemin - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"secouer","rad":"secou","cible":"e","ex":["elle avait secoué - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"soudoyer","rad":"soudoy","cible":"e","ex":["vous auriez soudoyé - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"souffler","rad":"souffl","cible":"e","ex":["tu as soufflé - Passé composé"],"niveau":"facile"}
+  {"inf":"soupeser","rad":"soupes","cible":"e","ex":["elle aura soupesé - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"succéder","rad":"succéd","cible":"e","ex":["que vous ayez succédé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"suppléer","rad":"supplé","cible":"e","ex":["tu avais suppléé - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"surgeler","rad":"surgel","cible":"e","ex":["elle aurait surgelé - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"surpayer","rad":"surpay","cible":"e","ex":["vous avez surpayé - Passé composé"],"niveau":"difficile"}
+  {"inf":"s’apitoyer","rad":"apitoy","cible":"e","ex":["tu te seras apitoyé - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"tapisser","rad":"tapiss","cible":"e","ex":["qu'elle ait tapissé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"tatouer","rad":"tatou","cible":"e","ex":["vous aviez tatoué - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"tomber","rad":"tomb","cible":"e","ex":["tu serais tombé - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"tournoyer","rad":"tournoy","cible":"e","ex":["elle a tournoyé - Passé composé"],"niveau":"difficile"}
+  {"inf":"tutoyer","rad":"tutoy","cible":"e","ex":["vous aurez tutoyé - Futur antérieur"],"niveau":"facile"}
+  {"inf":"verdoyer","rad":"verdoy","cible":"e","ex":["que tu aies verdoyé - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"vouer","rad":"vou","cible":"e","ex":["elle avait voué - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"vouvoyer","rad":"vouvoy","cible":"e","ex":["vous auriez vouvoyé - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"zézayer","rad":"zézay","cible":"e","ex":["tu as zézayé - Passé composé"],"niveau":"difficile"}
+  {"inf":"agir","rad":"ag","cible":"i","ex":["elle aura agi - Futur antérieur"],"niveau":"facile"}
+  {"inf":"applaudir","rad":"applaud","cible":"i","ex":["que vous ayez applaudi - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"arrondir","rad":"arrond","cible":"i","ex":["tu avais arrondi - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"avertir","rad":"avert","cible":"i","ex":["elle aurait averti - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"blanchir","rad":"blanch","cible":"i","ex":["vous avez blanchi - Passé composé"],"niveau":"facile"}
+  {"inf":"blondir","rad":"blond","cible":"i","ex":["tu auras blondi - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"blêmir","rad":"blêm","cible":"i","ex":["qu'elle ait blêmi - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"bondir","rad":"bond","cible":"i","ex":["vous aviez bondi - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"bouillir","rad":"bouill","cible":"i","ex":["tu aurais bouilli - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"brunir","rad":"brun","cible":"i","ex":["elle a bruni - Passé composé"],"niveau":"facile"}
+  {"inf":"bâtir","rad":"bât","cible":"i","ex":["vous aurez bâti - Futur antérieur"],"niveau":"facile"}
+  {"inf":"bénir","rad":"bén","cible":"i","ex":["que tu aies béni - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"choisir","rad":"chois","cible":"i","ex":["elle avait choisi - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"divertir","rad":"divert","cible":"i","ex":["vous auriez diverti - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"durcir","rad":"durc","cible":"i","ex":["tu as durci - Passé composé"],"niveau":"facile"}
+  {"inf":"définir","rad":"défin","cible":"i","ex":["elle aura défini - Futur antérieur"],"niveau":"facile"}
+  {"inf":"embellir","rad":"embell","cible":"i","ex":["que vous ayez embelli - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"emplir","rad":"empl","cible":"i","ex":["tu avais empli - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"engloutir","rad":"englout","cible":"i","ex":["elle aurait englouti - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"enrichir","rad":"enrich","cible":"i","ex":["vous avez enrichi - Passé composé"],"niveau":"facile"}
+  {"inf":"envahir","rad":"envah","cible":"i","ex":["tu auras envahi - Futur antérieur"],"niveau":"facile"}
+  {"inf":"réunir","rad":"réun","cible":"i","ex":["qu'elle ait réuni - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"éblouir","rad":"éblou","cible":"i","ex":["vous aviez ébloui - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"éclaircir","rad":"éclairc","cible":"i","ex":["tu aurais éclairci - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"élargir","rad":"élarg","cible":"i","ex":["elle a élargi - Passé composé"],"niveau":"facile"}
+  {"inf":"épaissir","rad":"épaiss","cible":"i","ex":["vous aurez épaissi - Futur antérieur"],"niveau":"facile"}
+  {"inf":"établir","rad":"établ","cible":"i","ex":["que tu aies établi - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"attendre","rad":"attend","cible":"u","ex":["elle avait attendu - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"battre","rad":"batt","cible":"u","ex":["vous auriez battu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"combattre","rad":"combatt","cible":"u","ex":["tu as combattu - Passé composé"],"niveau":"facile"}
+  {"inf":"condescendre","rad":"condescend","cible":"u","ex":["elle aura condescendu - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"confondre","rad":"confond","cible":"u","ex":["que vous ayez confondu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"consentir","rad":"consent","cible":"i","ex":["tu avais consenti - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"correspondre","rad":"correspond","cible":"u","ex":["elle aurait correspondu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"coudre","rad":"cous","cible":"u","ex":["vous avez cousu - Passé composé"],"niveau":"facile"}
+  {"inf":"descendre","rad":"descend","cible":"u","ex":["tu auras descendu la poubelle - Futur antérieur", "qu'elle soit descendue - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"desservir","rad":"desserv","cible":"i","ex":["vous aviez desservi - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"dormir","rad":"dorm","cible":"i","ex":["tu aurais dormi - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"découdre","rad":"décous","cible":"u","ex":["elle a décousu - Passé composé"],"niveau":"difficile"}
+  {"inf":"défendre","rad":"défend","cible":"u","ex":["vous aurez défendu - Futur antérieur"],"niveau":"facile"}
+  {"inf":"démentir","rad":"dément","cible":"i","ex":["que tu aies démenti - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"démordre","rad":"démord","cible":"u","ex":["elle avait démordu - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"départir","rad":"départ","cible":"i","ex":["vous auriez départi - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"dépendre","rad":"dépend","cible":"u","ex":["tu as dépendu - Passé composé"],"niveau":"facile"}
+  {"inf":"détendre","rad":"détend","cible":"u","ex":["elle aura détendu - Futur antérieur"],"niveau":"facile"}
+  {"inf":"distendre","rad":"distend","cible":"u","ex":["que vous ayez distendu - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"enfouir","rad":"enfou","cible":"i","ex":["tu avais enfoui - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"engourdir","rad":"engourd","cible":"i","ex":["elle aurait engourdi - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"entendre","rad":"entend","cible":"u","ex":["vous avez entendu - Passé composé"],"niveau":"facile"}
+  {"inf":"fendre","rad":"fend","cible":"u","ex":["tu auras fendu - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"fondre","rad":"fond","cible":"u","ex":["qu'elle ait fondu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"fuir","rad":"fu","cible":"i","ex":["vous aviez fui - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"mentir","rad":"ment","cible":"i","ex":["tu aurais menti - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"mordre","rad":"mord","cible":"u","ex":["elle a mordu - Passé composé"],"niveau":"facile"}
+  {"inf":"naître","rad":"n","cible":"e","ex":["vous serez nés - Futur antérieur"],"niveau":"facile"}
+  {"inf":"partir","rad":"part","cible":"i","ex":["que tu aies parti - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"pendre","rad":"pend","cible":"u","ex":["elle avait pendu - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"perdre","rad":"perd","cible":"u","ex":["vous auriez perdu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"pondre","rad":"pond","cible":"u","ex":["tu as pondu - Passé composé"],"niveau":"facile"}
+  {"inf":"pourfendre","rad":"pourfend","cible":"u","ex":["elle aura pourfendu - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"pressentir","rad":"pressent","cible":"i","ex":["que vous ayez pressenti - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"prétendre","rad":"prétend","cible":"u","ex":["tu avais prétendu - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"prévoir","rad":"prév","cible":"u","ex":["elle aurait prévu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"recoudre","rad":"recous","cible":"u","ex":["vous avez recousu - Passé composé"],"niveau":"difficile"}
+  {"inf":"se rendormir","rad":"rendorm","cible":"i","ex":["tu te seras rendormi - Futur antérieur"],"niveau":"facile"}
+  {"inf":"rendre","rad":"rend","cible":"u","ex":["qu'elle ait rendu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"repartir","rad":"repart","cible":"i","ex":["vous aviez reparti - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"ressentir","rad":"ressent","cible":"i","ex":["tu aurais ressenti - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"resservir","rad":"resserv","cible":"i","ex":["elle a resservi - Passé composé"],"niveau":"difficile"}
+  {"inf":"ressortir","rad":"ressort","cible":"i","ex":["vous aurez ressorti - Futur antérieur"],"niveau":"facile"}
+  {"inf":"revendre","rad":"revend","cible":"u","ex":["que tu aies revendu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"revoir","rad":"rev","cible":"u","ex":["elle avait revu - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"rire","rad":"r","cible":"i","ex":["vous auriez ri - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"répandre","rad":"répand","cible":"u","ex":["tu as répandu - Passé composé"],"niveau":"facile"}
+  {"inf":"répondre","rad":"répond","cible":"u","ex":["elle aura répondu - Futur antérieur"],"niveau":"facile"}
+  {"inf":"se blottir","rad":"blott","cible":"i","ex":["que vous vous soyez blottis - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"se morfondre","rad":"morfond","cible":"u","ex":["tu t'étais morfondu - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"se rendre","rad":"rend","cible":"u","ex":["elle se serait rendue - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"se repentir","rad":"repent","cible":"i","ex":["vous vous êtes repentis - Passé composé"],"niveau":"difficile"}
+  {"inf":"sentir","rad":"sent","cible":"i","ex":["tu auras senti - Futur antérieur"],"niveau":"facile"}
+  {"inf":"servir","rad":"serv","cible":"i","ex":["qu'elle ait servi - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"sortir","rad":"sort","cible":"i","ex":["vous aviez sorti le chien - Plus-que-parfait", "tu serais sorti - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"sourire","rad":"sour","cible":"i","ex":["elle a souri - Passé composé"],"niveau":"facile"}
+  {"inf":"suffire","rad":"suff","cible":"i","ex":["vous aurez suffi - Futur antérieur"],"niveau":"facile"}
+  {"inf":"suivre","rad":"suiv","cible":"i","ex":["que tu aies suivi - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"suspendre","rad":"suspend","cible":"u","ex":["elle avait suspendu - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"s’endormir","rad":"endorm","cible":"i","ex":["vous vous seriez endormis - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"s’enfuir","rad":"enfu","cible":"i","ex":["tu t'es enfui - Passé composé"],"niveau":"facile"}
+  {"inf":"s’enhardir","rad":"enhard","cible":"i","ex":["elle se sera enhardie - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"tendre","rad":"tend","cible":"u","ex":["que vous ayez tendu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"tordre","rad":"tord","cible":"u","ex":["tu avais tordu - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"vendre","rad":"vend","cible":"u","ex":["elle aurait vendu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"voir","rad":"v","cible":"u","ex":["vous avez vu - Passé composé"],"niveau":"facile"}
+  {"inf":"accourir","rad":"accour","cible":"u","ex":["tu auras accouru - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"apercevoir","rad":"aperç","cible":"u","ex":["qu'elle ait aperçu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"apparaître","rad":"appar","cible":"u","ex":["vous aviez apparu - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"boire","rad":"b","cible":"u","ex":["tu aurais bu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"comparaître","rad":"compar","cible":"u","ex":["elle a comparu - Passé composé"],"niveau":"difficile"}
+  {"inf":"complaire","rad":"compl","cible":"u","ex":["vous aurez complu - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"conclure","rad":"concl","cible":"u","ex":["que tu aies conclu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"concourir","rad":"concour","cible":"u","ex":["elle avait concouru - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"connaître","rad":"conn","cible":"u","ex":["vous auriez connu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"courir","rad":"cour","cible":"u","ex":["tu as couru - Passé composé"],"niveau":"facile"}
+  {"inf":"croire","rad":"cr","cible":"u","ex":["elle aura cru - Futur antérieur"],"niveau":"facile"}
+  {"inf":"devoir","rad":"d","cible":"u","ex":["que vous ayez dû - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"discourir","rad":"discour","cible":"u","ex":["tu avais discouru - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"disparaître","rad":"dispar","cible":"u","ex":["elle aurait disparu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"déplaire","rad":"dépl","cible":"u","ex":["vous avez déplu - Passé composé"],"niveau":"facile"}
+  {"inf":"élire","rad":"él","cible":"u","ex":["tu auras élu - Futur antérieur"],"niveau":"facile"}
+  {"inf":"réélire","rad":"réél","cible":"u","ex":["qu'elle ait réélu - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"émouvoir","rad":"ém","cible":"u","ex":["vous aviez ému - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"promouvoir","rad":"prom","cible":"u","ex":["tu aurais promu - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"encourir","rad":"encour","cible":"u","ex":["elle a encouru - Passé composé"],"niveau":"difficile"}
+  {"inf":"lire","rad":"l","cible":"u","ex":["vous aurez lu - Futur antérieur"],"niveau":"facile"}
+  {"inf":"moudre","rad":"moul","cible":"u","ex":["que tu aies moulu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"méconnaître","rad":"méconn","cible":"u","ex":["elle avait méconnu - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"paraître","rad":"par","cible":"u","ex":["vous auriez paru - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"parcourir","rad":"parcour","cible":"u","ex":["tu as parcouru - Passé composé"],"niveau":"facile"}
+  {"inf":"plaire","rad":"pl","cible":"u","ex":["je lui aurai plu - Futur antérieur"],"niveau":"facile"}
+  {"inf":"pourvoir","rad":"pourv","cible":"u","ex":["nous aurions pourvu - Conditionnel passé"],"niveau":"difficile"}
+  {"inf":"pouvoir","rad":"p","cible":"u","ex":["j'ai pu - Passé composé"],"niveau":"facile"}
+  {"inf":"prévaloir","rad":"préval","cible":"u","ex":["il aura prévalu - Futur antérieur"],"niveau":"difficile"}
+  {"inf":"reconnaître","rad":"reconn","cible":"u","ex":["que nous ayons reconnu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"recourir","rad":"recour","cible":"u","ex":["j'avais recouru - Plus-que-parfait"],"niveau":"difficile"}
+  {"inf":"relire","rad":"rel","cible":"u","ex":["il aurait relu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"revivre","rad":"revéc","cible":"u","ex":["nous avons revécu - Passé composé"],"niveau":"facile"}
+  {"inf":"réapparaître","rad":"réappar","cible":"u","ex":["j'aurai réapparu - Futur antérieur"],"niveau":"facile"}
+  {"inf":"résoudre","rad":"résol","cible":"u","ex":["qu'il ait résolu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"savoir","rad":"s","cible":"u","ex":["nous avions su - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"se taire","rad":"t","cible":"u","ex":["je me serais tu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"secourir","rad":"secour","cible":"u","ex":["il a secouru - Passé composé"],"niveau":"facile"}
+  {"inf":"survivre","rad":"survéc","cible":"u","ex":["nous aurons survécu - Futur antérieur"],"niveau":"facile"}
+  {"inf":"transparaître","rad":"transpar","cible":"u","ex":["que j'aie transparu - Subjonctif passé"],"niveau":"difficile"}
+  {"inf":"valoir","rad":"val","cible":"u","ex":["il avait valu - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"vivre","rad":"véc","cible":"u","ex":["nous aurions vécu - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"vouloir","rad":"voul","cible":"u","ex":["j'ai voulu - Passé composé"],"niveau":"facile"}
+  {"inf":"être","rad":"ét","cible":"e","ex":["il aura été - Futur antérieur"],"niveau":"facile"}
+  {"inf":"avoir","rad":"e","cible":"u","ex":["que nous ayons eu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"monter","rad":"mont","cible":"e","ex":["j'avais monté les valises - Plus-que-parfait", "il serait monté - Conditionnel passé"],"niveau":"facile"}
+  {"inf":"retourner","rad":"retourn","cible":"e","ex":["nous avons retourné la carte - Passé composé", "je serai retourné - Futur antérieur"],"niveau":"facile"}
+  {"inf":"pleuvoir","rad":"pl","cible":"u","ex":["qu'il ait plu - Subjonctif passé"],"niveau":"facile"}
+  {"inf":"se plaire","rad":"pl","cible":"u","ex":["elle s'est plu à Paris - Passé composé"],"niveau":"facile"}
+  {"inf":"exclure","rad":"excl","cible":"u","ex":["nous avions exclu - Plus-que-parfait"],"niveau":"facile"}
+  {"inf":"mouvoir","rad":"m","cible":"u","ex":["il a mû - Passé composé"],"niveau":"difficile"}
 ];
