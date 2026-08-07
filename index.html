@@ -137,6 +137,9 @@
         <button class="btn-menu-jeu bordeaux" onclick="lancerJeu('participepasse1')">
             🐓 En -é, -i, -u
         </button>
+        <button class="btn-menu-jeu bordeaux2" onclick="lancerJeu('participepasse2')">
+            🐓 En -is, -it, -int, -ait, -us
+        </button>
     </div>
 
     <div class="menu-section">
@@ -327,6 +330,7 @@
         <!-- IMPARFAIT — mode form (séries 6-8) -->
         <div id="zone-imparfait-form" style="display:none; text-align:center;">
             <div class="infinitif-display" id="imp-form-infinitif"></div>
+            <div style="font-style:italic; color:#7d2438; margin:6px 0;" id="imp-form-indice"></div>
             <div class="form-ligne">
                 <span class="sujet-inline" id="imp-form-sujet"></span>
                 <input type="text" id="imp-form-input" class="input-reponse"
@@ -336,6 +340,14 @@
             </div>
             <button class="btn-valider" id="btn-valider-impform"
                     onclick="jeuActuel.startsWith('futur') || jeuActuel === 'conditionnel' ? validerFutForm() : jeuActuel.startsWith('ps') ? validerPSForm() : jeuActuel.startsWith('participepasse') ? validerPPForm() : validerImpForm()" style="margin-top:15px;">OK</button>
+        </div>
+
+        <!-- PARTICIPE PASSE JEU2 — mode pelotes -->
+        <div id="zone-pp2-pelotes" style="display:none; text-align:center;">
+            <div class="infinitif-display" id="pp2-pelotes-infinitif"></div>
+            <div class="conjugaison-display" id="pp2-pelotes-radical"></div>
+            <div style="font-style:italic; color:#7d2438; margin:10px 0;" id="pp2-pelotes-indice"></div>
+            <div class="pelotes-zone" id="pp2-pelotes-zone" style="justify-content:center; gap:16px; flex-wrap:wrap;"></div>
         </div>
 
         <!-- PARTICIPE PASSE JEU1 — mode pelotes -->
@@ -451,6 +463,11 @@
             💬 <i>Conseils de Juju : n'oublie pas le <b>-E</b> des verbes en <b>-ER</b>. On l'entend à peine… mais il est là ! Pour les verbes en <b>-RE</b>, on enlève le <b>-e</b> final : dire → je dirais. Les verbes en <b>-YER</b> perdent le <b>-Y-</b> pour un <b>-i-</b> : je tutoierais. Certains prennent un accent grave : <b>j'achèterais</b>. D'autres, une double consonne comme <b>j'enverrais</b>, ou un nouveau radical comme <b>je viendrais</b>, <b>je ferais</b>, <b>il pleuvrait</b>. Certains ont même plusieurs orthographes comme <b>ouïr</b> : j'ouïerais, tu oirais, elle orrait. C'est joli, n'est-ce pas ? Allez, à toi de jouer !</i>
         </div>
 
+        <!-- Bulle Retiens participepasse2 -->
+        <div id="bulle-participepasse2" class="bulle-present1" style="display:none;">
+            💬 <i>Retiens : en mettant le participe passé au féminin à partir de noms comme la lettre, la parole, la demande, la carotte, la fille, la maison, la décision, découvre la terminaison muette.</i>
+        </div>
+
         <!-- Bulle Retiens participepasse1 -->
         <div id="bulle-participepasse1" class="bulle-present1" style="display:none;">
             💬 <i>Retiens : découvre les temps composés en observant la réponse.<br>
@@ -533,6 +550,7 @@
 <script src="accents2.js"></script>
 <script src="passesimple.js"></script>
 <script src="participepasse_jeu1.js"></script>
+<script src="participepasse_jeu2.js"></script>
 <script src="verbesImparfait_gd.js"></script>
 <script src="dataFuturCondi.js"></script>
 <script src="verbesImparfaitPron.js"></script>
@@ -758,6 +776,16 @@ const CONFIG = {
         7: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0.1, catE:2, catI:4, catU:4 },
         8: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0,   catE:2, catI:4, catU:4 },
     },
+    participepasse2: {
+        1: { niveau:'facile',    mode:'pelotes', nb:8, opa:1,    shuffle:true, catIT:3, catIS:2, catINT:1, catAIT:1, catUS:1, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
+        2: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.75, shuffle:true, catIT:3, catIS:2, catINT:1, catAIT:1, catUS:1, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
+        3: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catIT:2, catIS:1, catINT:3, catAIT:2, catUS:0, mix:{pelotes:2, terminaison:3, entiere:3} },
+        4: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.3,  shuffle:true, catIT:2, catIS:1, catINT:3, catAIT:2, catUS:0, mix:{pelotes:2, terminaison:3, entiere:3} },
+        5: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catIT:3, catIS:2, catINT:1, catAIT:1, catUS:1, mix:{pelotes:2, terminaison:3, entiere:3} },
+        6: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.25, shuffle:true, catIT:3, catIS:2, catINT:1, catAIT:1, catUS:1, mix:{pelotes:2, terminaison:3, entiere:3} },
+        7: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0.1, catIT:3, catIS:1, catINT:3, catAIT:2, catUS:1 },
+        8: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0,   catIT:3, catIS:1, catINT:3, catAIT:2, catUS:1 },
+    },
     ps1: {
         1: { niv:[1],   mode:'pelotes',          nb:8, opa:1,    shuffle:true, catA:8, catI:0, catU:0 },
         2: { niv:[1,2], mode:'pelotes',          nb:8, opa:0.75, shuffle:true, catA:8, catI:0, catU:0 },
@@ -913,6 +941,7 @@ function lancerJeu(type) {
         conjugue:  "L'infinitif conjugué",
         participe: 'Le participe présent',
         conditionnel: 'Le conditionnel présent',
+        participepasse2: 'Le participe passé — is, it, int, ait, us',
         participepasse1: 'Le participe passé — é, i, u',
         ps1: 'Passé simple — verbes en -ER',
         ps2: 'Passé simple — 2e et 3e groupe',
@@ -1038,7 +1067,7 @@ function chargerSerie() {
         } else { bulleFut2.style.display = 'none'; }
     }
 
-    ['participepasse1'].forEach(id => {
+    ['participepasse1','participepasse2'].forEach(id => {
         const b = document.getElementById('bulle-' + id);
         if (b) {
             b.style.display = (jeuActuel === id && cfg.opa > 0) ? 'block' : 'none';
@@ -1092,7 +1121,7 @@ function chargerSerie() {
 
     verbesPioches = piocher(cfg);
 
-    if (jeuActuel === 'participepasse1' && cfg.mix) {
+    if ((jeuActuel === 'participepasse1' || jeuActuel === 'participepasse2') && cfg.mix) {
         const liste = [];
         for (let i = 0; i < (cfg.mix.pelotes || 0); i++) liste.push('pelotes');
         for (let i = 0; i < (cfg.mix.terminaison || 0); i++) liste.push('form-terminaison');
@@ -1162,6 +1191,8 @@ function getLecon() {
         case 'accents2':
         case 'accents3':
             return ''; // La leçon accents est gérée par chargerSerieAccents()
+        case 'participepasse2':
+            return `<strong>Les verbes du 3<sup>e</sup> groupe peuvent avoir un participe passé irrégulier en -is, -it, -int, -ait, ou -us pour le verbe <i>inclure</i>.</strong>`;
         case 'participepasse1':
             return `<strong>La plupart des participes passés se terminent en [é], [i] ou [u]. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
                 Il s'écrit <b>-é</b> pour les verbes du 1<sup>er</sup> groupe et pour quelques verbes irréguliers comme <i>aller, être</i> et <i>naître</i>, <b>-i</b> pour les verbes du 2<sup>e</sup> groupe et certains verbes du 3<sup>e</sup> groupe, et <b>-u</b> pour quelques verbes du 3<sup>e</sup> groupe.<br>
@@ -1338,6 +1369,27 @@ function piocher(cfg) {
         return melangerTableau([...pool]).slice(0, cfg.nb);
     }
 
+    // Jeu participe passé — jeu 2 (is / it / int / ait / us)
+    if (jeuActuel === 'participepasse2') {
+        const pool0 = verbesPP_jeu2.filter(v => v.niveau === cfg.niveau);
+        const pickCat = (arr, cat, n) => {
+            const sub = arr.filter(v => v.cible === cat);
+            return melangerTableau([...sub]).slice(0, n);
+        };
+        let pool = [];
+        if ((cfg.catIT||0)  > 0) pool = pool.concat(pickCat(pool0, 'it',  cfg.catIT));
+        if ((cfg.catIS||0)  > 0) pool = pool.concat(pickCat(pool0, 'is',  cfg.catIS));
+        if ((cfg.catINT||0) > 0) pool = pool.concat(pickCat(pool0, 'int', cfg.catINT));
+        if ((cfg.catAIT||0) > 0) pool = pool.concat(pickCat(pool0, 'ait', cfg.catAIT));
+        if ((cfg.catUS||0)  > 0) pool = pool.concat(pickCat(pool0, 'us',  cfg.catUS));
+        if (pool.length < cfg.nb) {
+            const manque = cfg.nb - pool.length;
+            const reste = pool0.filter(v => !pool.includes(v));
+            pool = pool.concat(melangerTableau(reste).slice(0, manque));
+        }
+        return melangerTableau([...pool]);
+    }
+
     // Jeu participe passé — jeu 1 (e / i / u)
     if (jeuActuel === 'participepasse1') {
         const pool0 = verbesPP_jeu1.filter(v => v.niveau === cfg.niveau);
@@ -1435,6 +1487,7 @@ function majInterface() {
     document.getElementById('zone-presenttous-form').style.display    = 'none';
     document.getElementById('zone-imparfait-pelotes').style.display  = 'none';
     document.getElementById('zone-imparfait-form').style.display     = 'none';
+    document.getElementById('zone-pp2-pelotes').style.display        = 'none';
     document.getElementById('zone-pp1-pelotes').style.display        = 'none';
     document.getElementById('zone-ps-pelotes').style.display         = 'none';
     document.getElementById('zone-sp-pelotes').style.display         = 'none';
@@ -1457,6 +1510,7 @@ function majInterface() {
     else if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') afficherFutur(v);
     else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
     else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
+    else if (jeuActuel === 'participepasse2') afficherPP2(v);
     else if (jeuActuel === 'participepasse1') afficherPP1(v);
     else if (jeuActuel === 'ps1' || jeuActuel === 'ps2' || jeuActuel === 'ps3') afficherPS(v);
     else if (jeuActuel === 'sp1' || jeuActuel === 'sp2' || jeuActuel === 'sp3') afficherSP(v);
@@ -2786,6 +2840,114 @@ function getMsgErreurPSForm(reponse, bonne, isTermMode, cat, sujetAff, radical, 
 }
 
 // ============================================================
+// PARTICIPE PASSÉ — JEU 2 (is / it / int / ait / us)
+// ============================================================
+
+function afficherPP2(v) {
+    ppEssaiCount = 0;
+    const cfg  = getConfig();
+    const mode = (cfg.mix && ppModesQuestions[qIndex]) ? ppModesQuestions[qIndex] : cfg.mode;
+    const motComplet = v.rad + v.cible;
+
+    if (mode === 'pelotes') {
+        document.getElementById('zone-imparfait-form').style.display = 'none';
+        document.getElementById('zone-pp1-pelotes').style.display    = 'none';
+        const zone = document.getElementById('zone-pp2-pelotes');
+        zone.style.display = 'block';
+        zone.dataset.bonne = v.cible;
+        zone.dataset.motComplet = motComplet;
+
+        document.getElementById('pp2-pelotes-infinitif').innerText = v.inf;
+        document.getElementById('pp2-pelotes-radical').innerText   = v.rad + '-';
+        document.getElementById('pp2-pelotes-indice').innerHTML    = '💡 ' + exemplePP(v);
+
+        const toutes  = ['is','it','int','ait','us'];
+        const autres  = melangerTableau(toutes.filter(c => c !== v.cible)).slice(0, 2);
+        const pelotes = melangerTableau([
+            { text: '-' + v.cible,   code: v.cible,   correct: true  },
+            { text: '-' + autres[0], code: autres[0], correct: false },
+            { text: '-' + autres[1], code: autres[1], correct: false },
+        ]);
+        const couleurs = { is:'#a13a52', it:'#7d2438', int:'#5c1a2a', ait:'#8c2f45', us:'#4a1420' };
+        const pzone = document.getElementById('pp2-pelotes-zone');
+        pzone.innerHTML = '';
+        pelotes.forEach(p => {
+            const btn = document.createElement('button');
+            btn.className = 'pelote-terminaison';
+            btn.style.background = couleurs[p.code] || '#7d2438';
+            btn.innerText = p.text;
+            btn.onclick = () => validerPP2Pelote(p.code, p.correct, btn, zone, v);
+            pzone.appendChild(btn);
+        });
+
+    } else {
+        document.getElementById('zone-pp2-pelotes').style.display = 'none';
+        const zone = document.getElementById('zone-imparfait-form');
+        zone.style.display = 'block';
+        zone.dataset.motComplet = motComplet;
+
+        document.getElementById('imp-form-infinitif').innerText = v.inf;
+        document.getElementById('imp-form-indice').innerHTML    = '💡 ' + exemplePP(v);
+        const input = document.getElementById('imp-form-input');
+        input.value = '';
+        input.disabled = false;
+        document.getElementById('btn-valider-impform').style.display = 'inline-block';
+        input.focus();
+
+        if (mode === 'form-terminaison') {
+            document.getElementById('imp-form-sujet').innerText = v.rad + '-';
+            input.placeholder = '…';
+            input.style.width = '90px';
+            input.style.fontSize = '26px';
+            input.style.textAlign = 'center';
+            zone.dataset.reponse = v.cible;
+        } else {
+            document.getElementById('imp-form-sujet').innerText = '';
+            input.placeholder = 'participe passé…';
+            input.style.width = '220px';
+            input.style.fontSize = '22px';
+            input.style.textAlign = 'left';
+            zone.dataset.reponse = motComplet;
+        }
+    }
+
+    parler(v.inf);
+}
+
+function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
+    const msg = document.getElementById('msg-zone');
+    document.querySelectorAll('#pp2-pelotes-zone .pelote-terminaison').forEach(b => b.disabled = true);
+
+    if (correct) {
+        btn.style.outline = '3px solid #2ecc71';
+        msg.style.color = '#2ecc71';
+        msg.innerHTML   = `✅ Bravo !`;
+        scoreSerie++; scoreTotal++;
+        document.getElementById('total-score').innerText = scoreTotal;
+        document.getElementById('pp2-pelotes-radical').innerHTML =
+            `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+        parler(zone.dataset.motComplet);
+        setTimeout(prochain, 2200);
+    } else {
+        btn.style.outline = '3px solid #e74c3c';
+        ppEssaiCount++;
+        setTimeout(fuzzJuju, 0);
+        if (ppEssaiCount === 1) {
+            msg.style.color = '#e74c3c';
+            msg.innerText   = '❌ Essaie encore !';
+            document.querySelectorAll('#pp2-pelotes-zone .pelote-terminaison').forEach(b => b.disabled = false);
+        } else {
+            msg.style.color = '#e74c3c';
+            msg.innerHTML   = `❌ C'était <b>-${zone.dataset.bonne}</b> : <b>${zone.dataset.motComplet}</b>`;
+            document.getElementById('pp2-pelotes-radical').innerHTML =
+                `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+            parler(zone.dataset.motComplet);
+            setTimeout(prochain, 2200);
+        }
+    }
+}
+
+// ============================================================
 // PARTICIPE PASSÉ — JEU 1 (é / i / u)
 // ============================================================
 
@@ -2794,12 +2956,16 @@ let ppFormLocked  = false;
 let ppVoixTimer   = null;
 
 function exemplePP(v) {
-    return (v.ex || []).join(' &nbsp;|&nbsp; ');
+    if (Array.isArray(v.ex)) return v.ex.join(' &nbsp;|&nbsp; ');
+    return v.ex || '';
 }
 
 function phraseParleePP(v) {
-    const first = (v.ex && v.ex[0]) || '';
-    return first.split(' - ')[0].trim();
+    if (Array.isArray(v.ex)) {
+        const first = v.ex[0] || '';
+        return first.split(' - ')[0].trim();
+    }
+    return v.ex || '';
 }
 
 function afficherPP1(v) {
