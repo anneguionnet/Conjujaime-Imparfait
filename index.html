@@ -2927,7 +2927,7 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
         document.getElementById('pp2-pelotes-radical').innerHTML =
             `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
         document.getElementById('pp2-pelotes-indice').innerHTML = '💡 ' + exemplePP(v);
-        parler(zone.dataset.motComplet);
+        parler(phraseParleePP(v));
         setTimeout(prochain, 2200);
     } else {
         btn.style.outline = '3px solid #e74c3c';
@@ -2943,7 +2943,7 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
             document.getElementById('pp2-pelotes-radical').innerHTML =
                 `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
             document.getElementById('pp2-pelotes-indice').innerHTML = '💡 ' + exemplePP(v);
-            parler(zone.dataset.motComplet);
+            parler(phraseParleePP(v));
             setTimeout(prochain, 2200);
         }
     }
