@@ -230,7 +230,7 @@ const verbesPP_jeu1 = [
   {"inf":"connaître","rad":"conn","cible":"u","ex":["vous auriez connu - Conditionnel passé"],"niveau":"facile"},
   {"inf":"courir","rad":"cour","cible":"u","ex":["tu as couru - Passé composé"],"niveau":"facile"},
   {"inf":"croire","rad":"cr","cible":"u","ex":["elle aura cru - Futur antérieur"],"niveau":"facile"},
-  {"inf":"devoir","rad":"d","cible":"u","ex":["que vous ayez du - Subjonctif passé"],"niveau":"facile"},
+  {"inf":"devoir","rad":"d","cible":"u","ex":["que vous ayez dû - Subjonctif passé"],"niveau":"facile"},
   {"inf":"discourir","rad":"discour","cible":"u","ex":["tu avais discouru - Plus-que-parfait"],"niveau":"difficile"},
   {"inf":"disparaître","rad":"dispar","cible":"u","ex":["elle aurait disparu - Conditionnel passé"],"niveau":"facile"},
   {"inf":"déplaire","rad":"dépl","cible":"u","ex":["vous avez déplu - Passé composé"],"niveau":"facile"},
@@ -247,6 +247,7 @@ const verbesPP_jeu1 = [
   {"inf":"plaire","rad":"pl","cible":"u","ex":["je lui aurai plu - Futur antérieur"],"niveau":"facile"},
   {"inf":"pourvoir","rad":"pourv","cible":"u","ex":["nous aurions pourvu - Conditionnel passé"],"niveau":"difficile"},
   {"inf":"pouvoir","rad":"p","cible":"u","ex":["j'ai pu - Passé composé"],"niveau":"facile"},
+{"inf":"boire","rad":"b","cible":"u","ex":["j'ai bu - Passé composé"],"niveau":"facile"},
   {"inf":"prévaloir","rad":"préval","cible":"u","ex":["il aura prévalu - Futur antérieur"],"niveau":"difficile"},
   {"inf":"reconnaître","rad":"reconn","cible":"u","ex":["que nous ayons reconnu - Subjonctif passé"],"niveau":"facile"},
   {"inf":"recourir","rad":"recour","cible":"u","ex":["j'avais recouru - Plus-que-parfait"],"niveau":"difficile"},
@@ -269,4 +270,5 @@ const verbesPP_jeu1 = [
   {"inf":"pleuvoir","rad":"pl","cible":"u","ex":["qu'il ait plu - Subjonctif passé"],"niveau":"facile"},
   {"inf":"se plaire","rad":"pl","cible":"u","ex":["elle s'est plu à Paris - Passé composé"],"niveau":"facile"},
   {"inf":"exclure","rad":"excl","cible":"u","ex":["nous avions exclu - Plus-que-parfait"],"niveau":"facile"},
+  {"inf":"mouvoir","rad":"m","cible":"u","ex":["il a mû - Passé composé"],"niveau":"difficile"},
 ];

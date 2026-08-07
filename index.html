@@ -453,7 +453,8 @@
 
         <!-- Bulle Retiens participepasse1 -->
         <div id="bulle-participepasse1" class="bulle-present1" style="display:none;">
-            💬 <i>Retiens : découvre les temps composés en observant la réponse.</i>
+            💬 <i>Retiens : découvre les temps composés en observant la réponse.<br>
+            Certains participes passés irréguliers : <b>Mouvoir</b> → mû — <b>Devoir</b> → dû — <b>Pouvoir</b> → pu — <b>Boire</b> → bu</i>
         </div>
 
         <!-- Bulle Retiens futur1 -->
@@ -1151,7 +1152,8 @@ function getLecon() {
             return ''; // La leçon accents est gérée par chargerSerieAccents()
         case 'participepasse1':
             return `<strong>La plupart des participes passés se terminent en [é], [i] ou [u]. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
-                Il s'écrit <b>-é</b> pour les verbes du 1<sup>er</sup> groupe et pour quelques verbes irréguliers comme <i>aller, être</i> et <i>naître</i>, <b>-i</b> pour les verbes du 2<sup>e</sup> groupe et certains verbes du 3<sup>e</sup> groupe, et <b>-u</b> pour quelques verbes du 3<sup>e</sup> groupe.`;
+                Il s'écrit <b>-é</b> pour les verbes du 1<sup>er</sup> groupe et pour quelques verbes irréguliers comme <i>aller, être</i> et <i>naître</i>, <b>-i</b> pour les verbes du 2<sup>e</sup> groupe et certains verbes du 3<sup>e</sup> groupe, et <b>-u</b> pour quelques verbes du 3<sup>e</sup> groupe.<br>
+                N'oublie pas que seuls les verbes <i>mouvoir</i> et <i>devoir</i> prennent un accent circonflexe sur le -u au masculin.`;
         case 'ps1':
             return `<strong>Au passé simple, les verbes en <b>-ER</b> prennent les terminaisons suivantes :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp; ils/elles → -èrent</b>`;
@@ -2794,7 +2796,8 @@ function afficherPP1(v) {
     const cfg  = getConfig();
     const mode = cfg.mode;
     const AFFICHAGE_CIBLE = { e: 'é', i: 'i', u: 'u' };
-    const motComplet = v.rad + (AFFICHAGE_CIBLE[v.cible] || v.cible);
+    const EXCEPTIONS_MOT = { 'devoir': 'dû', 'mouvoir': 'mû' };
+    const motComplet = EXCEPTIONS_MOT[v.inf] || (v.rad + (AFFICHAGE_CIBLE[v.cible] || v.cible));
 
     if (mode === 'pelotes') {
         document.getElementById('zone-imparfait-form').style.display = 'none';
@@ -2870,7 +2873,7 @@ function validerPP1Pelote(termChoisie, correct, btn, zone, v) {
     if (correct) {
         btn.style.outline = '3px solid #2ecc71';
         msg.style.color = '#2ecc71';
-        msg.innerHTML   = `✅ Bravo ! <b>${zone.dataset.motComplet}</b><br><i>${exemplePP(v)}</i>`;
+        msg.innerHTML   = `✅ Bravo !<br><i>${exemplePP(v)}</i>`;
         scoreSerie++; scoreTotal++;
         document.getElementById('total-score').innerText = scoreTotal;
         document.getElementById('pp1-pelotes-radical').innerHTML =
