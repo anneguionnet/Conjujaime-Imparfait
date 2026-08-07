@@ -2797,6 +2797,7 @@ function afficherPP1(v) {
     const mode = cfg.mode;
     const AFFICHAGE_CIBLE = { e: 'é', i: 'i', u: 'u' };
     const EXCEPTIONS_MOT = { 'devoir': 'dû', 'mouvoir': 'mû' };
+    const EXCEPTIONS_TERMINAISON = { 'devoir': 'û', 'mouvoir': 'û' };
     const motComplet = EXCEPTIONS_MOT[v.inf] || (v.rad + (AFFICHAGE_CIBLE[v.cible] || v.cible));
 
     if (mode === 'pelotes') {
@@ -2812,8 +2813,9 @@ function afficherPP1(v) {
 
         const autres = ['e','i','u'].filter(c => c !== v.cible);
         const affichage = { e: 'é', i: 'i', u: 'u' };
+        const texteCorrect = EXCEPTIONS_TERMINAISON[v.inf] || affichage[v.cible];
         const pelotes = melangerTableau([
-            { text: '-' + affichage[v.cible], code: v.cible, correct: true  },
+            { text: '-' + texteCorrect, code: v.cible, correct: true  },
             { text: '-' + affichage[autres[0]], code: autres[0], correct: false },
             { text: '-' + affichage[autres[1]], code: autres[1], correct: false },
         ]);
@@ -2851,7 +2853,7 @@ function afficherPP1(v) {
             input.style.fontSize = '26px';
             input.style.textAlign = 'center';
             zone.dataset.modeTerminaison = '1';
-            zone.dataset.reponse = AFFICHAGE_CIBLE[v.cible] || v.cible;
+            zone.dataset.reponse = EXCEPTIONS_TERMINAISON[v.inf] || AFFICHAGE_CIBLE[v.cible] || v.cible;
         } else {
             document.getElementById('imp-form-sujet').innerText = '';
             input.placeholder = 'participe passé…';
