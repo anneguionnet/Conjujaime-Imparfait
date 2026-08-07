@@ -2921,12 +2921,11 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
     if (correct) {
         btn.style.outline = '3px solid #2ecc71';
         msg.style.color = '#2ecc71';
-        msg.innerHTML   = `✅ Bravo !`;
+        msg.innerHTML   = `✅ Bravo !<br><i>${exemplePP(v)}</i>`;
         scoreSerie++; scoreTotal++;
         document.getElementById('total-score').innerText = scoreTotal;
         document.getElementById('pp2-pelotes-radical').innerHTML =
             `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
-        document.getElementById('pp2-pelotes-indice').innerHTML = '💡 ' + exemplePP(v);
         parler(phraseParleePP(v));
         setTimeout(prochain, 2200);
     } else {
@@ -2939,10 +2938,9 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
             document.querySelectorAll('#pp2-pelotes-zone .pelote-terminaison').forEach(b => b.disabled = false);
         } else {
             msg.style.color = '#e74c3c';
-            msg.innerHTML   = `❌ C'était <b>-${zone.dataset.bonne}</b> : <b>${zone.dataset.motComplet}</b>`;
+            msg.innerHTML   = `❌ C'était <b>-${zone.dataset.bonne}</b> : <b>${zone.dataset.motComplet}</b><br><i>${exemplePP(v)}</i>`;
             document.getElementById('pp2-pelotes-radical').innerHTML =
                 `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
-            document.getElementById('pp2-pelotes-indice').innerHTML = '💡 ' + exemplePP(v);
             parler(phraseParleePP(v));
             setTimeout(prochain, 2200);
         }
@@ -3101,7 +3099,6 @@ function validerPPForm() {
         input.disabled = true;
         document.getElementById('btn-valider-impform').style.display = 'none';
         document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
-        document.getElementById('imp-form-indice').innerHTML = '💡 ' + exemplePP(v);
         input.style.display = 'none';
         parler(phraseParleePP(v));
         setTimeout(() => {
@@ -3124,7 +3121,6 @@ function validerPPForm() {
             zone.style.display = 'none';
             msg.style.color    = '#e74c3c';
             msg.innerHTML      = `❌ C'était : <b>${motComplet}</b><br><i>${exemplePP(v)}</i>`;
-            document.getElementById('imp-form-indice').innerHTML = '💡 ' + exemplePP(v);
             setTimeout(fuzzJuju, 0);
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
