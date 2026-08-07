@@ -749,8 +749,8 @@ const CONFIG = {
         8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
     participepasse1: {
-        1: { niveau:'facile',    mode:'pelotes', nb:8, opa:1,    shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
-        2: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.75, shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
+        1: { niveau:'facile',    mode:'pelotes', nb:8, opa:1,    shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
+        2: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.75, shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
         3: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catE:2, catI:3, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
         4: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.3,  shuffle:true, catE:2, catI:3, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
         5: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
@@ -1097,7 +1097,7 @@ function chargerSerie() {
         for (let i = 0; i < (cfg.mix.pelotes || 0); i++) liste.push('pelotes');
         for (let i = 0; i < (cfg.mix.terminaison || 0); i++) liste.push('form-terminaison');
         for (let i = 0; i < (cfg.mix.entiere || 0); i++) liste.push('form-entiere');
-        ppModesQuestions = melangerTableau(liste);
+        ppModesQuestions = cfg.mixFixe ? liste : melangerTableau(liste);
     } else {
         ppModesQuestions = [];
     }
