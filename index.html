@@ -633,6 +633,7 @@ let qIndex      = 0;
 let scoreTotal  = 0;
 let scoreSerie  = 0;
 let verbesPioches = [];
+let ppModesQuestions = [];
 let dejaVus     = new Set();
 let essai       = 0;
 let dernierOrdrePelotes = [1, 2, 3];
@@ -748,14 +749,14 @@ const CONFIG = {
         8: { niv:[1,2,3,4], mode:'form-entiere',     nb:8, opa:0    },
     },
     participepasse1: {
-        1: { niveau:'facile',    mode:'pelotes',          nb:10, opa:1,    shuffle:true, catE:4, catI:3, catU:3 },
-        2: { niveau:'facile',    mode:'pelotes',          nb:10, opa:0.75, shuffle:true, catE:4, catI:3, catU:3 },
-        3: { niveau:'difficile', mode:'pelotes',          nb:10, opa:0.5,  shuffle:true, catE:2, catI:4, catU:4 },
-        4: { niveau:'difficile', mode:'pelotes',          nb:10, opa:0.3,  shuffle:true, catE:2, catI:4, catU:4 },
-        5: { niveau:'facile',    mode:'form-terminaison', nb:10, opa:0.5,  catE:4, catI:3, catU:3 },
-        6: { niveau:'facile',    mode:'form-terminaison', nb:10, opa:0.25, catE:4, catI:3, catU:3 },
-        7: { niveau:'difficile', mode:'form-entiere',     nb:10, opa:0.1,  catE:2, catI:4, catU:4 },
-        8: { niveau:'difficile', mode:'form-entiere',     nb:10, opa:0,    catE:2, catI:4, catU:4 },
+        1: { niveau:'facile',    mode:'pelotes', nb:8, opa:1,    shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
+        2: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.75, shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
+        3: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catE:2, catI:3, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
+        4: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.3,  shuffle:true, catE:2, catI:3, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
+        5: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
+        6: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.25, shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:2, terminaison:3, entiere:3} },
+        7: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0.1, catE:2, catI:4, catU:4 },
+        8: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0,   catE:2, catI:4, catU:4 },
     },
     ps1: {
         1: { niv:[1],   mode:'pelotes',          nb:8, opa:1,    shuffle:true, catA:8, catI:0, catU:0 },
@@ -1090,6 +1091,17 @@ function chargerSerie() {
     }
 
     verbesPioches = piocher(cfg);
+
+    if (jeuActuel === 'participepasse1' && cfg.mix) {
+        const liste = [];
+        for (let i = 0; i < (cfg.mix.pelotes || 0); i++) liste.push('pelotes');
+        for (let i = 0; i < (cfg.mix.terminaison || 0); i++) liste.push('form-terminaison');
+        for (let i = 0; i < (cfg.mix.entiere || 0); i++) liste.push('form-entiere');
+        ppModesQuestions = melangerTableau(liste);
+    } else {
+        ppModesQuestions = [];
+    }
+
     majInterface();
 }
 
@@ -2794,7 +2806,7 @@ function afficherPP1(v) {
     ppEssaiCount = 0;
     if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
     const cfg  = getConfig();
-    const mode = cfg.mode;
+    const mode = (cfg.mix && ppModesQuestions[qIndex]) ? ppModesQuestions[qIndex] : cfg.mode;
     const AFFICHAGE_CIBLE = { e: 'é', i: 'i', u: 'u' };
     const EXCEPTIONS_MOT = { 'devoir': 'dû', 'mouvoir': 'mû' };
     const EXCEPTIONS_TERMINAISON = { 'devoir': 'û', 'mouvoir': 'û' };
