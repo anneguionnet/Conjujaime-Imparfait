@@ -2929,7 +2929,7 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
         document.getElementById('total-score').innerText = scoreTotal;
         document.getElementById('pp2-pelotes-radical').innerHTML =
             `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
-        parler(zone.dataset.motComplet + '. ' + phraseParleePP(v));
+        parler(phraseParleePP(v));
         setTimeout(prochain, 2200);
     } else {
         btn.style.outline = '3px solid #e74c3c';
@@ -2944,7 +2944,7 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
             msg.innerHTML   = `❌ C'était <b>-${zone.dataset.bonne}</b> : <b>${zone.dataset.motComplet}</b><br><i>${exemplePP(v)}</i>`;
             document.getElementById('pp2-pelotes-radical').innerHTML =
                 `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
-            parler(zone.dataset.motComplet + '. ' + phraseParleePP(v));
+            parler(phraseParleePP(v));
             setTimeout(prochain, 2200);
         }
     }
@@ -3104,7 +3104,7 @@ function validerPPForm() {
         document.getElementById('btn-valider-impform').style.display = 'none';
         document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
         input.style.display = 'none';
-        parler(jeuActuel === 'participepasse2' ? (motComplet + '. ' + phraseParleePP(v)) : phraseParleePP(v));
+        parler(phraseParleePP(v));
         setTimeout(() => {
             input.value = '';
             input.disabled = false;
@@ -3128,7 +3128,7 @@ function validerPPForm() {
             setTimeout(fuzzJuju, 0);
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
-            parler(jeuActuel === 'participepasse2' ? (motComplet + '. ' + phraseParleePP(v)) : phraseParleePP(v));
+            parler(phraseParleePP(v));
             setTimeout(prochain, 2600);
         }
     }
