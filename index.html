@@ -465,14 +465,14 @@
 
         <!-- Bulle Retiens participepasse2 -->
         <div id="bulle-participepasse2" class="bulle-present1" style="display:none;">
-            💡 <i>Retiens : en mettant le participe passé au féminin à partir de noms comme la lettre, la parole, la demande, la carotte, la fille, la maison, la décision, découvre la terminaison muette au masculin.<br>
+            💡 <i>Retiens : en mettant le participe passé au féminin à partir de noms comme la lettre, la parole, la demande, la carotte, la personne, la maison, la décision, découvre la terminaison muette au masculin.<br>
             <i>Inclus</i> garde son -s parce que c'est un adjectif depuis l'origine (comme <i>perclure</i> et <i>occlure</i>, absents de ce jeu). <i>Exclure</i> et <i>conclure</i>, eux, s'alignent sur les autres participes passés en -u et sont proposés dans le Jeu 1.</i>
         </div>
 
         <!-- Bulle Retiens participepasse1 -->
         <div id="bulle-participepasse1" class="bulle-present1" style="display:none;">
             💬 <i>Retiens : découvre les temps composés en observant la réponse.<br>
-            Certains participes passés irréguliers : <b>Mouvoir</b> → mû — <b>Devoir</b> → dû — <b>Pouvoir</b> → pu — <b>Boire</b> → bu</i>
+            Les verbes irréguliers : <b>Être</b> → été — <b>Naître</b> → né — <b>Avoir</b> → eu — <b>Boire</b> → bu — <b>Croire</b> → cru — <b>Devoir</b> → dû — <b>Mouvoir</b> → mû — <b>Plaire</b> → plu — <b>Pouvoir</b> → pu</i>
         </div>
 
         <!-- Bulle Retiens futur1 -->
@@ -1195,9 +1195,9 @@ function getLecon() {
         case 'participepasse2':
             return `<strong>Les verbes du 3<sup>e</sup> groupe peuvent avoir des terminaisons étymologiques en -is, -it, -int, -ait, ou encore -us pour le verbe <i>inclure</i>.</strong>`;
         case 'participepasse1':
-            return `<strong>La plupart des participes passés se terminent en [é], [i] ou [u]. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
-                Il s'écrit <b>-é</b> pour les verbes du 1<sup>er</sup> groupe et pour quelques verbes irréguliers comme <i>aller, être</i> et <i>naître</i>, <b>-i</b> pour les verbes du 2<sup>e</sup> groupe et certains verbes du 3<sup>e</sup> groupe, et <b>-u</b> pour quelques verbes du 3<sup>e</sup> groupe.<br>
-                N'oublie pas que seuls les verbes <i>mouvoir</i> et <i>devoir</i> prennent un accent circonflexe sur le -u au masculin.`;
+            return `<strong>Les participes passés se terminent généralement en [é], [i] ou [u]. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
+                Il s'écrit <b>-é</b> pour les verbes du 1<sup>er</sup> groupe et pour quelques verbes irréguliers comme <i>aller, être</i> et <i>naître</i>, <b>-i</b> pour tous les verbes du 2<sup>e</sup> groupe et certains verbes du 3<sup>e</sup> groupe, et <b>-u</b> pour certains verbes du 3<sup>e</sup> groupe.<br>
+                Seuls les verbes <i>mouvoir</i> et <i>devoir</i> prennent un accent circonflexe sur le -u au masculin.`;
         case 'ps1':
             return `<strong>Au passé simple, les verbes en <b>-ER</b> prennent les terminaisons suivantes :</strong><br>
                 <b>je → -ai &nbsp;|&nbsp; tu → -as &nbsp;|&nbsp; il/elle/on → -a &nbsp;|&nbsp; ils/elles → -èrent</b>`;
