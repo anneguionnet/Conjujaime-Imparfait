@@ -140,6 +140,9 @@
         <button class="btn-menu-jeu bordeaux2" onclick="lancerJeu('participepasse2')">
             🐓 Autres terminaisons
         </button>
+        <button class="btn-menu-jeu bordeaux3" onclick="lancerJeu('participepasse3')">
+            🐓 Passé simple ou participe ?
+        </button>
     </div>
 
     <div class="menu-section">
@@ -159,9 +162,6 @@
     <!-- ACCENTS -->
     <div class="menu-section">
         <div class="menu-section-titre">🔤 Les accents</div>
-        <button class="btn-menu-jeu jaune-acc" onclick="lancerJeu('accents1')">
-            📖 Les mots accentués
-        </button>
         <button class="btn-menu-jeu jaune-acc2" onclick="lancerJeu('accents2')">
             ✏️ Les verbes accentués
         </button>
@@ -342,6 +342,13 @@
                     onclick="jeuActuel.startsWith('futur') || jeuActuel === 'conditionnel' ? validerFutForm() : jeuActuel.startsWith('ps') ? validerPSForm() : jeuActuel.startsWith('participepasse') ? validerPPForm() : validerImpForm()" style="margin-top:15px;">OK</button>
         </div>
 
+        <!-- PARTICIPE PASSE JEU3 — mode pelotes -->
+        <div id="zone-pp3-pelotes" style="display:none; text-align:center;">
+            <div class="infinitif-display" id="pp3-pelotes-contexte"></div>
+            <div class="conjugaison-display" id="pp3-pelotes-radical"></div>
+            <div class="pelotes-zone" id="pp3-pelotes-zone" style="justify-content:center; gap:16px; flex-wrap:wrap;"></div>
+        </div>
+
         <!-- PARTICIPE PASSE JEU2 — mode pelotes -->
         <div id="zone-pp2-pelotes" style="display:none; text-align:center;">
             <div class="infinitif-display" id="pp2-pelotes-infinitif"></div>
@@ -463,6 +470,12 @@
             💬 <i>Conseils de Juju : n'oublie pas le <b>-E</b> des verbes en <b>-ER</b>. On l'entend à peine… mais il est là ! Pour les verbes en <b>-RE</b>, on enlève le <b>-e</b> final : dire → je dirais. Les verbes en <b>-YER</b> perdent le <b>-Y-</b> pour un <b>-i-</b> : je tutoierais. Certains prennent un accent grave : <b>j'achèterais</b>. D'autres, une double consonne comme <b>j'enverrais</b>, ou un nouveau radical comme <b>je viendrais</b>, <b>je ferais</b>, <b>il pleuvrait</b>. Certains ont même plusieurs orthographes comme <b>ouïr</b> : j'ouïerais, tu oirais, elle orrait. C'est joli, n'est-ce pas ? Allez, à toi de jouer !</i>
         </div>
 
+        <!-- Bulle Retiens participepasse3 -->
+        <div id="bulle-participepasse3" class="bulle-present1" style="display:none;">
+            💬 <i>Retiens : c'est en mettant au féminin qu'on entend la lettre muette du participe passé. Au passé simple, on accorde avec le sujet.<br>
+            Les verbes irréguliers : <b>Être</b> → été — <b>Naître</b> → né — <b>Avoir</b> → eu — <b>Boire</b> → bu — <b>Croire</b> → cru — <b>Devoir</b> → dû — <b>Mouvoir</b> → mû — <b>Plaire</b> → plu — <b>Pouvoir</b> → pu — <b>Vivre</b> → vécu — <b>Taire</b> → tu — <b>Acquérir</b> → acquis — <b>Prendre</b> → pris</i>
+        </div>
+
         <!-- Bulle Retiens participepasse2 -->
         <div id="bulle-participepasse2" class="bulle-present1" style="display:none;">
             💡 <i>Retiens : en mettant le participe passé au féminin à partir de noms comme la lettre, la parole, la demande, la carotte, la personne, la maison, la décision, découvre la terminaison muette au masculin.<br>
@@ -547,11 +560,11 @@
 </div>
 
 <script src="data.js"></script>
-<script src="accents1.js"></script>
 <script src="accents2.js"></script>
 <script src="passesimple.js"></script>
 <script src="participepasse_jeu1.js"></script>
 <script src="participepasse_jeu2.js"></script>
+<script src="participepasse_jeu3.js"></script>
 <script src="verbesImparfait_gd.js"></script>
 <script src="dataFuturCondi.js"></script>
 <script src="verbesImparfaitPron.js"></script>
@@ -787,6 +800,16 @@ const CONFIG = {
         7: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0.1, catIT:3, catIS:1, catINT:3, catAIT:2, catUS:1 },
         8: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0,   catIT:3, catIS:1, catINT:3, catAIT:2, catUS:1 },
     },
+    participepasse3: {
+        1: { niveau:'facile',    mode:'pelotes', nb:8, opa:1,    shuffle:true, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
+        2: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.75, shuffle:true, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
+        3: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.5,  shuffle:true, mix:{pelotes:2, terminaison:3, entiere:3} },
+        4: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.3,  shuffle:true, mix:{pelotes:2, terminaison:3, entiere:3} },
+        5: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.5,  shuffle:true, mix:{pelotes:2, terminaison:3, entiere:3} },
+        6: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.25, shuffle:true, mix:{pelotes:2, terminaison:3, entiere:3} },
+        7: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0.1 },
+        8: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0 },
+    },
     ps1: {
         1: { niv:[1],   mode:'pelotes',          nb:8, opa:1,    shuffle:true, catA:8, catI:0, catU:0 },
         2: { niv:[1,2], mode:'pelotes',          nb:8, opa:0.75, shuffle:true, catA:8, catI:0, catU:0 },
@@ -942,6 +965,7 @@ function lancerJeu(type) {
         conjugue:  "L'infinitif conjugué",
         participe: 'Le participe présent',
         conditionnel: 'Le conditionnel présent',
+        participepasse3: 'Le participe passé — passé simple ou participe ?',
         participepasse2: 'Le participe passé — is, it, int, ait, us',
         participepasse1: 'Le participe passé — é, i, u',
         ps1: 'Passé simple — verbes en -ER',
@@ -1068,7 +1092,7 @@ function chargerSerie() {
         } else { bulleFut2.style.display = 'none'; }
     }
 
-    ['participepasse1','participepasse2'].forEach(id => {
+    ['participepasse1','participepasse2','participepasse3'].forEach(id => {
         const b = document.getElementById('bulle-' + id);
         if (b) {
             b.style.display = (jeuActuel === id && cfg.opa > 0) ? 'block' : 'none';
@@ -1122,7 +1146,7 @@ function chargerSerie() {
 
     verbesPioches = piocher(cfg);
 
-    if ((jeuActuel === 'participepasse1' || jeuActuel === 'participepasse2') && cfg.mix) {
+    if ((jeuActuel === 'participepasse1' || jeuActuel === 'participepasse2' || jeuActuel === 'participepasse3') && cfg.mix) {
         const liste = [];
         for (let i = 0; i < (cfg.mix.pelotes || 0); i++) liste.push('pelotes');
         for (let i = 0; i < (cfg.mix.terminaison || 0); i++) liste.push('form-terminaison');
@@ -1192,6 +1216,9 @@ function getLecon() {
         case 'accents2':
         case 'accents3':
             return ''; // La leçon accents est gérée par chargerSerieAccents()
+        case 'participepasse3':
+            return `<strong>Les participes passés s'écrivent en -é, -i, -u, -is, -it, -int, -ait ou -us. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
+                On peut les confondre avec le passé simple au singulier. Sauras-tu les différencier ?`;
         case 'participepasse2':
             return `<strong>Les verbes du 3<sup>e</sup> groupe peuvent avoir des terminaisons étymologiques en -is, -it, -int, -ait, ou encore -us pour le verbe <i>inclure</i>.</strong>`;
         case 'participepasse1':
@@ -1370,6 +1397,12 @@ function piocher(cfg) {
         return melangerTableau([...pool]).slice(0, cfg.nb);
     }
 
+    // Jeu participe passé — jeu 3 (synthese, passe simple vs participe)
+    if (jeuActuel === 'participepasse3') {
+        const pool0 = verbesPP_jeu3.filter(v => v.niveau === cfg.niveau);
+        return melangerTableau([...pool0]).slice(0, cfg.nb);
+    }
+
     // Jeu participe passé — jeu 2 (is / it / int / ait / us)
     if (jeuActuel === 'participepasse2') {
         const pool0 = verbesPP_jeu2.filter(v => v.niveau === cfg.niveau);
@@ -1488,6 +1521,7 @@ function majInterface() {
     document.getElementById('zone-presenttous-form').style.display    = 'none';
     document.getElementById('zone-imparfait-pelotes').style.display  = 'none';
     document.getElementById('zone-imparfait-form').style.display     = 'none';
+    document.getElementById('zone-pp3-pelotes').style.display        = 'none';
     document.getElementById('zone-pp2-pelotes').style.display        = 'none';
     document.getElementById('zone-pp1-pelotes').style.display        = 'none';
     document.getElementById('zone-ps-pelotes').style.display         = 'none';
@@ -1511,6 +1545,7 @@ function majInterface() {
     else if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') afficherFutur(v);
     else if (jeuActuel === 'imparfait1' || jeuActuel === 'imparfait2') afficherImparfait(v);
     else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
+    else if (jeuActuel === 'participepasse3') afficherPP3(v);
     else if (jeuActuel === 'participepasse2') afficherPP2(v);
     else if (jeuActuel === 'participepasse1') afficherPP1(v);
     else if (jeuActuel === 'ps1' || jeuActuel === 'ps2' || jeuActuel === 'ps3') afficherPS(v);
@@ -2841,6 +2876,235 @@ function getMsgErreurPSForm(reponse, bonne, isTermMode, cat, sujetAff, radical, 
 }
 
 // ============================================================
+// PARTICIPE PASSÉ — JEU 3 (synthèse : passé simple vs participe)
+// ============================================================
+
+const PP3_PRONOMS = ['je','tu','elle'];
+const PP3_TENSE_ORDER = ['ps','pc','pqp','fa','cp','spa'];
+const PP3_TENSE_NAMES = {
+    ps:'Passé simple', pc:'Passé composé', pqp:'Plus-que-parfait',
+    fa:'Futur antérieur', cp:'Conditionnel passé', spa:'Subjonctif passé'
+};
+const PP3_AVOIR = {
+    je:  { pc:"j'ai", pqp:"j'avais", fa:"j'aurai", cp:"j'aurais", spa:"que j'aie" },
+    tu:  { pc:"tu as", pqp:"tu avais", fa:"tu auras", cp:"tu aurais", spa:"que tu aies" },
+    elle:{ pc:"elle a", pqp:"elle avait", fa:"elle aura", cp:"elle aurait", spa:"qu'elle ait" },
+};
+const PP3_ETRE = {
+    je:  { pc:"je suis", pqp:"j'étais", fa:"je serai", cp:"je serais", spa:"que je sois" },
+    tu:  { pc:"tu es", pqp:"tu étais", fa:"tu seras", cp:"tu serais", spa:"que tu sois" },
+    elle:{ pc:"elle est", pqp:"elle était", fa:"elle sera", cp:"elle serait", spa:"qu'elle soit" },
+};
+const PP3_REFL_ETRE = {
+    je:  { pc:"je me suis", pqp:"je m'étais", fa:"je me serai", cp:"je me serais", spa:"que je me sois" },
+    tu:  { pc:"tu t'es", pqp:"tu t'étais", fa:"tu te seras", cp:"tu te serais", spa:"que tu te sois" },
+    elle:{ pc:"elle s'est", pqp:"elle s'était", fa:"elle se sera", cp:"elle se serait", spa:"qu'elle se soit" },
+};
+const PP3_AGREE = { je:'', tu:'', elle:'e' };
+const PP3_AFFICHAGE = { e:'é', i:'i', u:'u', is:'is', it:'it', int:'int', ait:'ait', us:'us' };
+const PP3_EXCEPTIONS_MOT = { 'devoir':'dû', 'mouvoir':'mû' };
+const PP3_EXCEPTIONS_TERM = { 'devoir':'û', 'mouvoir':'û' };
+const PP3_ETRE_ONLY = new Set(['naître','aller','tomber','arriver','entrer']);
+
+function pp3EstReflexif(inf) {
+    return inf.startsWith('se ') || inf.startsWith("s'") || inf.startsWith('s’');
+}
+
+function pp3Motcomplet(v) {
+    if (PP3_EXCEPTIONS_MOT[v.inf]) return PP3_EXCEPTIONS_MOT[v.inf];
+    return v.rad + (PP3_AFFICHAGE[v.cible] || v.cible);
+}
+
+function pp3Terminaison(v) {
+    return PP3_EXCEPTIONS_TERM[v.inf] || PP3_AFFICHAGE[v.cible] || v.cible;
+}
+
+// Construit la phrase complète pour un temps compose donne
+function pp3PhraseComposee(v, sujet, tense) {
+    const motComplet = pp3Motcomplet(v);
+    let aux;
+    if (pp3EstReflexif(v.inf)) aux = PP3_REFL_ETRE[sujet][tense];
+    else if (PP3_ETRE_ONLY.has(v.inf)) aux = PP3_ETRE[sujet][tense];
+    else aux = PP3_AVOIR[sujet][tense];
+    const accord = (!pp3EstReflexif(v.inf) && !PP3_ETRE_ONLY.has(v.inf)) ? '' : PP3_AGREE[sujet];
+    return `${aux} ${motComplet}${accord}`;
+}
+
+// Recupere la forme passe simple pour un sujet donne (peut etre indisponible si groupe A et sujet != je)
+function pp3FormePS(v, sujet) {
+    if (v.psGroupe === 'A') return sujet === 'je' ? v.psJe : null;
+    if (sujet === 'je') return v.psJe;
+    if (sujet === 'tu') return v.psTu;
+    return v.psElle;
+}
+
+// Terminaison du passe simple pour la pelote / mini-form
+function pp3TerminaisonPS(v, sujet) {
+    if (v.psGroupe === 'A') return 'ai';
+    if (v.psGroupe === 'U') return sujet === 'elle' ? 'ut' : 'us';
+    return sujet === 'elle' ? 'it' : 'is'; // I2/I3
+}
+
+function pp3RadicalPS(v, sujet) {
+    const forme = pp3FormePS(v, sujet);
+    const term = pp3TerminaisonPS(v, sujet);
+    return forme.slice(0, forme.length - term.length);
+}
+
+function pp3ChoisirSujetEtType(v) {
+    let type = PP3_TENSE_ORDER[Math.floor(Math.random() * PP3_TENSE_ORDER.length)];
+    let sujet = PP3_PRONOMS[Math.floor(Math.random() * PP3_PRONOMS.length)];
+    if (type === 'ps' && v.psGroupe === 'A') sujet = 'je';
+    return { sujet, type };
+}
+
+function pp3Contexte(v, sujet, type) {
+    const sujetAff = { je:'Je', tu:'Tu', elle:'Elle' }[sujet];
+    if (type === 'ps') return `${sujetAff} ${v.inf} — au passé simple`;
+    return `${sujetAff} ${v.inf} — au ${PP3_TENSE_NAMES[type].toLowerCase()}`;
+}
+
+function afficherPP3(v) {
+    ppEssaiCount = 0;
+    const cfg  = getConfig();
+    const mode = (cfg.mix && ppModesQuestions[qIndex]) ? ppModesQuestions[qIndex] : cfg.mode;
+    const { sujet, type } = pp3ChoisirSujetEtType(v);
+    v._pp3sujet = sujet; v._pp3type = type; // memorise pour la validation
+
+    const contexte = pp3Contexte(v, sujet, type);
+    let motComplet, terminaisonCorrecte, radicalAffiche;
+
+    if (type === 'ps') {
+        motComplet = pp3FormePS(v, sujet);
+        terminaisonCorrecte = pp3TerminaisonPS(v, sujet);
+        radicalAffiche = pp3RadicalPS(v, sujet);
+    } else {
+        motComplet = pp3PhraseComposee(v, sujet, type);
+        terminaisonCorrecte = pp3Terminaison(v);
+        radicalAffiche = v.rad;
+    }
+
+    if (mode === 'pelotes') {
+        document.getElementById('zone-imparfait-form').style.display = 'none';
+        document.getElementById('zone-pp2-pelotes').style.display    = 'none';
+        const zone = document.getElementById('zone-pp3-pelotes');
+        zone.style.display = 'block';
+        zone.dataset.motComplet = motComplet;
+        zone.dataset.bonne = terminaisonCorrecte;
+
+        document.getElementById('pp3-pelotes-contexte').innerText = contexte;
+        document.getElementById('pp3-pelotes-radical').innerText  = (type==='ps' ? radicalAffiche : v.rad) + '-';
+
+        let choix;
+        if (type === 'ps' && v.psGroupe === 'A') {
+            const troisieme = Math.random() < 0.5 ? 'i' : 'u';
+            choix = melangerTableau([
+                { text:'-ai', code:'ai', correct:true },
+                { text:'-é',  code:'é',  correct:false },
+                { text:'-'+troisieme, code:troisieme, correct:false },
+            ]);
+        } else if (type === 'ps') {
+            const autre = terminaisonCorrecte === 'is' ? 'it' : terminaisonCorrecte === 'it' ? 'is'
+                        : terminaisonCorrecte === 'us' ? 'ut' : 'us';
+            let piege = v.cible;
+            if (piege === terminaisonCorrecte || piege === autre) {
+                const pool = ['is','it','int','ait','us','e','i','u'].filter(c => c!==terminaisonCorrecte && c!==autre);
+                piege = pool[Math.floor(Math.random()*pool.length)];
+            }
+            choix = melangerTableau([
+                { text:'-'+terminaisonCorrecte, code:terminaisonCorrecte, correct:true },
+                { text:'-'+autre, code:autre, correct:false },
+                { text:'-'+piege, code:piege, correct:false },
+            ]);
+        } else {
+            const toutes = ['e','i','u','is','it','int','ait','us'];
+            const autres = melangerTableau(toutes.filter(c => c !== v.cible)).slice(0,2);
+            choix = melangerTableau([
+                { text:'-'+PP3_AFFICHAGE[v.cible], code:v.cible, correct:true },
+                { text:'-'+PP3_AFFICHAGE[autres[0]], code:autres[0], correct:false },
+                { text:'-'+PP3_AFFICHAGE[autres[1]], code:autres[1], correct:false },
+            ]);
+        }
+        const couleurs = { ai:'#a13a52', é:'#7d2438', e:'#a13a52', i:'#7d2438', u:'#5c1a2a',
+                            is:'#a13a52', it:'#7d2438', int:'#5c1a2a', ait:'#8c2f45', us:'#4a1420', ut:'#4a1420' };
+        const pzone = document.getElementById('pp3-pelotes-zone');
+        pzone.innerHTML = '';
+        choix.forEach(c => {
+            const btn = document.createElement('button');
+            btn.className = 'pelote-terminaison';
+            btn.style.background = couleurs[c.code] || '#7d2438';
+            btn.innerText = c.text;
+            btn.onclick = () => validerPP3Pelote(c.correct, btn, zone, v);
+            pzone.appendChild(btn);
+        });
+
+    } else {
+        document.getElementById('zone-pp3-pelotes').style.display = 'none';
+        const zone = document.getElementById('zone-imparfait-form');
+        zone.style.display = 'block';
+        zone.dataset.motComplet = motComplet;
+
+        document.getElementById('imp-form-infinitif').innerText = contexte;
+        document.getElementById('imp-form-indice').innerHTML = '';
+        const input = document.getElementById('imp-form-input');
+        input.value = '';
+        input.disabled = false;
+        document.getElementById('btn-valider-impform').style.display = 'inline-block';
+        input.focus();
+
+        if (mode === 'form-terminaison') {
+            document.getElementById('imp-form-sujet').innerText = radicalAffiche + '-';
+            input.placeholder = '…';
+            input.style.width = '90px';
+            input.style.fontSize = '26px';
+            input.style.textAlign = 'center';
+            zone.dataset.reponse = terminaisonCorrecte;
+        } else {
+            document.getElementById('imp-form-sujet').innerText = '';
+            input.placeholder = 'réponse complète…';
+            input.style.width = '260px';
+            input.style.fontSize = '22px';
+            input.style.textAlign = 'left';
+            zone.dataset.reponse = motComplet;
+        }
+    }
+    parler(v.inf);
+}
+
+function validerPP3Pelote(correct, btn, zone, v) {
+    const msg = document.getElementById('msg-zone');
+    document.querySelectorAll('#pp3-pelotes-zone .pelote-terminaison').forEach(b => b.disabled = true);
+
+    if (correct) {
+        btn.style.outline = '3px solid #2ecc71';
+        msg.style.color = '#2ecc71';
+        msg.innerHTML   = `✅ Bravo !`;
+        scoreSerie++; scoreTotal++;
+        document.getElementById('total-score').innerText = scoreTotal;
+        document.getElementById('pp3-pelotes-radical').innerHTML =
+            `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+        parler(zone.dataset.motComplet);
+        setTimeout(prochain, 2400);
+    } else {
+        btn.style.outline = '3px solid #e74c3c';
+        ppEssaiCount++;
+        setTimeout(fuzzJuju, 0);
+        if (ppEssaiCount === 1) {
+            msg.style.color = '#e74c3c';
+            msg.innerText   = '❌ Essaie encore !';
+            document.querySelectorAll('#pp3-pelotes-zone .pelote-terminaison').forEach(b => b.disabled = false);
+        } else {
+            msg.style.color = '#e74c3c';
+            msg.innerHTML   = `❌ C'était : <b>${zone.dataset.motComplet}</b>`;
+            document.getElementById('pp3-pelotes-radical').innerHTML =
+                `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+            parler(zone.dataset.motComplet);
+            setTimeout(prochain, 2400);
+        }
+    }
+}
+
+// ============================================================
 // PARTICIPE PASSÉ — JEU 2 (is / it / int / ait / us)
 // ============================================================
 
@@ -3098,14 +3362,14 @@ function validerPPForm() {
         if (ppFormLocked) return;
         ppFormLocked = true;
         msg.style.color = '#2ecc71';
-        msg.innerHTML   = `✅ Bravo !<br><i>${exemplePP(v)}</i>`;
+        msg.innerHTML   = (jeuActuel === 'participepasse3') ? `✅ Bravo !` : `✅ Bravo !<br><i>${exemplePP(v)}</i>`;
         scoreSerie++; scoreTotal++;
         document.getElementById('total-score').innerText = scoreTotal;
         input.disabled = true;
         document.getElementById('btn-valider-impform').style.display = 'none';
         document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
         input.style.display = 'none';
-        parler(phraseParleePP(v));
+        parler(jeuActuel === 'participepasse3' ? motComplet : phraseParleePP(v));
         setTimeout(() => {
             input.value = '';
             input.disabled = false;
@@ -3125,11 +3389,11 @@ function validerPPForm() {
         } else {
             zone.style.display = 'none';
             msg.style.color    = '#e74c3c';
-            msg.innerHTML      = `❌ C'était : <b>${motComplet}</b><br><i>${exemplePP(v)}</i>`;
+            msg.innerHTML      = (jeuActuel === 'participepasse3') ? `❌ C'était : <b>${motComplet}</b>` : `❌ C'était : <b>${motComplet}</b><br><i>${exemplePP(v)}</i>`;
             setTimeout(fuzzJuju, 0);
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
-            parler(phraseParleePP(v));
+            parler(jeuActuel === 'participepasse3' ? motComplet : phraseParleePP(v));
             setTimeout(prochain, 2600);
         }
     }
