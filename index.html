@@ -140,7 +140,7 @@
         <button class="btn-menu-jeu bordeaux2" onclick="lancerJeu('participepasse2')">
             🐓 Autres terminaisons
         </button>
-        <p class="menu-encouragement">Tu maîtrises, vas-y !</p>
+        <p class="menu-encouragement">Tu maîtrises, vas-y ! 🐾</p>
         <button class="btn-menu-jeu bordeaux3" onclick="lancerJeu('participepasse3')">
             🐓 Passé simple ou participe ?
         </button>
@@ -2988,6 +2988,12 @@ function pp3SplitAux(aux) {
     return [sujetAffiche, reste];
 }
 
+function pp3TaillePolice(el, texte) {
+    if (texte.length > 18) el.style.fontSize = '28px';
+    else if (texte.length > 12) el.style.fontSize = '36px';
+    else el.style.fontSize = '';
+}
+
 function afficherPP3(v) {
     ppEssaiCount = 0;
     const cfg  = getConfig();
@@ -3036,7 +3042,10 @@ function afficherPP3(v) {
         zone.dataset.bonne = terminaisonCorrecte;
 
         document.getElementById('pp3-pelotes-contexte').innerText = contexte;
-        document.getElementById('pp3-pelotes-radical').innerText  = pp3Joindre(prefixeAffiche, radicalAffiche + '-');
+        const texteRadical = pp3Joindre(prefixeAffiche, radicalAffiche + '-');
+        const elRadical = document.getElementById('pp3-pelotes-radical');
+        elRadical.innerText = texteRadical;
+        pp3TaillePolice(elRadical, texteRadical);
 
         let choix;
         if (type === 'ps' && v.psGroupe === 'A') {
@@ -3060,15 +3069,25 @@ function afficherPP3(v) {
                 { text:'-'+piege, code:piege, correct:false },
             ]);
         } else {
-            const toutes = ['e','i','u','is','it','int','ait','us'];
-            const autres = melangerTableau(toutes.filter(c => c !== v.cible)).slice(0,2);
+            const PP3_PIEGES = {
+                e:   () => ['ait', Math.random() < 0.5 ? 'i' : 'u'],
+                i:   () => ['is', 'it'],
+                is:  () => ['i', 'it'],
+                it:  () => ['i', 'is'],
+                u:   () => ['i', 'û'],
+                int: () => ['ait', 'it'],
+                ait: () => ['e', 'it'],
+                us:  () => ['is', 'it'],
+            };
+            const [p1, p2] = (PP3_PIEGES[v.cible] || (() => ['i','is']))();
+            const texteFor = c => c === 'û' ? 'û' : (PP3_AFFICHAGE[c] || c);
             choix = melangerTableau([
-                { text:'-'+PP3_AFFICHAGE[v.cible], code:v.cible, correct:true },
-                { text:'-'+PP3_AFFICHAGE[autres[0]], code:autres[0], correct:false },
-                { text:'-'+PP3_AFFICHAGE[autres[1]], code:autres[1], correct:false },
+                { text:'-'+texteFor(v.cible), code:v.cible, correct:true },
+                { text:'-'+texteFor(p1), code:p1, correct:false },
+                { text:'-'+texteFor(p2), code:p2, correct:false },
             ]);
         }
-        const couleurs = { ai:'#a13a52', é:'#7d2438', e:'#a13a52', i:'#7d2438', u:'#5c1a2a',
+        const couleurs = { ai:'#a13a52', é:'#7d2438', e:'#a13a52', i:'#7d2438', u:'#5c1a2a', 'û':'#5c1a2a',
                             is:'#a13a52', it:'#7d2438', int:'#5c1a2a', ait:'#8c2f45', us:'#4a1420', ut:'#4a1420' };
         const pzone = document.getElementById('pp3-pelotes-zone');
         pzone.innerHTML = '';
@@ -3096,7 +3115,10 @@ function afficherPP3(v) {
         input.focus();
 
         if (mode === 'form-terminaison') {
-            document.getElementById('imp-form-sujet').innerText = pp3Joindre(prefixeAffiche, radicalAffiche + '-');
+            const texteSujet = pp3Joindre(prefixeAffiche, radicalAffiche + '-');
+            const elSujet = document.getElementById('imp-form-sujet');
+            elSujet.innerText = texteSujet;
+            pp3TaillePolice(elSujet, texteSujet);
             input.placeholder = '…';
             input.style.width = '90px';
             input.style.fontSize = '26px';
@@ -3126,8 +3148,11 @@ function validerPP3Pelote(correct, btn, zone, v) {
         msg.innerHTML   = `✅ Bravo !`;
         scoreSerie++; scoreTotal++;
         document.getElementById('total-score').innerText = scoreTotal;
-        document.getElementById('pp3-pelotes-radical').innerHTML =
-            `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+        {
+            const elR = document.getElementById('pp3-pelotes-radical');
+            elR.style.fontSize = '';
+            elR.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${zone.dataset.motComplet}</span>`;
+        }
         parler(zone.dataset.motComplet);
         setTimeout(prochain, 2400);
     } else {
@@ -3141,8 +3166,9 @@ function validerPP3Pelote(correct, btn, zone, v) {
         } else {
             msg.style.color = '#e74c3c';
             msg.innerHTML   = `❌ C'était : <b>${zone.dataset.motComplet}</b>`;
+            document.getElementById('pp3-pelotes-radical').style.fontSize = '';
             document.getElementById('pp3-pelotes-radical').innerHTML =
-                `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
+                `<span style="color:#1e5631; font-weight:bold;">${zone.dataset.motComplet}</span>`;
             parler(zone.dataset.motComplet);
             setTimeout(prochain, 2400);
         }
