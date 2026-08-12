@@ -2960,9 +2960,9 @@ function pp3ChoisirSujetEtType(v) {
 }
 
 function pp3Contexte(v, sujet, type) {
-    const sujetAff = { je:'Je', tu:'Tu', elle:'Elle' }[sujet];
-    if (type === 'ps') return `${sujetAff} ${v.inf} — au passé simple`;
-    return `${sujetAff} ${v.inf} — au ${PP3_TENSE_NAMES[type].toLowerCase()}`;
+    const infCap = v.inf.charAt(0).toUpperCase() + v.inf.slice(1);
+    if (type === 'ps') return `${infCap} — au passé simple`;
+    return `${infCap} — au ${PP3_TENSE_NAMES[type].toLowerCase()}`;
 }
 
 function afficherPP3(v) {
@@ -2994,7 +2994,9 @@ function afficherPP3(v) {
         zone.dataset.bonne = terminaisonCorrecte;
 
         document.getElementById('pp3-pelotes-contexte').innerText = contexte;
-        document.getElementById('pp3-pelotes-radical').innerText  = (type==='ps' ? radicalAffiche : v.rad) + '-';
+        const sujetAff = { je:'Je', tu:'Tu', elle:'Elle' }[sujet];
+        const prefixeSujet = (type === 'ps') ? sujetAff + ' ' : '';
+        document.getElementById('pp3-pelotes-radical').innerText  = prefixeSujet + (type==='ps' ? radicalAffiche : v.rad) + '-';
 
         let choix;
         if (type === 'ps' && v.psGroupe === 'A') {
@@ -3054,14 +3056,17 @@ function afficherPP3(v) {
         input.focus();
 
         if (mode === 'form-terminaison') {
-            document.getElementById('imp-form-sujet').innerText = radicalAffiche + '-';
+            const sujetAff2 = { je:'Je', tu:'Tu', elle:'Elle' }[sujet];
+            const prefixeSujet2 = (type === 'ps') ? sujetAff2 + ' ' : '';
+            document.getElementById('imp-form-sujet').innerText = prefixeSujet2 + radicalAffiche + '-';
             input.placeholder = '…';
             input.style.width = '90px';
             input.style.fontSize = '26px';
             input.style.textAlign = 'center';
             zone.dataset.reponse = terminaisonCorrecte;
         } else {
-            document.getElementById('imp-form-sujet').innerText = '';
+            const sujetAff3 = { je:'Je', tu:'Tu', elle:'Elle' }[sujet];
+            document.getElementById('imp-form-sujet').innerText = (type === 'ps') ? sujetAff3 : '';
             input.placeholder = 'réponse complète…';
             input.style.width = '260px';
             input.style.fontSize = '22px';
