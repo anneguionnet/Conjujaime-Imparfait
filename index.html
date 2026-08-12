@@ -1012,6 +1012,9 @@ function retourMenu() {
 // ============================================================
 
 function chargerSerie() {
+    const bulleAccentsFuite = document.getElementById('bulle-accents1');
+    if (bulleAccentsFuite) bulleAccentsFuite.style.display = 'none';
+
     if (jeuActuel === 'accents3') { chargerSerieDictee(); return; }
     if (jeuActuel.startsWith('accents')) { chargerSerieAccents(); return; }
     scoreSerie    = 0;
