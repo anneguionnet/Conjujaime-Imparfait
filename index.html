@@ -2965,6 +2965,29 @@ function pp3Contexte(v, sujet, type) {
     return `${infCap} — au ${PP3_TENSE_NAMES[type].toLowerCase()}`;
 }
 
+function pp3Joindre(prefixe, suite) {
+    return prefixe.endsWith("'") ? prefixe + suite : prefixe + ' ' + suite;
+}
+
+// Decoupe un auxiliaire conjugue complet en (sujet affiche, reste a taper)
+// Gere aussi le marqueur subjonctif "que "/"qu'" en tete de chaine.
+function pp3SplitAux(aux) {
+    let que = '';
+    let reste = aux;
+    if (reste.startsWith("qu'")) { que = "Qu'"; reste = reste.slice(3); }
+    else if (reste.startsWith('que ')) { que = 'Que '; reste = reste.slice(4); }
+
+    let sujet;
+    if (reste.startsWith("j'"))       { sujet = "J'";   reste = reste.slice(2); }
+    else if (reste.startsWith('je ')) { sujet = 'Je';   reste = reste.slice(3); }
+    else if (reste.startsWith('tu ')) { sujet = 'Tu';   reste = reste.slice(3); }
+    else if (reste.startsWith('elle ')) { sujet = 'Elle'; reste = reste.slice(5); }
+    else { sujet = 'Elle'; } // secours, ne devrait pas arriver
+
+    const sujetAffiche = que ? (que + sujet.charAt(0).toLowerCase() + sujet.slice(1)) : sujet;
+    return [sujetAffiche, reste];
+}
+
 function afficherPP3(v) {
     ppEssaiCount = 0;
     const cfg  = getConfig();
@@ -2973,16 +2996,35 @@ function afficherPP3(v) {
     v._pp3sujet = sujet; v._pp3type = type; // memorise pour la validation
 
     const contexte = pp3Contexte(v, sujet, type);
-    let motComplet, terminaisonCorrecte, radicalAffiche;
+    const elidable = (mot) => /^[aeiouhâàéèêîïôùûAEIOUHÂÀÉÈÊÎÏÔÙÛ]/.test(mot);
+    let sujetAff = { je:'Je', tu:'Tu', elle:'Elle' }[sujet];
+
+    let terminaisonCorrecte, radicalAffiche, prefixeAffiche, reponseAttendueEntiere, motCompletRevele;
 
     if (type === 'ps') {
-        motComplet = pp3FormePS(v, sujet);
+        const formePS = pp3FormePS(v, sujet);
         terminaisonCorrecte = pp3TerminaisonPS(v, sujet);
         radicalAffiche = pp3RadicalPS(v, sujet);
+        if (sujet === 'je' && elidable(radicalAffiche)) sujetAff = "J'";
+        prefixeAffiche = sujetAff;                 // "Elle" ou "J'"
+        reponseAttendueEntiere = formePS;           // l'eleve tape "comprit" en entier
+        motCompletRevele = pp3Joindre(sujetAff, formePS); // "Elle comprit" / "J'employai"
     } else {
-        motComplet = pp3PhraseComposee(v, sujet, type);
+        const estEtreType = pp3EstReflexif(v.inf) || PP3_ETRE_ONLY.has(v.inf);
+        const aux = pp3EstReflexif(v.inf) ? PP3_REFL_ETRE[sujet][type]
+                  : PP3_ETRE_ONLY.has(v.inf) ? PP3_ETRE[sujet][type]
+                  : PP3_AVOIR[sujet][type];
+        const participe = pp3Motcomplet(v) + (estEtreType ? PP3_AGREE[sujet] : '');
         terminaisonCorrecte = pp3Terminaison(v);
         radicalAffiche = v.rad;
+        prefixeAffiche = aux;                       // "J'aurais" (pelotes / mini-form)
+        reponseAttendueEntiere = participe;          // l'eleve ne tape que "employé"
+        motCompletRevele = aux + ' ' + participe;    // "J'aurais employé"
+
+        // Decoupage sujet seul / reste de l'auxiliaire, pour la form complete uniquement
+        const [sujetSeulAux, resteAux] = pp3SplitAux(aux);
+        var sujetSeulEntiere = sujetSeulAux;
+        var reponseEntiereComplete = resteAux + ' ' + participe; // "aurais employé" / "aie employé"
     }
 
     if (mode === 'pelotes') {
@@ -2990,13 +3032,11 @@ function afficherPP3(v) {
         document.getElementById('zone-pp2-pelotes').style.display    = 'none';
         const zone = document.getElementById('zone-pp3-pelotes');
         zone.style.display = 'block';
-        zone.dataset.motComplet = motComplet;
+        zone.dataset.motComplet = motCompletRevele;
         zone.dataset.bonne = terminaisonCorrecte;
 
         document.getElementById('pp3-pelotes-contexte').innerText = contexte;
-        const sujetAff = { je:'Je', tu:'Tu', elle:'Elle' }[sujet];
-        const prefixeSujet = (type === 'ps') ? sujetAff + ' ' : '';
-        document.getElementById('pp3-pelotes-radical').innerText  = prefixeSujet + (type==='ps' ? radicalAffiche : v.rad) + '-';
+        document.getElementById('pp3-pelotes-radical').innerText  = pp3Joindre(prefixeAffiche, radicalAffiche + '-');
 
         let choix;
         if (type === 'ps' && v.psGroupe === 'A') {
@@ -3045,7 +3085,7 @@ function afficherPP3(v) {
         document.getElementById('zone-pp3-pelotes').style.display = 'none';
         const zone = document.getElementById('zone-imparfait-form');
         zone.style.display = 'block';
-        zone.dataset.motComplet = motComplet;
+        zone.dataset.motComplet = motCompletRevele;
 
         document.getElementById('imp-form-infinitif').innerText = contexte;
         document.getElementById('imp-form-indice').innerHTML = '';
@@ -3056,22 +3096,21 @@ function afficherPP3(v) {
         input.focus();
 
         if (mode === 'form-terminaison') {
-            const sujetAff2 = { je:'Je', tu:'Tu', elle:'Elle' }[sujet];
-            const prefixeSujet2 = (type === 'ps') ? sujetAff2 + ' ' : '';
-            document.getElementById('imp-form-sujet').innerText = prefixeSujet2 + radicalAffiche + '-';
+            document.getElementById('imp-form-sujet').innerText = pp3Joindre(prefixeAffiche, radicalAffiche + '-');
             input.placeholder = '…';
             input.style.width = '90px';
             input.style.fontSize = '26px';
             input.style.textAlign = 'center';
             zone.dataset.reponse = terminaisonCorrecte;
         } else {
-            const sujetAff3 = { je:'Je', tu:'Tu', elle:'Elle' }[sujet];
-            document.getElementById('imp-form-sujet').innerText = (type === 'ps') ? sujetAff3 : '';
-            input.placeholder = 'réponse complète…';
+            const sujetEntiere = (type === 'ps') ? prefixeAffiche : sujetSeulEntiere;
+            const reponseEntiere = (type === 'ps') ? reponseAttendueEntiere : reponseEntiereComplete;
+            document.getElementById('imp-form-sujet').innerText = sujetEntiere;
+            input.placeholder = 'réponse…';
             input.style.width = '260px';
             input.style.fontSize = '22px';
             input.style.textAlign = 'left';
-            zone.dataset.reponse = motComplet;
+            zone.dataset.reponse = reponseEntiere;
         }
     }
     parler(v.inf);
