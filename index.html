@@ -129,13 +129,6 @@
     </div>
 
     <div class="menu-section">
-        <div class="menu-section-titre">🔤 Les accents</div>
-        <button class="btn-menu-jeu jaune-acc" onclick="lancerJeu('accents1')">
-            🔤 Un accent
-        </button>
-    </div>
-
-    <div class="menu-section">
         <div class="menu-section-titre">🐓 Le participe passé</div>
         <button class="btn-menu-jeu bordeaux" onclick="lancerJeu('participepasse1')">
             🐓 En -é, -i, -u
@@ -146,6 +139,13 @@
         <p class="menu-encouragement">Tu maîtrises, continue ! 🐾</p>
         <button class="btn-menu-jeu bordeaux3" onclick="lancerJeu('participepasse3')">
             🐓 Passé simple ou participe
+        </button>
+    </div>
+
+    <div class="menu-section">
+        <div class="menu-section-titre">🔤 Les accents</div>
+        <button class="btn-menu-jeu jaune-acc" onclick="lancerJeu('accents1')">
+            🔤 Un seul accent
         </button>
     </div>
 
@@ -1493,6 +1493,7 @@ function majInterface() {
     document.getElementById('zone-pp3-pelotes').style.display        = 'none';
     document.getElementById('zone-pp2-pelotes').style.display        = 'none';
     document.getElementById('zone-acc1-pelotes').style.display        = 'none';
+    { const es = document.getElementById('imp-form-sujet'); es.style.width = ''; es.style.textAlign = ''; es.style.marginBottom = ''; }
     document.getElementById('zone-pp1-pelotes').style.display        = 'none';
     document.getElementById('zone-ps-pelotes').style.display         = 'none';
     document.getElementById('zone-sp-pelotes').style.display         = 'none';
@@ -3393,20 +3394,29 @@ function afficherAccents1(v) {
         document.getElementById('btn-valider-impform').style.display = 'inline-block';
         input.focus();
 
+        const elSujet = document.getElementById('imp-form-sujet');
+
         if (mode === 'form-terminaison') {
-            document.getElementById('imp-form-sujet').innerText = avant + '_' + apres;
+            elSujet.innerHTML = `<span style="color:#333;">${avant}</span><span style="color:#e67e00;">_</span><span style="color:#333;">${apres}</span>`;
+            elSujet.style.width = '100%';
+            elSujet.style.textAlign = 'center';
+            elSujet.style.marginBottom = '10px';
             input.placeholder = 'é / è / ê…';
             input.style.width = '120px';
             input.style.fontSize = '26px';
             input.style.textAlign = 'center';
             zone.dataset.reponse = v.cible;
         } else {
-            document.getElementById('imp-form-sujet').innerText = '';
-            input.placeholder = 'mot complet…';
+            const { prefixe, verbe } = accStripPrefix(v.mot);
+            elSujet.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${prefixe || '—'}</span>`;
+            elSujet.style.width = '';
+            elSujet.style.textAlign = '';
+            elSujet.style.marginBottom = '';
+            input.placeholder = 'reste du mot…';
             input.style.width = '260px';
             input.style.fontSize = '22px';
             input.style.textAlign = 'left';
-            zone.dataset.reponse = motComplet;
+            zone.dataset.reponse = verbe;
         }
     }
     parler(v.mot);
