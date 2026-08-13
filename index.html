@@ -3002,6 +3002,7 @@ function pp3TaillePolice(el, texte) {
 
 function afficherPP3(v) {
     ppEssaiCount = 0;
+    if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
     const cfg  = getConfig();
     const mode = (cfg.mix && ppModesQuestions[qIndex]) ? ppModesQuestions[qIndex] : cfg.mode;
     const { sujet, type } = pp3ChoisirSujetEtType(v);
@@ -3142,9 +3143,11 @@ function afficherPP3(v) {
         }
     }
     parler(v.inf);
+    ppVoixTimer = setTimeout(() => { parler(motCompletRevele); }, 10000);
 }
 
 function validerPP3Pelote(correct, btn, zone, v) {
+    if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
     const msg = document.getElementById('msg-zone');
     document.querySelectorAll('#pp3-pelotes-zone .pelote-terminaison').forEach(b => b.disabled = true);
 
@@ -3156,7 +3159,7 @@ function validerPP3Pelote(correct, btn, zone, v) {
         document.getElementById('total-score').innerText = scoreTotal;
         {
             const elR = document.getElementById('pp3-pelotes-radical');
-            elR.style.fontSize = '';
+            pp3TaillePolice(elR, zone.dataset.motComplet);
             elR.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${zone.dataset.motComplet}</span>`;
         }
         parler(zone.dataset.motComplet);
@@ -3172,9 +3175,11 @@ function validerPP3Pelote(correct, btn, zone, v) {
         } else {
             msg.style.color = '#e74c3c';
             msg.innerHTML   = `❌ C'était : <b>${zone.dataset.motComplet}</b>`;
-            document.getElementById('pp3-pelotes-radical').style.fontSize = '';
-            document.getElementById('pp3-pelotes-radical').innerHTML =
-                `<span style="color:#1e5631; font-weight:bold;">${zone.dataset.motComplet}</span>`;
+            {
+                const elR2 = document.getElementById('pp3-pelotes-radical');
+                pp3TaillePolice(elR2, zone.dataset.motComplet);
+                elR2.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${zone.dataset.motComplet}</span>`;
+            }
             parler(zone.dataset.motComplet);
             setTimeout(prochain, 2400);
         }
@@ -3444,7 +3449,15 @@ function validerPPForm() {
         document.getElementById('total-score').innerText = scoreTotal;
         input.disabled = true;
         document.getElementById('btn-valider-impform').style.display = 'none';
-        document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
+        {
+            const elS = document.getElementById('imp-form-sujet');
+            if (jeuActuel === 'participepasse3') {
+                pp3TaillePolice(elS, motComplet);
+                elS.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${motComplet}</span>`;
+            } else {
+                elS.innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
+            }
+        }
         input.style.display = 'none';
         parler(jeuActuel === 'participepasse3' ? motComplet : phraseParleePP(v));
         setTimeout(() => {
