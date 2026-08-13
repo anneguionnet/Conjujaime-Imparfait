@@ -3111,14 +3111,22 @@ function afficherPP2(v) {
         document.getElementById('pp2-pelotes-radical').innerText   = v.rad + '-';
         document.getElementById('pp2-pelotes-indice').innerHTML    = 'Trouve la bonne terminaison.';
 
-        const toutes  = ['is','it','int','ait','us'];
-        const autres  = melangerTableau(toutes.filter(c => c !== v.cible)).slice(0, 2);
-        const pelotes = melangerTableau([
-            { text: '-' + v.cible,   code: v.cible,   correct: true  },
-            { text: '-' + autres[0], code: autres[0], correct: false },
-            { text: '-' + autres[1], code: autres[1], correct: false },
-        ]);
-        const couleurs = { is:'#a13a52', it:'#7d2438', int:'#5c1a2a', ait:'#8c2f45', us:'#4a1420' };
+        const PIEGES_FORCES_J2 = {
+            'inclure': [{ text:'-us', code:'us', correct:true }, { text:'-u', code:'u', correct:false }, { text:'-is', code:'is', correct:false }],
+        };
+        let pelotes;
+        if (PIEGES_FORCES_J2[v.inf]) {
+            pelotes = melangerTableau(PIEGES_FORCES_J2[v.inf]);
+        } else {
+            const toutes  = ['is','it','int','ait','us'];
+            const autres  = melangerTableau(toutes.filter(c => c !== v.cible)).slice(0, 2);
+            pelotes = melangerTableau([
+                { text: '-' + v.cible,   code: v.cible,   correct: true  },
+                { text: '-' + autres[0], code: autres[0], correct: false },
+                { text: '-' + autres[1], code: autres[1], correct: false },
+            ]);
+        }
+        const couleurs = { is:'#a13a52', it:'#7d2438', int:'#5c1a2a', ait:'#8c2f45', us:'#4a1420', u:'#8c2f45' };
         const pzone = document.getElementById('pp2-pelotes-zone');
         pzone.innerHTML = '';
         pelotes.forEach(p => {
@@ -3241,15 +3249,28 @@ function afficherPP1(v) {
         document.getElementById('pp1-pelotes-infinitif').innerText = v.inf;
         document.getElementById('pp1-pelotes-radical').innerText   = v.rad + '-';
 
-        const autres = ['e','i','u'].filter(c => c !== v.cible);
         const affichage = { e: 'é', i: 'i', u: 'u' };
         const texteCorrect = EXCEPTIONS_TERMINAISON[v.inf] || affichage[v.cible];
-        const pelotes = melangerTableau([
-            { text: '-' + texteCorrect, code: v.cible, correct: true  },
-            { text: '-' + affichage[autres[0]], code: autres[0], correct: false },
-            { text: '-' + affichage[autres[1]], code: autres[1], correct: false },
-        ]);
-        const couleurs = { e:'#a13a52', i:'#7d2438', u:'#5c1a2a' };
+
+        const PIEGES_FORCES = {
+            'exclure':  [{ text:'-u', code:'u', correct:true }, { text:'-û', code:'û', correct:false }, { text:'-is', code:'is', correct:false }],
+            'conclure': [{ text:'-u', code:'u', correct:true }, { text:'-û', code:'û', correct:false }, { text:'-is', code:'is', correct:false }],
+            'devoir':   [{ text:'-û', code:'u', correct:true }, { text:'-u', code:'u2', correct:false }, { text:'-i', code:'i', correct:false }],
+            'mouvoir':  [{ text:'-û', code:'u', correct:true }, { text:'-u', code:'u2', correct:false }, { text:'-i', code:'i', correct:false }],
+        };
+
+        let pelotes;
+        if (PIEGES_FORCES[v.inf]) {
+            pelotes = melangerTableau(PIEGES_FORCES[v.inf]);
+        } else {
+            const autres = ['e','i','u'].filter(c => c !== v.cible);
+            pelotes = melangerTableau([
+                { text: '-' + texteCorrect, code: v.cible, correct: true  },
+                { text: '-' + affichage[autres[0]], code: autres[0], correct: false },
+                { text: '-' + affichage[autres[1]], code: autres[1], correct: false },
+            ]);
+        }
+        const couleurs = { e:'#a13a52', i:'#7d2438', u:'#5c1a2a', 'û':'#4a1420', 'u2':'#8c2f45', is:'#a13a52' };
         const pzone = document.getElementById('pp1-pelotes-zone');
         pzone.innerHTML = '';
         pelotes.forEach(p => {
