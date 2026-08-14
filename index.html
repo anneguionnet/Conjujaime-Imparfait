@@ -3408,6 +3408,8 @@ function afficherAccents1(v) {
             zone.dataset.reponse = v.cible;
         } else {
             const { prefixe, verbe } = accStripPrefix(v.mot);
+            document.getElementById('imp-form-infinitif').innerHTML =
+                `<span style="color:#1e5631; font-weight:bold; font-style:normal; font-size:0.7em;">${v.inf}</span>`;
             elSujet.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${prefixe || '—'}</span>`;
             elSujet.style.width = '';
             elSujet.style.textAlign = '';
