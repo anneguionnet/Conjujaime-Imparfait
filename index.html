@@ -527,17 +527,17 @@
 
 </div>
 
-<script src="data.js"></script>
-<script src="passesimple.js"></script>
-<script src="accents.js"></script>
-<script src="participepasse_jeu1.js"></script>
-<script src="participepasse_jeu2.js"></script>
-<script src="participepasse_jeu3.js"></script>
-<script src="verbesImparfait_gd.js"></script>
-<script src="dataFuturCondi.js"></script>
-<script src="verbesImparfaitPron.js"></script>
-<script src="dataFuturCondiPron.js"></script>
-<script src="subjPresent.js"></script>
+<script src="data.js?v=1"></script>
+<script src="passesimple.js?v=1"></script>
+<script src="accents.js?v=1"></script>
+<script src="participepasse_jeu1.js?v=1"></script>
+<script src="participepasse_jeu2.js?v=1"></script>
+<script src="participepasse_jeu3.js?v=1"></script>
+<script src="verbesImparfait_gd.js?v=1"></script>
+<script src="dataFuturCondi.js?v=1"></script>
+<script src="verbesImparfaitPron.js?v=1"></script>
+<script src="dataFuturCondiPron.js?v=1"></script>
+<script src="subjPresent.js?v=1"></script>
 <script>
 // ============================================================
 // ENGINE — Voix, confettis, utilitaires
@@ -2874,7 +2874,7 @@ const PP3_AGREE = { je:'', tu:'', elle:'e' };
 const PP3_AFFICHAGE = { e:'é', i:'i', u:'u', is:'is', it:'it', int:'int', ait:'ait', us:'us' };
 const PP3_EXCEPTIONS_MOT = { 'devoir':'dû', 'mouvoir':'mû' };
 const PP3_EXCEPTIONS_TERM = { 'devoir':'û', 'mouvoir':'û' };
-const PP3_ETRE_ONLY = new Set(['naître','aller','tomber','arriver','entrer']);
+const PP3_ETRE_ONLY = new Set(['naître','aller','tomber','arriver','entrer','partir','repartir','ressortir']);
 
 function pp3EstReflexif(inf) {
     return inf.startsWith('se ') || inf.startsWith("s'") || inf.startsWith('s’');

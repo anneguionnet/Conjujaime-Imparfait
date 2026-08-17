@@ -180,7 +180,7 @@ const verbesPP_jeu1 = [
   {"inf":"mentir","rad":"ment","cible":"i","ex":["tu aurais menti - Conditionnel passé"],"niveau":"facile"},
   {"inf":"mordre","rad":"mord","cible":"u","ex":["elle a mordu - Passé composé"],"niveau":"facile"},
   {"inf":"naître","rad":"n","cible":"e","ex":["vous serez nés - Futur antérieur"],"niveau":"facile"},
-  {"inf":"partir","rad":"part","cible":"i","ex":["que tu aies parti - Subjonctif passé"],"niveau":"facile"},
+  {"inf":"partir","rad":"part","cible":"i","ex":["que tu sois parti - Subjonctif passé"],"niveau":"facile"},
   {"inf":"pendre","rad":"pend","cible":"u","ex":["elle avait pendu - Plus-que-parfait"],"niveau":"facile"},
   {"inf":"perdre","rad":"perd","cible":"u","ex":["vous auriez perdu - Conditionnel passé"],"niveau":"facile"},
   {"inf":"pondre","rad":"pond","cible":"u","ex":["tu as pondu - Passé composé"],"niveau":"facile"},
