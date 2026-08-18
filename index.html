@@ -3206,7 +3206,6 @@ function afficherPP2(v) {
         zone.dataset.motComplet = motComplet;
 
         document.getElementById('imp-form-infinitif').innerText = v.inf;
-        document.getElementById('imp-form-indice').innerHTML    = 'Trouve la bonne terminaison.';
         const input = document.getElementById('imp-form-input');
         input.value = '';
         input.disabled = false;
@@ -3214,6 +3213,7 @@ function afficherPP2(v) {
         input.focus();
 
         if (mode === 'form-terminaison') {
+            document.getElementById('imp-form-indice').innerHTML = 'Trouve la bonne terminaison.';
             document.getElementById('imp-form-sujet').innerText = v.rad + '-';
             input.placeholder = '…';
             input.style.width = '90px';
@@ -3221,6 +3221,7 @@ function afficherPP2(v) {
             input.style.textAlign = 'center';
             zone.dataset.reponse = v.cible;
         } else {
+            document.getElementById('imp-form-indice').innerHTML = 'Trouve le bon participe passé.';
             document.getElementById('imp-form-sujet').innerText = '';
             input.placeholder = 'participe passé…';
             input.style.width = '220px';
