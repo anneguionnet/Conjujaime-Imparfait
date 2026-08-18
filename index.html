@@ -3405,15 +3405,15 @@ function afficherAccents1(v) {
             elSujet.style.width = '100%';
             elSujet.style.textAlign = 'center';
             elSujet.style.marginBottom = '10px';
-            input.placeholder = 'é / è / ê…';
-            input.style.width = '120px';
-            input.style.fontSize = '26px';
+            input.placeholder = 'é / è / ê';
+            input.style.width = '160px';
+            input.style.fontSize = '22px';
             input.style.textAlign = 'center';
             zone.dataset.reponse = v.cible;
             zone.dataset.altReponse = '';
         } else {
             const { prefixe, verbe } = accStripPrefix(v.mot);
-            document.getElementById('imp-form-indice').innerHTML = 'Écris la forme accentuée.';
+            document.getElementById('imp-form-indice').innerHTML = 'Écris la forme accentuée entendue.';
             document.getElementById('imp-form-infinitif').innerHTML =
                 `<span style="color:#1e5631; font-weight:bold; font-style:normal; font-size:0.7em;">${v.inf}</span>`;
             elSujet.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${prefixe || '—'}</span>`;
