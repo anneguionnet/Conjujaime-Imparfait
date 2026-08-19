@@ -163,7 +163,7 @@
         </button>
         <p class="menu-encouragement">Un accent, ça va, deux accents, prête ? 🐾</p>
         <button class="btn-menu-jeu jaune-acc2" onclick="lancerJeu('accents2')">
-            🔤 Deux accents
+            🔤 Le son [ɛ]
         </button>
     </div>
 
@@ -942,7 +942,7 @@ function lancerJeu(type) {
         participepasse3: 'Le participe passé ou le passé simple',
         participepasse2: 'Le participe passé — is, it, int, ait, us',
         accents1: 'Les accents — un accent',
-        accents2: 'Les accents — deux accents',
+        accents2: 'Les accents — le son [ɛ]',
         participepasse1: 'Le participe passé — é, i, u',
         ps1: 'Passé simple — verbes en -ER',
         ps2: 'Passé simple — 2e et 3e groupe',
@@ -3401,6 +3401,19 @@ function accMotComplet(v) {
     return avant + v.cible + apres;
 }
 
+// Renvoie le mot complet alternatif (orthographe rectifiee), ou null s'il n'y en a pas
+function accAltMotComplet(v) {
+    if (v.altRad) {
+        const { prefixe } = accStripPrefix(v.mot);
+        return prefixe + v.altRad;
+    }
+    if (v.altCible) {
+        const { avant, apres } = construireAffichageMot(v.mot, v.cible, v.pos);
+        return avant + v.altCible + apres;
+    }
+    return null;
+}
+
 function afficherAccents2(v) {
     accEssaiCount = 0;
     if (accVoixTimer) { clearTimeout(accVoixTimer); accVoixTimer = null; }
@@ -3428,13 +3441,13 @@ function afficherAccents2(v) {
             '<span class="mot-partie">' + avant + '</span>' +
             '<span class="mot-blanc">_</span>' +
             '<span class="mot-partie">' + apres + '</span>';
-        document.getElementById('acc2-instruction').innerText = 'Trouve le bon accent. — ' + (v.temps === 'futur' ? 'futur simple' : 'présent');
+        document.getElementById('acc2-instruction').innerText = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : 'présent');
 
         const [p1, p2] = ACC2_PIEGES[v.cible] || ['é','è'];
         const pelotes = melangerTableau([
             { text: v.cible, correct: true },
-            { text: p1, correct: false },
-            { text: p2, correct: false },
+            { text: p1, correct: p1 === v.altCible },
+            { text: p2, correct: p2 === v.altCible },
         ]);
         const couleurs = { 'é':'#ffd700', 'è':'#ffb300', 'ê':'#e67e00', 'e':'#c77c00' };
         const pzone = document.getElementById('acc2-pelotes-zone');
@@ -3466,7 +3479,7 @@ function afficherAccents2(v) {
         const elSujet = document.getElementById('imp-form-sujet');
 
         if (mode === 'form-terminaison') {
-            document.getElementById('imp-form-indice').innerHTML = 'Trouve le bon accent. — ' + (v.temps === 'futur' ? 'futur simple' : 'présent');
+            document.getElementById('imp-form-indice').innerHTML = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : 'présent');
             elSujet.innerHTML = `<span style="color:#333;">${avant}</span><span style="color:#e67e00;">_</span><span style="color:#333;">${apres}</span>`;
             elSujet.style.width = '100%';
             elSujet.style.textAlign = 'center';
@@ -3476,7 +3489,7 @@ function afficherAccents2(v) {
             input.style.fontSize = '20px';
             input.style.textAlign = 'center';
             zone.dataset.reponse = v.cible;
-            zone.dataset.altReponse = '';
+            zone.dataset.altReponse = v.altCible || '';
         } else {
             const { prefixe, verbe } = accStripPrefix(v.mot);
             document.getElementById('imp-form-indice').innerHTML = 'Écris la forme accentuée entendue. — ' + (v.temps === 'futur' ? 'futur simple' : 'présent');
@@ -3491,7 +3504,8 @@ function afficherAccents2(v) {
             input.style.fontSize = '22px';
             input.style.textAlign = 'left';
             zone.dataset.reponse = verbe;
-            zone.dataset.altReponse = v.altRad || '';
+            const altMC = accAltMotComplet(v);
+            zone.dataset.altReponse = altMC ? accStripPrefix(altMC).verbe : '';
         }
     }
     parler(v.mot);
@@ -3552,14 +3566,14 @@ function afficherAccents1(v) {
             '<span class="mot-partie">' + avant + '</span>' +
             '<span class="mot-blanc">_</span>' +
             '<span class="mot-partie">' + apres + '</span>';
-        document.getElementById('acc1-instruction').innerText = 'Trouve le bon accent. — ' + (v.temps === 'futur' ? 'futur simple' : 'présent');
+        document.getElementById('acc1-instruction').innerText = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : 'présent');
 
         const toutes = ['é','è','ê'];
-        const autres = toutes.filter(c => c !== v.cible);
+        const autres = toutes.filter(c => c !== v.cible && c !== v.altCible);
         const pelotes = melangerTableau([
             { text: v.cible, correct: true },
             { text: autres[0], correct: false },
-            { text: autres[1], correct: false },
+            { text: autres[1] || v.altCible, correct: !!(autres[1] === undefined && v.altCible) },
         ]);
         const couleurs = { 'é':'#ffd700', 'è':'#ffb300', 'ê':'#e67e00' };
         const pzone = document.getElementById('acc1-pelotes-zone');
@@ -3591,7 +3605,7 @@ function afficherAccents1(v) {
         const elSujet = document.getElementById('imp-form-sujet');
 
         if (mode === 'form-terminaison') {
-            document.getElementById('imp-form-indice').innerHTML = 'Trouve le bon accent. — ' + (v.temps === 'futur' ? 'futur simple' : 'présent');
+            document.getElementById('imp-form-indice').innerHTML = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : 'présent');
             elSujet.innerHTML = `<span style="color:#333;">${avant}</span><span style="color:#e67e00;">_</span><span style="color:#333;">${apres}</span>`;
             elSujet.style.width = '100%';
             elSujet.style.textAlign = 'center';
@@ -3601,7 +3615,7 @@ function afficherAccents1(v) {
             input.style.fontSize = '22px';
             input.style.textAlign = 'center';
             zone.dataset.reponse = v.cible;
-            zone.dataset.altReponse = '';
+            zone.dataset.altReponse = v.altCible || '';
         } else {
             const { prefixe, verbe } = accStripPrefix(v.mot);
             document.getElementById('imp-form-indice').innerHTML = 'Écris la forme accentuée entendue. — ' + (v.temps === 'futur' ? 'futur simple' : 'présent');
@@ -3616,7 +3630,8 @@ function afficherAccents1(v) {
             input.style.fontSize = '22px';
             input.style.textAlign = 'left';
             zone.dataset.reponse = verbe;
-            zone.dataset.altReponse = v.altRad || '';
+            const altMC = accAltMotComplet(v);
+            zone.dataset.altReponse = altMC ? accStripPrefix(altMC).verbe : '';
         }
     }
     parler(v.mot);
