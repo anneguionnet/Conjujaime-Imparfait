@@ -547,7 +547,7 @@
 
 <script src="data.js?v=1"></script>
 <script src="passesimple.js?v=1"></script>
-<script src="accents.js?v=5"></script>
+<script src="accents.js?v=7"></script>
 <script src="participepasse_jeu1.js?v=1"></script>
 <script src="participepasse_jeu2.js?v=1"></script>
 <script src="participepasse_jeu3.js?v=1"></script>
@@ -3419,7 +3419,9 @@ function accAltMotComplet(v) {
 function accTexteRevele(v) {
     const principal = accMotComplet(v);
     const alt = accAltMotComplet(v);
-    return alt ? (principal + ' / ' + alt) : principal;
+    if (!alt) return principal;
+    if (v.altCible) return principal + ' / ' + alt;
+    return principal + ' — ' + alt + ' est aussi accepté';
 }
 
 function afficherAccents2(v) {

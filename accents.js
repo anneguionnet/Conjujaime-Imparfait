@@ -4,9 +4,8 @@
 // niveau : facile (1 position testee) / difficile (2+ positions)
 // ============================================================
 const verbesAccents = [
-  {"mot":"préféré","temps":"présent","inf":"préférer","cible":"é","niveau":"difficile"},
-  {"mot":"préféré","temps":"présent","inf":"préférer","pos":2,"cible":"é","niveau":"difficile"},
-  {"mot":"préféré","temps":"présent","inf":"préférer","pos":3,"cible":"é","niveau":"difficile"},
+  {"mot":"nous préférons","temps":"présent","inf":"préférer","cible":"é","niveau":"difficile"},
+  {"mot":"nous préférons","temps":"présent","inf":"préférer","pos":2,"cible":"é","niveau":"difficile"},
   {"mot":"elle m'intéresse","temps":"présent","inf":"intéresser","pos":1,"cible":"é","niveau":"difficile"},
   {"mot":"elle m'intéresse","temps":"présent","inf":"intéresser","pos":2,"cible":"e","niveau":"difficile"},
   {"mot":"elle m'étonne","temps":"présent","inf":"étonner","cible":"é","niveau":"facile"},
@@ -278,4 +277,15 @@ const verbesAccents = [
   {"mot":"je réécris","temps":"présent","inf":"réécrire","pos":2,"cible":"é","niveau":"difficile"},
   {"mot":"je réélis","temps":"présent","inf":"réélire","pos":1,"cible":"é","niveau":"difficile"},
   {"mot":"je réélis","temps":"présent","inf":"réélire","pos":2,"cible":"é","niveau":"difficile"},
+
+  {"mot":"j'examine","temps":"présent","inf":"examiner","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+  {"mot":"j'excite","temps":"présent","inf":"exciter","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+  {"mot":"j'existe","temps":"présent","inf":"exister","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+  {"mot":"j'exige","temps":"présent","inf":"exiger","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+  {"mot":"j'explique","temps":"présent","inf":"expliquer","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+  {"mot":"j'exploite","temps":"présent","inf":"exploiter","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+  {"mot":"j'explore","temps":"présent","inf":"explorer","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+  {"mot":"j'expose","temps":"présent","inf":"exposer","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+  {"mot":"j'exprime","temps":"présent","inf":"exprimer","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+  {"mot":"j'expulse","temps":"présent","inf":"expulser","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
 ];
