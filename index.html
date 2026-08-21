@@ -547,7 +547,7 @@
 
 <script src="data.js?v=1"></script>
 <script src="passesimple.js?v=1"></script>
-<script src="accents.js?v=3"></script>
+<script src="accents.js?v=5"></script>
 <script src="participepasse_jeu1.js?v=1"></script>
 <script src="participepasse_jeu2.js?v=1"></script>
 <script src="participepasse_jeu3.js?v=1"></script>
@@ -1208,6 +1208,7 @@ function getLecon() {
                 <li>Si elle est <b>sonore</b> → on écrit <b>é</b> (accent aigu)</li>
                 <li>Si un <b>-s-</b> ou une syllabe entière a disparu → on écrit <b>ê</b>. Ex : <i>j'arrête</i> ← arrestation / <i>je fête</i> ← festif</li>
                 <li>Si elle contient une <b>double consonne</b> → le e se prononce [ɛ] sans accent</li>
+                <li>Si elle se trouve devant un <b>x</b> → le e s'ouvre en [ɛ] sans accent aussi</li>
                 </ul>`;
         case 'participepasse1':
             return `<strong>Les participes passés se terminent généralement en [é], [i] ou [u] au masculin singulier. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
@@ -3414,6 +3415,13 @@ function accAltMotComplet(v) {
     return null;
 }
 
+// Texte de revelation : les deux orthographes si le mot en a deux, une seule sinon
+function accTexteRevele(v) {
+    const principal = accMotComplet(v);
+    const alt = accAltMotComplet(v);
+    return alt ? (principal + ' / ' + alt) : principal;
+}
+
 function afficherAccents2(v) {
     accEssaiCount = 0;
     if (accVoixTimer) { clearTimeout(accVoixTimer); accVoixTimer = null; }
@@ -3525,7 +3533,7 @@ function validerAccents2Pelote(correct, btn, zone, v) {
         scoreSerie++; scoreTotal++;
         document.getElementById('total-score').innerText = scoreTotal;
         document.getElementById('acc2-mot').innerHTML =
-            `<span style="color:#1e5631; font-weight:bold;">${zone.dataset.motComplet}</span>`;
+            `<span style="color:#1e5631; font-weight:bold;">${accTexteRevele(v)}</span>`;
         parler(zone.dataset.motComplet);
         setTimeout(prochain, 2600);
     } else {
@@ -3540,7 +3548,7 @@ function validerAccents2Pelote(correct, btn, zone, v) {
             msg.style.color = '#e74c3c';
             msg.innerHTML   = `❌ C'était <b>${zone.dataset.bonne}</b><br><i>${explication}</i>`;
             document.getElementById('acc2-mot').innerHTML =
-                `<span style="color:#1e5631; font-weight:bold;">${zone.dataset.motComplet}</span>`;
+                `<span style="color:#1e5631; font-weight:bold;">${accTexteRevele(v)}</span>`;
             parler(zone.dataset.motComplet);
             setTimeout(prochain, 2600);
         }
@@ -3651,7 +3659,7 @@ function validerAccents1Pelote(correct, btn, zone, v) {
         scoreSerie++; scoreTotal++;
         document.getElementById('total-score').innerText = scoreTotal;
         document.getElementById('acc1-mot').innerHTML =
-            `<span style="color:#1e5631; font-weight:bold;">${zone.dataset.motComplet}</span>`;
+            `<span style="color:#1e5631; font-weight:bold;">${accTexteRevele(v)}</span>`;
         parler(zone.dataset.motComplet);
         setTimeout(prochain, 2600);
     } else {
@@ -3666,7 +3674,7 @@ function validerAccents1Pelote(correct, btn, zone, v) {
             msg.style.color = '#e74c3c';
             msg.innerHTML   = `❌ C'était <b>${zone.dataset.bonne}</b><br><i>${explication}</i>`;
             document.getElementById('acc1-mot').innerHTML =
-                `<span style="color:#1e5631; font-weight:bold;">${zone.dataset.motComplet}</span>`;
+                `<span style="color:#1e5631; font-weight:bold;">${accTexteRevele(v)}</span>`;
             parler(zone.dataset.motComplet);
             setTimeout(prochain, 2600);
         }
@@ -3694,7 +3702,7 @@ function validerAccentsForm() {
         document.getElementById('total-score').innerText = scoreTotal;
         input.disabled = true;
         document.getElementById('btn-valider-impform').style.display = 'none';
-        document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${motComplet}</span>`;
+        document.getElementById('imp-form-sujet').innerHTML = `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${accTexteRevele(v)}</span>`;
         input.style.display = 'none';
         parler(motComplet);
         setTimeout(() => {
@@ -3716,7 +3724,7 @@ function validerAccentsForm() {
         } else {
             zone.style.display = 'none';
             msg.style.color    = '#e74c3c';
-            msg.innerHTML      = `❌ C'était : <b>${motComplet}</b><br><i>${explication}</i>`;
+            msg.innerHTML      = `❌ C'était : <b>${accTexteRevele(v)}</b><br><i>${explication}</i>`;
             setTimeout(fuzzJuju, 0);
             input.disabled = true;
             document.getElementById('btn-valider-impform').style.display = 'none';
