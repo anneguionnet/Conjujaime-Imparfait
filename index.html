@@ -547,7 +547,7 @@
 
 <script src="data.js?v=1"></script>
 <script src="passesimple.js?v=1"></script>
-<script src="accents.js?v=7"></script>
+<script src="accents.js?v=8"></script>
 <script src="participepasse_jeu1.js?v=1"></script>
 <script src="participepasse_jeu2.js?v=1"></script>
 <script src="participepasse_jeu3.js?v=1"></script>
@@ -1201,14 +1201,13 @@ function getLecon() {
                 <li>Si un <b>-s-</b> ou une syllabe entière a disparu → on écrit <b>ê</b>. Ex : <i>j'arrête</i> ← arrestation / <i>je fête</i> ← festif</li>
                 </ul>`;
         case 'accents2':
-            return `<strong>Retrouve le bon accent</strong><br>
+            return `<strong>Accent ou -e muet ?</strong><br>
                 Le son [e] ou [ɛ] peut s'écrire -è, é, ê, ou e. Observe la syllabe qui suit.<br>
                 <ul style="margin:8px 0 0 20px; padding:0;">
                 <li>Si elle est <b>muette</b> → on écrit <b>è</b> (accent grave)</li>
                 <li>Si elle est <b>sonore</b> → on écrit <b>é</b> (accent aigu)</li>
                 <li>Si un <b>-s-</b> ou une syllabe entière a disparu → on écrit <b>ê</b>. Ex : <i>j'arrête</i> ← arrestation / <i>je fête</i> ← festif</li>
-                <li>Si elle contient une <b>double consonne</b> → le e se prononce [ɛ] sans accent</li>
-                <li>Si elle se trouve devant un <b>x</b> → le e s'ouvre en [ɛ] sans accent aussi</li>
+                <li>Si elle se trouve <b>avant une double consonne ou un -x</b> → on écrit <b>e</b> (sans accent)</li>
                 </ul>`;
         case 'participepasse1':
             return `<strong>Les participes passés se terminent généralement en [é], [i] ou [u] au masculin singulier. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
@@ -3463,7 +3462,7 @@ function afficherAccents2(v) {
                 '<span class="mot-blanc">_</span>' +
                 '<span class="mot-partie">' + apres + '</span>';
         }
-        document.getElementById('acc2-instruction').innerText = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : 'présent');
+        document.getElementById('acc2-instruction').innerText = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : v.temps === 'infinitif' ? 'infinitif' : 'présent');
 
         const [p1, p2] = ACC2_PIEGES[v.cible] || ['é','è'];
         const pelotes = melangerTableau([
@@ -3501,7 +3500,7 @@ function afficherAccents2(v) {
         const elSujet = document.getElementById('imp-form-sujet');
 
         if (mode === 'form-terminaison') {
-            document.getElementById('imp-form-indice').innerHTML = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : 'présent');
+            document.getElementById('imp-form-indice').innerHTML = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : v.temps === 'infinitif' ? 'infinitif' : 'présent');
             elSujet.innerHTML = `<span style="color:#333;">${avant}</span><span style="color:#e67e00;">_</span><span style="color:#333;">${apres}</span>`;
             elSujet.style.width = '100%';
             elSujet.style.textAlign = 'center';
@@ -3514,7 +3513,7 @@ function afficherAccents2(v) {
             zone.dataset.altReponse = v.altCible || '';
         } else {
             const { prefixe, verbe } = accStripPrefix(v.mot);
-            document.getElementById('imp-form-indice').innerHTML = 'Écris la forme accentuée entendue. — ' + (v.temps === 'futur' ? 'futur simple' : 'présent');
+            document.getElementById('imp-form-indice').innerHTML = 'Écris la forme accentuée entendue. — ' + (v.temps === 'futur' ? 'futur simple' : v.temps === 'infinitif' ? 'infinitif' : 'présent');
             document.getElementById('imp-form-infinitif').innerHTML =
                 `<span style="color:#1e5631; font-weight:bold; font-style:normal; font-size:0.7em;">${v.inf}</span>`;
             elSujet.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${prefixe || '—'}</span>`;
@@ -3538,7 +3537,11 @@ function validerAccents2Pelote(correct, btn, zone, v) {
     if (accVoixTimer) { clearTimeout(accVoixTimer); accVoixTimer = null; }
     const msg = document.getElementById('msg-zone');
     document.querySelectorAll('#acc2-pelotes-zone .pelote-terminaison').forEach(b => b.disabled = true);
-    const explication = v.info ? v.info : (ACC_EXPLICATIONS[v.cible] || '');
+    const lettreChoisie = btn.innerText;
+    const explicationDefaut = v.info ? v.info : (ACC_EXPLICATIONS[v.cible] || '');
+    const explication = correct
+        ? (v.info ? v.info : (ACC_EXPLICATIONS[lettreChoisie] || explicationDefaut))
+        : explicationDefaut;
 
     if (correct) {
         btn.style.outline = '3px solid #2ecc71';
@@ -3600,7 +3603,7 @@ function afficherAccents1(v) {
                 '<span class="mot-blanc">_</span>' +
                 '<span class="mot-partie">' + apres + '</span>';
         }
-        document.getElementById('acc1-instruction').innerText = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : 'présent');
+        document.getElementById('acc1-instruction').innerText = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : v.temps === 'infinitif' ? 'infinitif' : 'présent');
 
         const toutes = ['é','è','ê'];
         const autres = toutes.filter(c => c !== v.cible && c !== v.altCible);
@@ -3639,7 +3642,7 @@ function afficherAccents1(v) {
         const elSujet = document.getElementById('imp-form-sujet');
 
         if (mode === 'form-terminaison') {
-            document.getElementById('imp-form-indice').innerHTML = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : 'présent');
+            document.getElementById('imp-form-indice').innerHTML = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : v.temps === 'infinitif' ? 'infinitif' : 'présent');
             elSujet.innerHTML = `<span style="color:#333;">${avant}</span><span style="color:#e67e00;">_</span><span style="color:#333;">${apres}</span>`;
             elSujet.style.width = '100%';
             elSujet.style.textAlign = 'center';
@@ -3652,7 +3655,7 @@ function afficherAccents1(v) {
             zone.dataset.altReponse = v.altCible || '';
         } else {
             const { prefixe, verbe } = accStripPrefix(v.mot);
-            document.getElementById('imp-form-indice').innerHTML = 'Écris la forme accentuée entendue. — ' + (v.temps === 'futur' ? 'futur simple' : 'présent');
+            document.getElementById('imp-form-indice').innerHTML = 'Écris la forme accentuée entendue. — ' + (v.temps === 'futur' ? 'futur simple' : v.temps === 'infinitif' ? 'infinitif' : 'présent');
             document.getElementById('imp-form-infinitif').innerHTML =
                 `<span style="color:#1e5631; font-weight:bold; font-style:normal; font-size:0.7em;">${v.inf}</span>`;
             elSujet.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${prefixe || '—'}</span>`;
@@ -3676,7 +3679,11 @@ function validerAccents1Pelote(correct, btn, zone, v) {
     if (accVoixTimer) { clearTimeout(accVoixTimer); accVoixTimer = null; }
     const msg = document.getElementById('msg-zone');
     document.querySelectorAll('#acc1-pelotes-zone .pelote-terminaison').forEach(b => b.disabled = true);
-    const explication = v.info ? v.info : (ACC_EXPLICATIONS[v.cible] || '');
+    const lettreChoisie = btn.innerText;
+    const explicationDefaut = v.info ? v.info : (ACC_EXPLICATIONS[v.cible] || '');
+    const explication = correct
+        ? (v.info ? v.info : (ACC_EXPLICATIONS[lettreChoisie] || explicationDefaut))
+        : explicationDefaut;
 
     if (correct) {
         btn.style.outline = '3px solid #2ecc71';
@@ -3725,7 +3732,8 @@ function validerAccentsForm() {
     const msg     = document.getElementById('msg-zone');
     const motComplet = zone.dataset.motComplet;
     const v = verbesPioches[qIndex];
-    const explication = v.info ? v.info : (ACC_EXPLICATIONS[v.cible] || '');
+    const reponseEstAlt = reponse !== bonne && altBonne && reponse === altBonne;
+    const explication = v.info ? v.info : (reponseEstAlt && v.altCible ? (ACC_EXPLICATIONS[v.altCible] || ACC_EXPLICATIONS[v.cible] || '') : (ACC_EXPLICATIONS[v.cible] || ''));
 
     if (reponse === bonne || (altBonne && reponse === altBonne)) {
         if (ppFormLocked) return;

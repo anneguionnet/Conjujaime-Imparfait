@@ -176,7 +176,7 @@ const verbesAccents = [
   {"mot":"j'arrête","temps":"présent","inf":"arrêter","cible":"ê","info":"de la famille d'arrestation","niveau":"facile"},
   {"mot":"je m'entête","temps":"présent","inf":"s'entêter","pos":2,"cible":"ê","info":"vient du latin testa","niveau":"facile"},
   {"mot":"elle fête","temps":"présent","inf":"fêter","cible":"ê","info":"de la famille de festif","niveau":"facile"},
-  {"mot":"être","temps":"présent","inf":"être","cible":"ê","info":"de la famille de je suis, nous sommes, elles sont","niveau":"facile"},
+  {"mot":"être","temps":"infinitif","inf":"être","cible":"ê","info":"de la famille de je suis, nous sommes, elles sont","niveau":"facile"},
   {"mot":"tu rêves","temps":"présent","inf":"rêver","cible":"ê","niveau":"facile"},
   {"mot":"tu m'embêtes","temps":"présent","inf":"embêter","pos":2,"cible":"ê","info":"de la famille de bestial, bestiaux","niveau":"facile"},
   {"mot":"il se défenêtre","temps":"présent","inf":"se défenêtrer","pos":1,"cible":"é","niveau":"difficile"},
