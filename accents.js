@@ -288,4 +288,15 @@ const verbesAccents = [
   {"mot":"j'expose","temps":"présent","inf":"exposer","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
   {"mot":"j'exprime","temps":"présent","inf":"exprimer","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
   {"mot":"j'expulse","temps":"présent","inf":"expulser","cible":"e","info":"Devant un x, le e s'ouvre en [ɛ] sans accent.","niveau":"difficile"},
+
+  {"mot":"je perds","temps":"présent","inf":"perdre","cible":"e","niveau":"facile"},
+  {"mot":"elle descend","temps":"présent","inf":"descendre","cible":"e","niveau":"facile"},
+  {"mot":"je prêche","temps":"présent","inf":"prêcher","cible":"ê","niveau":"facile"},
+  {"mot":"j'apprête","temps":"présent","inf":"apprêter","cible":"ê","niveau":"facile"},
+  {"mot":"je vêts","temps":"présent","inf":"vêtir","cible":"ê","niveau":"facile"},
+  {"mot":"je quête","temps":"présent","inf":"quêter","cible":"ê","niveau":"facile"},
+  {"mot":"j'empêche","temps":"présent","inf":"empêcher","cible":"e","info":"E initial fermé par une consonne, comme dans persévérer.","niveau":"difficile"},
+  {"mot":"j'empêche","temps":"présent","inf":"empêcher","cible":"ê","niveau":"difficile"},
+  {"mot":"j'enquête","temps":"présent","inf":"enquêter","cible":"e","info":"E initial fermé par une consonne, comme dans persévérer.","niveau":"difficile"},
+  {"mot":"j'enquête","temps":"présent","inf":"enquêter","cible":"ê","niveau":"difficile"},
 ];

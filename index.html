@@ -547,7 +547,7 @@
 
 <script src="data.js?v=1"></script>
 <script src="passesimple.js?v=1"></script>
-<script src="accents.js?v=8"></script>
+<script src="accents.js?v=9"></script>
 <script src="participepasse_jeu1.js?v=1"></script>
 <script src="participepasse_jeu2.js?v=1"></script>
 <script src="participepasse_jeu3.js?v=1"></script>
@@ -1207,7 +1207,7 @@ function getLecon() {
                 <li>Si elle est <b>muette</b> → on écrit <b>è</b> (accent grave)</li>
                 <li>Si elle est <b>sonore</b> → on écrit <b>é</b> (accent aigu)</li>
                 <li>Si un <b>-s-</b> ou une syllabe entière a disparu → on écrit <b>ê</b>. Ex : <i>j'arrête</i> ← arrestation / <i>je fête</i> ← festif</li>
-                <li>Si elle se trouve <b>avant une double consonne ou un -x</b> → on écrit <b>e</b> (sans accent)</li>
+                <li>Si elle se trouve <b>avant une double consonne ou un -x</b> → le <b>-e</b> (sans accent) s'ouvre en [ɛ]</li>
                 </ul>`;
         case 'participepasse1':
             return `<strong>Les participes passés se terminent généralement en [é], [i] ou [u] au masculin singulier. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
@@ -1419,10 +1419,11 @@ function piocher(cfg) {
             const sub = arr.filter(v => v.cible === cat);
             return melangerTableau([...sub]).slice(0, n);
         };
+        const poolÊ = verbesAccents.filter(v => v.cible === 'ê');
         let pool = [];
         if ((cfg.catAigu||0)  > 0) pool = pool.concat(pickCat(pool0, 'é', cfg.catAigu));
         if ((cfg.catGrave||0) > 0) pool = pool.concat(pickCat(pool0, 'è', cfg.catGrave));
-        if ((cfg.catCirc||0)  > 0) pool = pool.concat(pickCat(pool0, 'ê', cfg.catCirc));
+        if ((cfg.catCirc||0)  > 0) pool = pool.concat(pickCat(poolÊ, 'ê', cfg.catCirc));
         if ((cfg.catE||0)     > 0) pool = pool.concat(pickCat(pool0, 'e', cfg.catE));
         if (pool.length < cfg.nb) {
             const manque = cfg.nb - pool.length;
@@ -1553,6 +1554,7 @@ function majInterface() {
     document.getElementById('zone-acc2-pelotes').style.display        = 'none';
     document.getElementById('zone-acc1-pelotes').style.display        = 'none';
     { const es = document.getElementById('imp-form-sujet'); es.style.width = ''; es.style.textAlign = ''; es.style.marginBottom = ''; es.style.fontSize = ''; }
+    { const zf = document.getElementById('zone-imparfait-form'); if (zf) zf.dataset.modeForm = ''; }
     document.getElementById('zone-pp1-pelotes').style.display        = 'none';
     document.getElementById('zone-ps-pelotes').style.display         = 'none';
     document.getElementById('zone-sp-pelotes').style.display         = 'none';
@@ -3500,6 +3502,7 @@ function afficherAccents2(v) {
         const elSujet = document.getElementById('imp-form-sujet');
 
         if (mode === 'form-terminaison') {
+            zone.dataset.modeForm = 'terminaison';
             document.getElementById('imp-form-indice').innerHTML = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : v.temps === 'infinitif' ? 'infinitif' : 'présent');
             elSujet.innerHTML = `<span style="color:#333;">${avant}</span><span style="color:#e67e00;">_</span><span style="color:#333;">${apres}</span>`;
             elSujet.style.width = '100%';
@@ -3527,6 +3530,7 @@ function afficherAccents2(v) {
             zone.dataset.reponse = verbe;
             const altMC = accAltMotComplet(v);
             zone.dataset.altReponse = altMC ? accStripPrefix(altMC).verbe : '';
+            zone.dataset.modeForm = 'entiere';
         }
     }
     parler(v.mot);
@@ -3644,6 +3648,7 @@ function afficherAccents1(v) {
         if (mode === 'form-terminaison') {
             document.getElementById('imp-form-indice').innerHTML = "Trouve la bonne orthographe du son [ɛ]. — " + (v.temps === 'futur' ? 'futur simple' : v.temps === 'infinitif' ? 'infinitif' : 'présent');
             elSujet.innerHTML = `<span style="color:#333;">${avant}</span><span style="color:#e67e00;">_</span><span style="color:#333;">${apres}</span>`;
+            zone.dataset.modeForm = 'terminaison';
             elSujet.style.width = '100%';
             elSujet.style.textAlign = 'center';
             elSujet.style.marginBottom = '10px';
@@ -3669,6 +3674,7 @@ function afficherAccents1(v) {
             zone.dataset.reponse = verbe;
             const altMC = accAltMotComplet(v);
             zone.dataset.altReponse = altMC ? accStripPrefix(altMC).verbe : '';
+            zone.dataset.modeForm = 'entiere';
         }
     }
     parler(v.mot);
@@ -3733,7 +3739,10 @@ function validerAccentsForm() {
     const motComplet = zone.dataset.motComplet;
     const v = verbesPioches[qIndex];
     const reponseEstAlt = reponse !== bonne && altBonne && reponse === altBonne;
-    const explication = v.info ? v.info : (reponseEstAlt && v.altCible ? (ACC_EXPLICATIONS[v.altCible] || ACC_EXPLICATIONS[v.cible] || '') : (ACC_EXPLICATIONS[v.cible] || ''));
+    const modeGenerique = zone.dataset.modeForm === 'entiere' && v.pos;
+    const explication = modeGenerique
+        ? 'Tu as trouvé ! 🐾'
+        : (v.info ? v.info : (reponseEstAlt && v.altCible ? (ACC_EXPLICATIONS[v.altCible] || ACC_EXPLICATIONS[v.cible] || '') : (ACC_EXPLICATIONS[v.cible] || '')));
 
     if (reponse === bonne || (altBonne && reponse === altBonne)) {
         if (ppFormLocked) return;
