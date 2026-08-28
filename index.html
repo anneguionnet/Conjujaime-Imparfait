@@ -161,7 +161,7 @@
         <button class="btn-menu-jeu jaune-acc" onclick="lancerJeu('accents1')">
             🔤 Un seul accent
         </button>
-        <p class="menu-encouragement">Un accent, ça va, deux accents, prête ? 🐾</p>
+        <p class="menu-encouragement">On essaie tous les sons [ɛ] ? 🐾</p>
         <button class="btn-menu-jeu jaune-acc2" onclick="lancerJeu('accents2')">
             🔤 Le son [ɛ]
         </button>
@@ -3739,7 +3739,7 @@ function validerAccentsForm() {
     const motComplet = zone.dataset.motComplet;
     const v = verbesPioches[qIndex];
     const reponseEstAlt = reponse !== bonne && altBonne && reponse === altBonne;
-    const modeGenerique = zone.dataset.modeForm === 'entiere' && v.pos;
+    const modeGenerique = zone.dataset.modeForm === 'entiere' && v.niveau === 'difficile';
     const explication = modeGenerique
         ? 'Tu as trouvé ! 🐾'
         : (v.info ? v.info : (reponseEstAlt && v.altCible ? (ACC_EXPLICATIONS[v.altCible] || ACC_EXPLICATIONS[v.cible] || '') : (ACC_EXPLICATIONS[v.cible] || '')));
