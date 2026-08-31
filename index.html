@@ -549,8 +549,8 @@
 <script src="passesimple.js?v=1"></script>
 <script src="accents.js?v=9"></script>
 <script src="participepasse_jeu1.js?v=1"></script>
-<script src="participepasse_jeu2.js?v=1"></script>
-<script src="participepasse_jeu3.js?v=1"></script>
+<script src="participepasse_jeu2.js?v=3"></script>
+<script src="participepasse_jeu3.js?v=3"></script>
 <script src="verbesImparfait_gd.js?v=1"></script>
 <script src="dataFuturCondi.js?v=1"></script>
 <script src="verbesImparfaitPron.js?v=1"></script>
@@ -797,14 +797,14 @@ const CONFIG = {
         8: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0,   catE:2, catI:4, catU:4 },
     },
     participepasse2: {
-        1: { niveau:'facile',    mode:'pelotes', nb:8, opa:1,    shuffle:true, catIT:3, catIS:2, catINT:1, catAIT:1, catUS:1, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
-        2: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.75, shuffle:true, catIT:3, catIS:2, catINT:1, catAIT:1, catUS:1, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
-        3: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catIT:2, catIS:1, catINT:3, catAIT:2, catUS:0, mix:{pelotes:2, terminaison:3, entiere:3} },
-        4: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.3,  shuffle:true, catIT:2, catIS:1, catINT:3, catAIT:2, catUS:0, mix:{pelotes:2, terminaison:3, entiere:3} },
-        5: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catIT:3, catIS:2, catINT:1, catAIT:1, catUS:1, mix:{pelotes:2, terminaison:3, entiere:3} },
-        6: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.25, shuffle:true, catIT:3, catIS:2, catINT:1, catAIT:1, catUS:1, mix:{pelotes:2, terminaison:3, entiere:3} },
-        7: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0.1, catIT:3, catIS:1, catINT:3, catAIT:2, catUS:1 },
-        8: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0,   catIT:3, catIS:1, catINT:3, catAIT:2, catUS:1 },
+        1: { niveau:'facile',    mode:'pelotes', nb:8, opa:1,    shuffle:true, catIT:2, catIS:2, catINT:1, catAIT:1, catUS:1, catERT:1, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
+        2: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.75, shuffle:true, catIT:2, catIS:2, catINT:1, catAIT:1, catUS:1, catERT:1, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
+        3: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catIT:2, catIS:1, catINT:2, catAIT:2, catUS:0, catERT:1, mix:{pelotes:2, terminaison:3, entiere:3} },
+        4: { niveau:'difficile', mode:'pelotes', nb:8, opa:0.3,  shuffle:true, catIT:2, catIS:1, catINT:2, catAIT:2, catUS:0, catERT:1, mix:{pelotes:2, terminaison:3, entiere:3} },
+        5: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.5,  shuffle:true, catIT:2, catIS:2, catINT:1, catAIT:1, catUS:1, catERT:1, mix:{pelotes:2, terminaison:3, entiere:3} },
+        6: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.25, shuffle:true, catIT:2, catIS:2, catINT:1, catAIT:1, catUS:1, catERT:1, mix:{pelotes:2, terminaison:3, entiere:3} },
+        7: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0.1, catIT:3, catIS:1, catINT:2, catAIT:2, catUS:1, catERT:1 },
+        8: { niveau:'difficile', mode:'form-entiere', nb:10, opa:0,   catIT:3, catIS:1, catINT:2, catAIT:2, catUS:1, catERT:1 },
     },
     participepasse3: {
         1: { niveau:'facile',    mode:'pelotes', nb:8, opa:1,    shuffle:true, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
@@ -1186,12 +1186,12 @@ function getLecon() {
                 nous → -ons &nbsp;|&nbsp; vous → -ez &nbsp;|&nbsp; ils/elles → -ont</b><br>
                 💬 <i>Tu as reconnu ? Ce sont les mêmes que le verbe <b>avoir</b> au présent. On conserve l'infinitif pour les verbes du 1<sup>er</sup> groupe. Pour les verbes en <b>-RE</b>, on enlève le <b>-e</b> final : dire → je dirai</i>`;
         case 'participepasse3':
-            return `<strong>Les participes passés s'écrivent en -é, -i, -u, -û, -is, -it, -int, -ait ou -us au masculin singulier. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
+            return `<strong>Les participes passés s'écrivent en -é, -i, -u, -û, -is, -it, -int, -ait, -ert ou -us au masculin singulier. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
                 Seuls les verbes <i>croître</i>, <i>mouvoir</i> et <i>devoir</i> prennent un accent circonflexe sur le -u au masculin.<br>
                 On peut les confondre avec le passé simple au singulier. Sauras-tu les différencier ?`;
         case 'participepasse2':
-            return `<strong>Les verbes du 3<sup>e</sup> groupe peuvent avoir un participe passé avec des lettres finales étymologiques en -is, -it, -int, -ait, ou encore -us pour le verbe <i>inclure</i>.</strong><br>
-                Exemples : <b>Acquérir</b> → acquis — <b>Prendre</b> → pris — <b>Mettre</b> → mis — <b>Dire</b> → dit — <b>Écrire</b> → écrit — <b>Craindre</b> → craint — <b>Peindre</b> → peint — <b>Joindre</b> → joint — <b>Faire</b> → fait`;
+            return `<strong>Les verbes du 3<sup>e</sup> groupe peuvent avoir un participe passé avec des lettres finales étymologiques en -is, -it, -int, -ait, -ert ou encore -us pour le verbe <i>inclure</i>.</strong><br>
+                Exemples : <b>Acquérir</b> → acquis — <b>Prendre</b> → pris — <b>Mettre</b> → mis — <b>Dire</b> → dit — <b>Écrire</b> → écrit — <b>Craindre</b> → craint — <b>Peindre</b> → peint — <b>Joindre</b> → joint — <b>Faire</b> → fait — <b>Offrir</b> → offert`;
         case 'accents1':
             return `<strong>Retrouve le bon accent</strong><br>
                 L'orthographe du son [é] ou [ɛ] dépend de la syllabe qui suit.<br>
@@ -1404,6 +1404,7 @@ function piocher(cfg) {
         if ((cfg.catINT||0) > 0) pool = pool.concat(pickCat(pool0, 'int', cfg.catINT));
         if ((cfg.catAIT||0) > 0) pool = pool.concat(pickCat(pool0, 'ait', cfg.catAIT));
         if ((cfg.catUS||0)  > 0) pool = pool.concat(pickCat(pool0, 'us',  cfg.catUS));
+        if ((cfg.catERT||0) > 0) pool = pool.concat(pickCat(pool0, 'ert', cfg.catERT));
         if (pool.length < cfg.nb) {
             const manque = cfg.nb - pool.length;
             const reste = pool0.filter(v => !pool.includes(v));
@@ -3118,6 +3119,7 @@ function afficherPP3(v) {
                 int: () => ['ait', 'it'],
                 ait: () => ['e', 'it'],
                 us:  () => ['is', 'it'],
+                ert: () => ['it', 'u'],
             };
             const [p1, p2] = (PP3_PIEGES[v.cible] || (() => ['i','is']))();
             const texteFor = c => c === 'û' ? 'û' : (PP3_AFFICHAGE[c] || c);
@@ -3128,7 +3130,7 @@ function afficherPP3(v) {
             ]);
         }
         const couleurs = { ai:'#a13a52', é:'#7d2438', e:'#a13a52', i:'#7d2438', u:'#5c1a2a', 'û':'#5c1a2a',
-                            is:'#a13a52', it:'#7d2438', int:'#5c1a2a', ait:'#8c2f45', us:'#4a1420', ut:'#4a1420' };
+                            is:'#a13a52', it:'#7d2438', int:'#5c1a2a', ait:'#8c2f45', us:'#4a1420', ut:'#4a1420', ert:'#6b1530' };
         const pzone = document.getElementById('pp3-pelotes-zone');
         pzone.innerHTML = '';
         choix.forEach(c => {
@@ -3249,7 +3251,7 @@ function afficherPP2(v) {
         if (PIEGES_FORCES_J2[v.inf]) {
             pelotes = melangerTableau(PIEGES_FORCES_J2[v.inf]);
         } else {
-            const toutes  = ['is','it','int','ait','us'];
+            const toutes  = ['is','it','int','ait','us','ert'];
             const autres  = melangerTableau(toutes.filter(c => c !== v.cible)).slice(0, 2);
             pelotes = melangerTableau([
                 { text: '-' + v.cible,   code: v.cible,   correct: true  },
@@ -3257,7 +3259,7 @@ function afficherPP2(v) {
                 { text: '-' + autres[1], code: autres[1], correct: false },
             ]);
         }
-        const couleurs = { is:'#a13a52', it:'#7d2438', int:'#5c1a2a', ait:'#8c2f45', us:'#4a1420', u:'#8c2f45' };
+        const couleurs = { is:'#a13a52', it:'#7d2438', int:'#5c1a2a', ait:'#8c2f45', us:'#4a1420', u:'#8c2f45', ert:'#6b1530' };
         const pzone = document.getElementById('pp2-pelotes-zone');
         pzone.innerHTML = '';
         pelotes.forEach(p => {

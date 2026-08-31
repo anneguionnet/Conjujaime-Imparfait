@@ -338,4 +338,15 @@ const verbesPP_jeu3 = [
   {"inf":"écrire","rad":"écr","cible":"it","niveau":"facile","source":"jeu2","psGroupe":"I3","psJe":"écrivis","psTu":"écrivis","psElle":"écrivit"},
   {"inf":"mettre","rad":"m","cible":"is","niveau":"facile","source":"jeu2","psGroupe":"I3","psJe":"mis","psTu":"mis","psElle":"mit"},
   {"inf":"inclure","rad":"incl","cible":"us","niveau":"facile","source":"jeu2","psGroupe":"U","psJe":"inclus","psTu":"inclus","psElle":"inclut"},
+
+  {"inf":"ouvrir","rad":"ouv","cible":"ert","niveau":"facile","source":"jeu2","psGroupe":"I3","psJe":"ouvris","psTu":"ouvris","psElle":"ouvrit"},
+  {"inf":"couvrir","rad":"couv","cible":"ert","niveau":"facile","source":"jeu2","psGroupe":"I3","psJe":"couvris","psTu":"couvris","psElle":"couvrit"},
+  {"inf":"découvrir","rad":"découv","cible":"ert","niveau":"facile","source":"jeu2","psGroupe":"I3","psJe":"découvris","psTu":"découvris","psElle":"découvrit"},
+  {"inf":"offrir","rad":"off","cible":"ert","niveau":"facile","source":"jeu2","psGroupe":"I3","psJe":"offris","psTu":"offris","psElle":"offrit"},
+  {"inf":"souffrir","rad":"souff","cible":"ert","niveau":"difficile","source":"jeu2","psGroupe":"I3","psJe":"souffris","psTu":"souffris","psElle":"souffrit"},
+
+  {"inf":"recouvrir","rad":"recouv","cible":"ert","niveau":"difficile","source":"jeu2","psGroupe":"I3","psJe":"recouvris","psTu":"recouvris","psElle":"recouvrit"},
+  {"inf":"entrouvrir","rad":"entrouv","cible":"ert","niveau":"difficile","source":"jeu2","psGroupe":"I3","psJe":"entrouvris","psTu":"entrouvris","psElle":"entrouvrit"},
+  {"inf":"rouvrir","rad":"rouv","cible":"ert","niveau":"difficile","source":"jeu2","psGroupe":"I3","psJe":"rouvris","psTu":"rouvris","psElle":"rouvrit"},
+  {"inf":"redécouvrir","rad":"redécouv","cible":"ert","niveau":"difficile","source":"jeu2","psGroupe":"I3","psJe":"redécouvris","psTu":"redécouvris","psElle":"redécouvrit"},
 ];

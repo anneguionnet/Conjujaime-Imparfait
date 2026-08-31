@@ -82,4 +82,15 @@ const verbesPP_jeu2 = [
   {"inf":"écrire","rad":"écr","ppFem":"écrite","cible":"it","ex":"la lettre écrite","niveau":"facile"},
   {"inf":"mettre","rad":"m","ppFem":"mise","cible":"is","ex":"une décision mise","niveau":"facile"},
   {"inf":"inclure","rad":"incl","ppFem":"incluse","cible":"us","ex":"une demande incluse","niveau":"facile"},
+
+{"inf":"ouvrir","rad":"ouv","ppFem":"ouverte","cible":"ert","ex":"une porte ouverte","niveau":"facile"},
+{"inf":"couvrir","rad":"couv","ppFem":"couverte","cible":"ert","ex":"une table couverte","niveau":"facile"},
+{"inf":"découvrir","rad":"découv","ppFem":"découverte","cible":"ert","ex":"une île découverte","niveau":"facile"},
+{"inf":"offrir","rad":"off","ppFem":"offerte","cible":"ert","ex":"une décision offerte","niveau":"facile"},
+{"inf":"souffrir","rad":"souff","ppFem":"soufferte","cible":"ert","ex":"une douleur soufferte","niveau":"difficile"},
+
+{"inf":"recouvrir","rad":"recouv","ppFem":"recouverte","cible":"ert","ex":"une surface recouverte","niveau":"difficile"},
+{"inf":"entrouvrir","rad":"entrouv","ppFem":"entrouverte","cible":"ert","ex":"une porte entrouverte","niveau":"difficile"},
+{"inf":"rouvrir","rad":"rouv","ppFem":"rouverte","cible":"ert","ex":"une boutique rouverte","niveau":"difficile"},
+{"inf":"redécouvrir","rad":"redécouv","ppFem":"redécouverte","cible":"ert","ex":"une vérité redécouverte","niveau":"difficile"},
 ];
