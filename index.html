@@ -161,9 +161,13 @@
         <button class="btn-menu-jeu jaune-acc" onclick="lancerJeu('accents1')">
             🔤 Un seul accent
         </button>
-        <p class="menu-encouragement">On essaie tous les sons [ɛ] ? 🐾</p>
+        <p class="menu-encouragement">Un accent, ça va — prête pour deux ? 🐾</p>
         <button class="btn-menu-jeu jaune-acc2" onclick="lancerJeu('accents2')">
             🔤 Le son [ɛ]
+        </button>
+        <p class="menu-encouragement">La dictée du son [ɛ], c'est à toi ! 🐾</p>
+        <button class="btn-menu-jeu jaune-acc3" onclick="lancerJeu('accents3')">
+            🔤 La dictée
         </button>
     </div>
 
@@ -464,6 +468,12 @@
 
         <!-- Bulle Retiens accents2 -->
         <div id="bulle-accents2" class="bulle-present1" style="display:none;">
+            💬 <i>Conseil de Juju : pour réussir, <b>observe bien les lettres qui suivent le son [ɛ]</b>.<br>
+            Comme en arabe ou en hébreu, il faut <b>lire de la droite vers la gauche</b> pour vérifier la graphie !</i>
+        </div>
+
+        <!-- Bulle Retiens accents3 -->
+        <div id="bulle-accents3" class="bulle-present1" style="display:none;">
             💬 <i>Conseil de Juju : pour réussir, <b>observe bien les lettres qui suivent le son [ɛ]</b>.<br>
             Comme en arabe ou en hébreu, il faut <b>lire de la droite vers la gauche</b> pour vérifier la graphie !</i>
         </div>
@@ -786,6 +796,16 @@ const CONFIG = {
         7: { mode:'form-entiere', nb:10, opa:0.05, catAigu:3, catGrave:2, catCirc:1, catE:4 },
         8: { mode:'form-entiere', nb:10, opa:0,    catAigu:3, catGrave:2, catCirc:1, catE:4 },
     },
+    accents3: {
+        1: { mode:'form-entiere', nb:8,  opa:0.6, nFacile:6, nDifficile:2 },
+        2: { mode:'form-entiere', nb:8,  opa:0.4, nFacile:6, nDifficile:2 },
+        3: { mode:'form-entiere', nb:8,  opa:0.3, nFacile:4, nDifficile:4 },
+        4: { mode:'form-entiere', nb:8,  opa:0.2, nFacile:4, nDifficile:4 },
+        5: { mode:'form-entiere', nb:8,  opa:0.1, nFacile:4, nDifficile:4 },
+        6: { mode:'form-entiere', nb:8,  opa:0.05,nFacile:4, nDifficile:4 },
+        7: { mode:'form-entiere', nb:10, opa:0,   nFacile:3, nDifficile:7 },
+        8: { mode:'form-entiere', nb:10, opa:0,   nFacile:3, nDifficile:7 },
+    },
     participepasse1: {
         1: { niveau:'facile',    mode:'pelotes', nb:8, opa:1,    shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
         2: { niveau:'facile',    mode:'pelotes', nb:8, opa:0.75, shuffle:true, catE:3, catI:2, catU:3, mix:{pelotes:3, terminaison:3, entiere:2}, mixFixe:true },
@@ -943,6 +963,7 @@ function lancerJeu(type) {
         participepasse2: 'Le participe passé — les autres terminaisons',
         accents1: 'Les accents — un accent',
         accents2: 'Les accents — le son [ɛ]',
+        accents3: 'Les accents — la dictée',
         participepasse1: 'Le participe passé — é, i, u',
         ps1: 'Passé simple — verbes en -ER',
         ps2: 'Passé simple — 2e et 3e groupe',
@@ -1065,7 +1086,7 @@ function chargerSerie() {
         } else { bulleFut2.style.display = 'none'; }
     }
 
-    ['accents1','accents2','participepasse1','participepasse2','participepasse3'].forEach(id => {
+    ['accents1','accents2','accents3','participepasse1','participepasse2','participepasse3'].forEach(id => {
         const b = document.getElementById('bulle-' + id);
         if (b) {
             b.style.display = (jeuActuel === id && cfg.opa > 0) ? 'block' : 'none';
@@ -1208,6 +1229,9 @@ function getLecon() {
                 <li>Si un <b>-s-</b> ou une syllabe entière a disparu → on écrit <b>ê</b>. Ex : <i>j'arrête</i> ← arrestation / <i>je fête</i> ← festif</li>
                 <li>Si elle se trouve <b>avant une double consonne ou un -x</b> → le <b>-e</b> (sans accent) s'ouvre en [ɛ]</li>
                 </ul>`;
+        case 'accents3':
+            return `<strong>À toi de retrouver l'orthographe complète du mot.</strong><br>
+                Le son [e] ou [ɛ] peut s'écrire -è, é, ê, ou e en fonction de la syllabe qui suit.`;
         case 'participepasse1':
             return `<strong>Les participes passés se terminent généralement en [é], [i] ou [u] au masculin singulier. C'est le groupe du verbe qui détermine la terminaison.</strong><br>
                 Il s'écrit <b>-é</b> pour les verbes du 1<sup>er</sup> groupe et pour quelques verbes irréguliers comme <i>aller, être</i> et <i>naître</i>, <b>-i</b> pour tous les verbes du 2<sup>e</sup> groupe et certains verbes du 3<sup>e</sup> groupe, et <b>-u</b> pour certains verbes du 3<sup>e</sup> groupe.<br>
@@ -1412,6 +1436,15 @@ function piocher(cfg) {
         return melangerTableau([...pool]);
     }
 
+    // Accents — jeu 3 (dictée : melange facile/difficile progressif)
+    if (jeuActuel === 'accents3') {
+        const poolFacile    = verbesAccents.filter(v => v.niveau === 'facile');
+        const poolDifficile = verbesAccents.filter(v => v.niveau === 'difficile');
+        const choisisFacile    = melangerTableau([...poolFacile]).slice(0, cfg.nFacile || 0);
+        const choisisDifficile = melangerTableau([...poolDifficile]).slice(0, cfg.nDifficile || 0);
+        return melangerTableau(choisisFacile.concat(choisisDifficile));
+    }
+
     // Accents — jeu 2 (difficile : é / è / ê / e)
     if (jeuActuel === 'accents2') {
         const pool0 = verbesAccents.filter(v => v.niveau === 'difficile');
@@ -1578,6 +1611,7 @@ function majInterface() {
     else if (jeuActuel === 'imparfait3') afficherImparfait3(v);
     else if (jeuActuel === 'participepasse3') afficherPP3(v);
     else if (jeuActuel === 'participepasse2') afficherPP2(v);
+    else if (jeuActuel === 'accents3') afficherAccents3(v);
     else if (jeuActuel === 'accents2') afficherAccents2(v);
     else if (jeuActuel === 'accents1') afficherAccents1(v);
     else if (jeuActuel === 'participepasse1') afficherPP1(v);
@@ -3432,6 +3466,46 @@ function accTexteRevele(v) {
     if (!alt) return principal;
     if (v.altCible) return principal + ' / ' + alt;
     return principal + ' — ' + alt + ' est aussi accepté';
+}
+
+function afficherAccents3(v) {
+    accEssaiCount = 0;
+    if (accVoixTimer) { clearTimeout(accVoixTimer); accVoixTimer = null; }
+    const motComplet = accMotComplet(v);
+
+    document.getElementById('zone-acc1-pelotes').style.display = 'none';
+    document.getElementById('zone-acc2-pelotes').style.display = 'none';
+    const zone = document.getElementById('zone-imparfait-form');
+    zone.style.display = 'block';
+    zone.dataset.motComplet = motComplet;
+    zone.dataset.modeForm = 'entiere';
+
+    document.getElementById('imp-form-indice').innerHTML = 'Trouve les verbes dictés ! 🐾';
+    const input = document.getElementById('imp-form-input');
+    input.value = '';
+    input.disabled = false;
+    document.getElementById('btn-valider-impform').style.display = 'inline-block';
+    input.focus();
+
+    const { prefixe, verbe } = accStripPrefix(v.mot);
+    const elSujet = document.getElementById('imp-form-sujet');
+    document.getElementById('imp-form-infinitif').innerHTML =
+        `<span style="color:#1e5631; font-weight:bold; font-style:normal; font-size:0.7em;">${v.inf}</span>`;
+    elSujet.innerHTML = `<span style="color:#1e5631; font-weight:bold;">${prefixe || '—'}</span>`;
+    elSujet.style.width = '';
+    elSujet.style.textAlign = '';
+    elSujet.style.marginBottom = '';
+    input.placeholder = 'reste du mot…';
+    input.style.width = '260px';
+    input.style.fontSize = '22px';
+    input.style.textAlign = 'left';
+
+    const altMC = accAltMotComplet(v);
+    zone.dataset.reponse = verbe;
+    zone.dataset.altReponse = altMC ? accStripPrefix(altMC).verbe : '';
+
+    parler(v.mot);
+    accVoixTimer = setTimeout(() => { parler(motComplet); }, 8000);
 }
 
 function afficherAccents2(v) {
