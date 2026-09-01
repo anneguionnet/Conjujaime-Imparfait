@@ -45,7 +45,7 @@ const verbesPP_jeu2 = [
   {"inf":"joindre","rad":"jo","ppFem":"jointe","cible":"int","ex":"la lettre jointe","niveau":"facile"},
   {"inf":"méfaire","rad":"méf","ppFem":"méfaite","cible":"ait","ex":"une décision méfaite","niveau":"difficile"},
   {"inf":"se méprendre","rad":"mépr","ppFem":"méprise","cible":"is","ex":"une personne méprise","niveau":"difficile","pronominal":true},
-  {"inf":"oindre","rad":"o","ppFem":"ointe","cible":"int","ex":"une décision ointe","niveau":"difficile"},
+  {"inf":"oindre","rad":"o","ppFem":"ointe","cible":"int","ex":"une tête ointe","niveau":"difficile"},
   {"inf":"peindre","rad":"pe","ppFem":"peinte","cible":"int","ex":"la maison peinte","niveau":"facile"},
   {"inf":"plaindre","rad":"pla","ppFem":"plainte","cible":"int","ex":"une décision plainte","niveau":"facile"},
   {"inf":"prendre","rad":"pr","ppFem":"prise","cible":"is","ex":"une décision prise","niveau":"facile"},
