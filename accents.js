@@ -293,7 +293,7 @@ const verbesAccents = [
   {"mot":"elle descend","temps":"présent","inf":"descendre","cible":"e","niveau":"facile"},
   {"mot":"je prêche","temps":"présent","inf":"prêcher","cible":"ê","niveau":"facile"},
   {"mot":"j'apprête","temps":"présent","inf":"apprêter","cible":"ê","niveau":"facile"},
-  {"mot":"je vêts","temps":"présent","inf":"vêtir","cible":"ê","niveau":"facile"},
+  {"mot":"je vêts","temps":"présent","inf":"vêtir","cible":"ê","info":"de la famille de vestimentaire","niveau":"facile"},
   {"mot":"je quête","temps":"présent","inf":"quêter","cible":"ê","niveau":"facile"},
   {"mot":"j'empêche","temps":"présent","inf":"empêcher","cible":"e","info":"E initial fermé par une consonne, comme dans persévérer.","niveau":"difficile"},
   {"mot":"j'empêche","temps":"présent","inf":"empêcher","cible":"ê","niveau":"difficile"},
