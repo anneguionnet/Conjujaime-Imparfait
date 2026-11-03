@@ -197,6 +197,9 @@
 
         <img src="purpleJuju.jpg" alt="Juju" class="juju-jeu" id="juju-jeu" onclick="clicJuju()">
 
+        <!-- Consigne participe passé (selon le mode : pelotes / mini-form / form complète) -->
+        <div id="pp-consigne" style="display:none; text-align:center; font-weight:bold; color:#7d2438; font-size:18px; margin:4px 0 8px;"></div>
+
         <!-- Verbe affiché (jeux infinitif) -->
         <div class="verbe-display" id="verbe-txt"></div>
 
@@ -1588,6 +1591,7 @@ function majInterface() {
     { const es = document.getElementById('imp-form-sujet'); es.style.width = ''; es.style.textAlign = ''; es.style.marginBottom = ''; es.style.fontSize = ''; }
     { const zf = document.getElementById('zone-imparfait-form'); if (zf) zf.dataset.modeForm = ''; }
     document.getElementById('zone-pp1-pelotes').style.display        = 'none';
+    document.getElementById('pp-consigne').style.display             = 'none';
     document.getElementById('zone-ps-pelotes').style.display         = 'none';
     document.getElementById('zone-sp-pelotes').style.display         = 'none';
     document.getElementById('zone-sp-form').style.display            = 'none';
@@ -2558,7 +2562,7 @@ function finDeSerie() {
         titre.innerText = '💪 Encore un effort !'; titre.style.color = '#e74c3c';
     }
 
-    document.getElementById('inter-score').innerText = `${scoreSerie} / 8`;
+    document.getElementById('inter-score').innerText = `${formatScore(scoreSerie)} / 8`;
 
     const msg = document.getElementById('inter-msg');
     if (derniere && passe)   msg.innerText = 'Tu as terminé toutes les séries ! Excellent travail. 🌟';
@@ -3071,6 +3075,7 @@ function afficherPP3(v) {
     if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
     const cfg  = getConfig();
     const mode = (cfg.mix && ppModesQuestions[qIndex]) ? ppModesQuestions[qIndex] : cfg.mode;
+    ppAfficherConsigne(mode);
     const { sujet, type } = pp3ChoisirSujetEtType(v);
     v._pp3sujet = sujet; v._pp3type = type; // memorise pour la validation
 
@@ -3221,9 +3226,7 @@ function validerPP3Pelote(correct, btn, zone, v) {
     if (correct) {
         btn.style.outline = '3px solid #2ecc71';
         msg.style.color = '#2ecc71';
-        msg.innerHTML   = `✅ Bravo !`;
-        scoreSerie++; scoreTotal++;
-        document.getElementById('total-score').innerText = scoreTotal;
+        msg.innerHTML   = ppAjouterPoint();
         {
             const elR = document.getElementById('pp3-pelotes-radical');
             pp3TaillePolice(elR, zone.dataset.motComplet);
@@ -3262,6 +3265,7 @@ function afficherPP2(v) {
     if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
     const cfg  = getConfig();
     const mode = (cfg.mix && ppModesQuestions[qIndex]) ? ppModesQuestions[qIndex] : cfg.mode;
+    ppAfficherConsigne(mode);
     const motComplet = v.rad + v.cible;
 
     if (mode === 'pelotes') {
@@ -3274,7 +3278,7 @@ function afficherPP2(v) {
 
         document.getElementById('pp2-pelotes-infinitif').innerText = v.inf;
         document.getElementById('pp2-pelotes-radical').innerText   = v.rad + '-';
-        document.getElementById('pp2-pelotes-indice').innerHTML    = 'Trouve la bonne terminaison.';
+        document.getElementById('pp2-pelotes-indice').innerHTML    = '';
 
         const PIEGES_FORCES_J2 = {
             'inclure': [{ text:'-us', code:'us', correct:true }, { text:'-u', code:'u', correct:false }, { text:'-is', code:'is', correct:false }],
@@ -3347,9 +3351,7 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
     if (correct) {
         btn.style.outline = '3px solid #2ecc71';
         msg.style.color = '#2ecc71';
-        msg.innerHTML   = `✅ Bravo !<br><i>${exemplePP(v)}</i>`;
-        scoreSerie++; scoreTotal++;
-        document.getElementById('total-score').innerText = scoreTotal;
+        msg.innerHTML   = `${ppAjouterPoint()}<br><i>${exemplePP(v)}</i>`;
         document.getElementById('pp2-pelotes-radical').innerHTML =
             `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
         parler(phraseParleePP(v));
@@ -3380,6 +3382,26 @@ function validerPP2Pelote(codeChoisi, correct, btn, zone, v) {
 let ppEssaiCount  = 0;
 let ppFormLocked  = false;
 let ppVoixTimer   = null;
+
+// Consigne affichée entre Juju et l'infinitif (jeux 1, 2, 3 du participe passé)
+const PP_CONSIGNES = {
+    'pelotes':          'Choisis la bonne terminaison',
+    'form-terminaison': 'Écris la terminaison',
+};
+function ppAfficherConsigne(mode) {
+    const el = document.getElementById('pp-consigne');
+    el.innerText = PP_CONSIGNES[mode] || 'Écris la forme en entier';
+    el.style.display = 'block';
+}
+
+// Demi-points : 1 point du premier coup, ½ point au 2e essai
+function formatScore(n) { return String(n).replace('.', ','); }
+function ppAjouterPoint() {
+    const pts = ppEssaiCount > 0 ? 0.5 : 1;
+    scoreSerie += pts; scoreTotal += pts;
+    document.getElementById('total-score').innerText = formatScore(scoreTotal);
+    return pts === 1 ? '✅ Bravo !' : '✅ Bravo ! (½ point)';
+}
 
 function exemplePP(v) {
     if (Array.isArray(v.ex)) return v.ex.join(' &nbsp;|&nbsp; ');
@@ -3869,6 +3891,7 @@ function afficherPP1(v) {
     if (ppVoixTimer) { clearTimeout(ppVoixTimer); ppVoixTimer = null; }
     const cfg  = getConfig();
     const mode = (cfg.mix && ppModesQuestions[qIndex]) ? ppModesQuestions[qIndex] : cfg.mode;
+    ppAfficherConsigne(mode);
     const AFFICHAGE_CIBLE = { e: 'é', i: 'i', u: 'u' };
     const EXCEPTIONS_MOT = { 'devoir': 'dû', 'mouvoir': 'mû' };
     const EXCEPTIONS_TERMINAISON = { 'devoir': 'û', 'mouvoir': 'û' };
@@ -3963,9 +3986,7 @@ function validerPP1Pelote(termChoisie, correct, btn, zone, v) {
     if (correct) {
         btn.style.outline = '3px solid #2ecc71';
         msg.style.color = '#2ecc71';
-        msg.innerHTML   = `✅ Bravo !<br><i>${exemplePP(v)}</i>`;
-        scoreSerie++; scoreTotal++;
-        document.getElementById('total-score').innerText = scoreTotal;
+        msg.innerHTML   = `${ppAjouterPoint()}<br><i>${exemplePP(v)}</i>`;
         document.getElementById('pp1-pelotes-radical').innerHTML =
             `<span style="color:#1e5631; font-weight:bold; font-size:1.2em;">${zone.dataset.motComplet}</span>`;
         parler(phraseParleePP(v));
@@ -4003,9 +4024,8 @@ function validerPPForm() {
         if (ppFormLocked) return;
         ppFormLocked = true;
         msg.style.color = '#2ecc71';
-        msg.innerHTML   = (jeuActuel === 'participepasse3') ? `✅ Bravo !` : `✅ Bravo !<br><i>${exemplePP(v)}</i>`;
-        scoreSerie++; scoreTotal++;
-        document.getElementById('total-score').innerText = scoreTotal;
+        const bravoPP = ppAjouterPoint();
+        msg.innerHTML   = (jeuActuel === 'participepasse3') ? bravoPP : `${bravoPP}<br><i>${exemplePP(v)}</i>`;
         input.disabled = true;
         document.getElementById('btn-valider-impform').style.display = 'none';
         {
