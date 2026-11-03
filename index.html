@@ -557,7 +557,7 @@
 <script src="data.js?v=1"></script>
 <script src="passesimple.js?v=1"></script>
 <script src="accents.js?v=10"></script>
-<script src="participepasse_jeu1.js?v=1"></script>
+<script src="participepasse_jeu1.js?v=2"></script>
 <script src="participepasse_jeu2.js?v=4"></script>
 <script src="participepasse_jeu3.js?v=3"></script>
 <script src="verbesImparfait_gd.js?v=1"></script>
@@ -4588,12 +4588,10 @@ function validerImpForm() {
 // TOUCHES ENTRÉE
 // ============================================================
 
-document.getElementById('imp-form-input').addEventListener('keypress', e => {
-    if (e.key === 'Enter') {
-        if (jeuActuel === 'futur1' || jeuActuel === 'futur2' || jeuActuel === 'conditionnel') validerFutForm();
-        else validerImpForm();
-    }
-});
+// imp-form-input : la touche Entrée est gérée UNIQUEMENT par le onkeydown inline
+// (aiguillage futur / ps / participepasse / accents / imparfait).
+// Ne pas rajouter de listener 'keypress' ici : il déclenchait validerImpForm()
+// en double sur les jeux du participe passé (faux "Essaie encore…", questions sautées, score faussé).
 document.getElementById('input-participe').addEventListener('keypress', e => {
     if (e.key === 'Enter') validerParticipe();
 });

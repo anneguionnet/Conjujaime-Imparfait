@@ -191,7 +191,6 @@ const verbesPP_jeu1 = [
   {"inf":"recoudre","rad":"recous","cible":"u","ex":["vous avez recousu - Passé composé"],"niveau":"difficile"},
   {"inf":"se rendormir","rad":"rendorm","cible":"i","ex":["tu te seras rendormi - Futur antérieur"],"niveau":"facile"},
   {"inf":"rendre","rad":"rend","cible":"u","ex":["qu'elle ait rendu - Subjonctif passé"],"niveau":"facile"},
-  {"inf":"repartir","rad":"repart","cible":"i","ex":["vous aviez reparti - Plus-que-parfait"],"niveau":"facile"},
   {"inf":"ressentir","rad":"ressent","cible":"i","ex":["tu aurais ressenti - Conditionnel passé"],"niveau":"facile"},
   {"inf":"resservir","rad":"resserv","cible":"i","ex":["elle a resservi - Passé composé"],"niveau":"difficile"},
   {"inf":"ressortir","rad":"ressort","cible":"i","ex":["vous aurez ressorti - Futur antérieur"],"niveau":"facile"},
